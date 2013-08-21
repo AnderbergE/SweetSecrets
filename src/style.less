@@ -5,6 +5,7 @@ html, body {
 	width: 100%;
 }
 
+/* DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE */
 .date-nav {
 	padding-bottom: 5%;
 	padding-top: 10%;
@@ -23,35 +24,6 @@ html, body {
 	display: inline-block;
 	vertical-align: middle;
 }
-.day:nth-child(1),
-.day:nth-child(5) {
-	color: lightgrey;
-	font-size: 1.5rem;
-}
-.day:nth-child(3) {
-	font-size: 5rem;
-}
-.day:nth-child(2),
-.day:nth-child(4) {
-	color: grey;
-	font-size: 2rem;
-}
-.day:nth-child(1) {
-	transform: rotateY(-40deg);
-	-webkit-transform: rotateY(-40deg);
-}
-.day:nth-child(2) {
-	transform: rotateY(-20deg);
-	-webkit-transform: rotateY(-20deg);
-}
-.day:nth-child(4) {
-	transform: rotateY(20deg);
-	-webkit-transform: rotateY(20deg);
-}
-.day:nth-child(5) {
-	transform: rotateY(40deg);
-	-webkit-transform: rotateY(40deg);
-}
 .today {
 	color: chocolate !important;
 }
@@ -59,18 +31,34 @@ html, body {
 	color: chartreuse !important;
 }
 .monday {
-	color: yellow !important;
-}
-.day:hover {
-	cursor: pointer;
+	color: yellow;
 }
 
+/* SWEETS  SWEETS  SWEETS SWEETS SWEETS  SWEETS SWEETS SWEETS  SWEETS  SWEETS */
 .sweets {
 	position: relative;
 	text-align: center;
 }
 input[type="checkbox"] {
 	display: none;
+	
+	&:checked {
+		& + .icon {
+			color: white;
+		}
+		& + .icon-ian-yates-mr-whippy {
+			background: powderblue;
+		}
+		& + .icon-drink {
+			background: hotpink;
+		}
+		& + .icon-cupcake {
+			background: orange;
+		}
+		& + .icon-candy {
+			background: lightgreen;
+		}
+	}
 }
 .icon {
 	background: lightgrey;
@@ -81,21 +69,6 @@ input[type="checkbox"] {
 	height: 12rem;
 	width: 12rem;
 	line-height: 13rem !important;
-}
-input:checked + label {
-	color: white;
-}
-input:checked + .icon-ian-yates-mr-whippy {
-	background: powderblue;
-}
-input:checked + .icon-drink {
-	background: hotpink;
-}
-input:checked + .icon-cupcake {
-	background: orange;
-}
-input:checked + .icon-candy {
-	background: lightgreen;
 }
 
 /* FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT */
