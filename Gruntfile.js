@@ -8,60 +8,36 @@ module.exports = function(grunt) {
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>; */\n',
+      
     // Task configuration.
     concat: {
-      dist: {
-        src: ['src/*.js'],
-        dest: 'dist/script.js'
-      }
+      dist: { src: ['src/*.js'], dest: 'dist/script.js' }
     },
     uglify: {
-      dist: {
-        files: {
-          'dist/script.min.js': '<%= concat.dist.dest %>'
-        }
-      }
+      dist: { files: { 'dist/script.min.js': '<%= concat.dist.dest %>' } }
     },
     less: {
-      options: {
-        paths: ["src/"]
-      },
-      dist: {
-        files: {
-          "dist/style.css": "src/style.less"
-        }
-      }
+      dist: { files: { "dist/style.css": "src/style.less" } }
     },
     copy: {
       dist: {
         files: [
           {
-            expand: true,
-            flatten: true,
-            src: ['src/*.html'],
-            dest: 'dist/',
-            filter: 'isFile'
+            expand: true, flatten: true, filter: 'isFile',
+            src: ['src/*.html'], dest: 'dist/'
           },
           {
-            expand: true,
-            flatten: true,
-            src: ['src/fonts/*'],
-            dest: 'dist/fonts/',
+            expand: true, flatten: true,
+            src: ['src/fonts/*'], dest: 'dist/fonts/',
           }
         ]
       }
     },
     watch: {
-      less: {
-        files: ['src/*.less'],
-        tasks: ['less']
-      },
+      less: { files: ['src/*.less'], tasks: ['less'] },
       livereload: {
-        options: {
-          livereload: true
-        },
-        files: ['src/*'],
-        tasks: ['concat', 'uglify', 'copy']
+        options: { livereload: true },
+        files: ['src/*'], tasks: ['concat', 'uglify', 'copy']
       }
     }
   });
