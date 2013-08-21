@@ -1,16 +1,5 @@
 var A_DAY_IN_MS = 86400000;
 
-function dateToYMD(date) {
-	var d = date.getDate();
-	var m = date.getMonth() + 1;
-	var y = date.getFullYear();
-	return dateFillZeroes(y, m, d);
-}
-
-function dateFillZeroes(y, m, d) {
-	return '' + y + (m<=9 ? '0' + m : m) + (d <= 9 ? '0' + d : d);
-}
-
 function getLastDayInMonth(value) {
 	value = new Date(value);
 	return new Date(value.getFullYear(), value.getMonth()+1, 0);
