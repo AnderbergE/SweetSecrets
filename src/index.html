@@ -10,7 +10,8 @@
 			<div class="month">{{selected | date:'MMM'}}</div>
 			<div class="days">
 				<!-- $index start at 0 -->
-				<a href="#" ng-repeat="(day, sweets) in dates" class="day"
+				<a href="#" class="day {{day | date:'EEEE' | lowercase}}"
+					ng-repeat="(day, sweets) in dates"
 					ng-class="{today: day == today, selected: day == selected}"
 					ng-click="changeSelectedDate($index)">
 						{{day | date:'d'}}
@@ -21,7 +22,8 @@
 			<span ng-repeat="sweet in types">
 				<input type="checkbox" id="{{sweet.name}}"
 					name="{{sweet.name}}" value="{{sweet.name}}"
-					ng-model="dates[selected][sweet.name]" ng-change="setValue(sweet.name)"/>
+					ng-model="dates[selected][sweet.name]"
+					ng-change="setValue(sweet.name)"/>
 				<label class="icon {{sweet.icon}}" for="{{sweet.name}}"></label>
 			</span>
 		</div>
