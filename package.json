@@ -1,0 +1,20 @@
+{
+  "name": "SweetSecrets",
+  "version": "0.0.1",
+  "author": {
+    "name": "Erik Anderberg",
+    "email": "Anderberg.E@gmail.com"
+  },
+  "description": "Keep track of your sweet stuff",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnderbergE/SweetSecrets/"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-less": "~0.7.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.2"
+  }
+}

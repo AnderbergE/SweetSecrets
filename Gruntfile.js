@@ -1,0 +1,79 @@
+/*global module:false*/
+module.exports = function(grunt) {
+
+  // Project configuration.
+  grunt.initConfig({
+    // Metadata.
+    pkg: grunt.file.readJSON('package.json'),
+    banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
+      '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+      '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>; */\n',
+    // Task configuration.
+    concat: {
+      dist: {
+        src: ['src/*.js'],
+        dest: 'dist/script.js'
+      }
+    },
+    uglify: {
+      dist: {
+        files: {
+          'dist/script.min.js': '<%= concat.dist.dest %>'
+        }
+      }
+    },
+    less: {
+      options: {
+        paths: ["src/"]
+      },
+      dist: {
+        files: {
+          "dist/style.css": "src/style.less"
+        }
+      }
+    },
+    copy: {
+      dist: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['src/*.html'],
+            dest: 'dist/',
+            filter: 'isFile'
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: ['src/fonts/*'],
+            dest: 'dist/fonts/',
+          }
+        ]
+      }
+    },
+    watch: {
+      less: {
+        files: ['src/*.less'],
+        tasks: ['less']
+      },
+      livereload: {
+        options: {
+          livereload: true
+        },
+        files: ['src/*'],
+        tasks: ['concat', 'uglify', 'copy']
+      }
+    }
+  });
+
+  // These plugins provide necessary tasks.
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+
+  // Default task.
+  grunt.registerTask('default', ['concat', 'uglify', 'less', 'copy', 'watch']);
+
+};

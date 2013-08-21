@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sv-SE">
+<head>
+	<title>Test</title>
+	<link rel="stylesheet" href="style.css" type="text/css"/>
+</head>
+<body ng-app="">
+	<div id="main-affairs" ng-controller="SweetDates">
+		<nav class="date-nav">
+			<div class="month">{{selected | date:'MMM'}}</div>
+			<div class="days">
+				<!-- $index start at 0 -->
+				<a href="#" ng-repeat="(day, sweets) in dates" class="day"
+					ng-class="{today: day == today, selected: day == selected}"
+					ng-click="changeSelectedDate($index)">
+						{{day | date:'d'}}
+				</a>
+			</div>
+		</nav>
+		<div class="sweets" ng-controller="Sweets">
+			<span ng-repeat="sweet in types">
+				<input type="checkbox" id="{{sweet.name}}"
+					name="{{sweet.name}}" value="{{sweet.name}}"
+					ng-model="dates[selected][sweet.name]" ng-change="setValue(sweet.name)"/>
+				<label class="icon {{sweet.icon}}" for="{{sweet.name}}"></label>
+			</span>
+		</div>
+		<span ng-repeat="(key, sweet) in dates[selected.toJSON()] track by $index">
+			{{getSweet(key)}}
+		</span>
+	</div>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+	<script src="script.js" type="text/javascript"></script>
+	<script src="http://localhost:35729/livereload.js"></script>
+</body>
+</html>
