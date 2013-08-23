@@ -9,7 +9,7 @@ function SweetDates($scope) {
 		}
 	}
 
-	$scope.changeSelectedDate = function ($index) {
+	$scope.changeSelectedDate = function () {
 		$scope.selected = this.day;
 	}
 
@@ -17,11 +17,6 @@ function SweetDates($scope) {
 	$scope.today = getStrippedTime();
 	$scope.selected = $scope.today;
 	$scope.fillMonth($scope.selected);
-
-/* Remove later on */
-	$scope.getSweet = function (type) {
-		return $scope.dates[$scope.selected.toJSON()][type];
-	}
 }
 
 function Sweets($scope) {
