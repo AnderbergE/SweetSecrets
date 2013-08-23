@@ -1,3 +1,7 @@
+/* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
+
+@day-width: 14%; // (100/7)
+
 html, body {
 	font-size: 100%;
 	height: 100%;
@@ -12,26 +16,54 @@ html, body {
 	position: relative;
 	text-align: center;
 }
-.month {
-	display: block;
+.date-overview {
 	font-size: 2rem;
-	text-align: center;
+	font-weight: bold;
+}
+.this-year {
+	display: none;
 }
 .days {
-	letter-spacing: 1rem;
+	margin: 0 5%;
+	text-align: left;
 }
 .day {
+	color: black;
 	display: inline-block;
-	vertical-align: middle;
+	font-size: 2rem;
+	height: 3em;
+	line-height: 3em; // Hack for vertical align middle.
+	text-align: center;
+	text-decoration: none;
+	width: @day-width;
+	
+	&:first-child.tuesday {
+		margin-left: @day-width;
+	}
+	&:first-child.wednesday {
+		margin-left: (@day-width * 2);
+	}
+	&:first-child.thursday {
+		margin-left: (@day-width * 3)
+	}
+	&:first-child.friday {
+		margin-left: (@day-width * 4)
+	}
+	&:first-child.saturday {
+		margin-left: (@day-width * 5)
+	}
+	&:first-child.sunday {
+		margin-left: (@day-width * 6)
+	}
 }
 .today {
-	color: chocolate !important;
+	color: olive !important;
 }
 .selected {
-	color: chartreuse !important;
+	color: chocolate !important;
 }
-.monday {
-	color: yellow;
+.sunday {
+	color: darkred;
 }
 
 /* SWEETS  SWEETS  SWEETS SWEETS SWEETS  SWEETS SWEETS SWEETS  SWEETS  SWEETS */

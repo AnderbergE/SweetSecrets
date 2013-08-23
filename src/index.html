@@ -7,7 +7,13 @@
 <body ng-app="">
 	<div id="main-affairs" ng-controller="SweetDates">
 		<nav class="date-nav">
-			<div class="month">{{selected | date:'MMM'}}</div>
+			<div class="date-overview">
+				<span class="year"
+					ng-class="{'this-year': {{selected | date:'yyyy'}} == {{today | date:'yyyy'}}}">
+					{{selected | date:'yyyy'}} - 
+				</span>
+				<span class="month">{{selected | date:'MMM'}}</span>
+			</div>
 			<div class="days">
 				<!-- $index start at 0 -->
 				<a href="#" class="day {{day | date:'EEEE' | lowercase}}"
