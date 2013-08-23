@@ -14,14 +14,18 @@
 				</span>
 				<span class="month">{{selected | date:'MMM'}}</span>
 			</div>
-			<div class="days">
-				<!-- $index start at 0 -->
-				<a href="#" class="day {{day | date:'EEEE' | lowercase}}"
+			<div class="days" ng-controller="Sweets">
+				<div class="day {{day | date:'EEEE' | lowercase}}"
 					ng-repeat="(day, sweets) in dates"
-					ng-class="{today: day == today, selected: day == selected}"
-					ng-click="changeSelectedDate($index)">
-						{{day | date:'d'}}
-				</a>
+					ng-class="{today: day == today, selected: day == selected}">
+					<a href="" class="day-link"
+						ng-click="changeSelectedDate()">
+						{{day | date:'d'}}</a>
+					<span class="sweet {{sweet.name}}"
+						ng-repeat="sweet in types"
+						ng-class="{show: sweets[sweet.name]}"></span>
+<!-- ng-repeat="(sweet, value) in sweets track by $index" -->
+				</div>
 			</div>
 		</nav>
 		<div class="sweets" ng-controller="Sweets">
@@ -33,7 +37,7 @@
 				<label class="icon {{sweet.icon}}" for="{{sweet.name}}"></label>
 			</span>
 		</div>
-		<span ng-repeat="(key, sweet) in dates[selected.toJSON()] track by $index">
+		<span ng-repeat="(key, sweet) in dates[selected] track by $index">
 			{{getSweet(key)}}
 		</span>
 	</div>

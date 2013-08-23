@@ -1,3 +1,4 @@
+// TODO: Can you solve background colours using data-objects or classnames instead?
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
 
 @day-width: 14%; // (100/7)
@@ -14,27 +15,22 @@ html, body {
 	padding-bottom: 5%;
 	padding-top: 10%;
 	position: relative;
-	text-align: center;
 }
 .date-overview {
 	font-size: 2rem;
 	font-weight: bold;
+	text-align: center;
 }
 .this-year {
 	display: none;
 }
 .days {
 	margin: 0 5%;
-	text-align: left;
 }
 .day {
-	color: black;
 	display: inline-block;
-	font-size: 2rem;
-	height: 3em;
-	line-height: 3em; // Hack for vertical align middle.
-	text-align: center;
-	text-decoration: none;
+	height: 5em;
+	position: relative;
 	width: @day-width;
 	
 	&:first-child.tuesday {
@@ -55,14 +51,39 @@ html, body {
 	&:first-child.sunday {
 		margin-left: (@day-width * 6)
 	}
+	& .sweet {
+		display: block;
+		float: left;
+		height: 50%;
+		visibility: hidden;
+		width: 50%;
+	}
+	& .show {
+		visibility: visible;
+	}
+	& .candy {
+		background: blue;
+	}
+	& .icecream {
+		background: red;
+	}
 }
-.today {
+.day-link {
+	color: black;
+	font-size: 2em;
+	position: absolute;
+	text-decoration: none;
+	text-align: center;
+	top: 0.5em;
+	width: 100%;
+}
+.today .day-link {
 	color: olive !important;
 }
-.selected {
+.selected .day-link {
 	color: chocolate !important;
 }
-.sunday {
+.sunday .day-link {
 	color: darkred;
 }
 
