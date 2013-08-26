@@ -21,9 +21,9 @@ function SweetDates($scope) {
 
 function Sweets($scope) {
 	$scope.types = [
-		{ name: "drink", icon: "icon-drink"},
-		{ name: "cake", icon: "icon-cupcake"},
-		{ name: "candy", icon: "icon-candy"},
-		{ name: "icecream", icon: "icon-ian-yates-mr-whippy"}
+		{ name: "candy", icon: "icon-candy", background: 'lightgreen'},
+		{ name: "cake", icon: "icon-cupcake", background: 'orange'},
+		{ name: "drink", icon: "icon-drink", background: 'hotpink'},
+		{ name: "icecream", icon: "icon-ian-yates-mr-whippy", background: 'powderblue'}
 	];
 }

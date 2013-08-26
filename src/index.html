@@ -23,7 +23,8 @@
 						{{day | date:'d'}}</a>
 					<span class="sweet {{sweet.name}}"
 						ng-repeat="sweet in types"
-						ng-class="{show: sweets[sweet.name]}"></span>
+						ng-class="{show: sweets[sweet.name]}"
+						style="background: {{sweet.background}}"></span>
 				</div>
 			</div>
 		</nav>
@@ -33,7 +34,7 @@
 					name="{{sweet.name}}" value="{{sweet.name}}"
 					ng-model="dates[selected][sweet.name]"
 					ng-change="setValue(sweet.name)"/>
-				<label class="icon {{sweet.icon}}" for="{{sweet.name}}"></label>
+				<label class="icon {{sweet.icon}}" for="{{sweet.name}}" style="background: {{sweet.background}}"></label>
 			</span>
 		</div>
 	</div>
