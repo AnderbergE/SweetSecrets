@@ -20,7 +20,7 @@
 					ng-class="{today: day == today, selected: day == selected}">
 					<a href="" class="day-link"
 						ng-click="changeSelectedDate()">
-						{{day | date:'d'}}</a>
+						<span>{{day | date:'d'}}</span></a>
 					<span class="sweet {{sweet.name}}"
 						ng-repeat="sweet in types"
 						ng-class="{show: sweets[sweet.name]}"
