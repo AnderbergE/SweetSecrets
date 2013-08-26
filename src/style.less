@@ -1,7 +1,9 @@
 // TODO: Can you solve background colours using data-objects or classnames instead?
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
 
-@day-width: 14%; // (100/7)
+@day-width: 13.5%; // (100/7)
+@day-margin: 0.25%;
+@day-total: @day-width + (@day-margin * 2);
 
 html, body {
 	font-size: 100%;
@@ -30,27 +32,27 @@ html, body {
 .day {
 	display: inline-block;
 	height: 5em;
-	margin-right: 0.5%;
+	margin: @day-margin;
 	position: relative;
-	width: (@day-width - 0.5%);
+	width: @day-width;
 	
 	&:first-child.tuesday {
-		margin-left: @day-width;
+		margin-left: @day-total + @day-margin;
 	}
 	&:first-child.wednesday {
-		margin-left: (@day-width * 2);
+		margin-left: (@day-total * 2) + @day-margin;
 	}
 	&:first-child.thursday {
-		margin-left: (@day-width * 3)
+		margin-left: (@day-total * 3) + @day-margin;
 	}
 	&:first-child.friday {
-		margin-left: (@day-width * 4)
+		margin-left: (@day-total * 4) + @day-margin;
 	}
 	&:first-child.saturday {
-		margin-left: (@day-width * 5)
+		margin-left: (@day-total * 5) + @day-margin;
 	}
 	&:first-child.sunday {
-		margin-left: (@day-width * 6)
+		margin-left: (@day-total * 6) + @day-margin;
 	}
 	& .sweet {
 		display: block;
