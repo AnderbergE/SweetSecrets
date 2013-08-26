@@ -62,15 +62,9 @@ html, body {
 	& .show {
 		visibility: visible;
 	}
-	& .candy {
-		background: blue;
-	}
-	& .icecream {
-		background: red;
-	}
 }
 .day-link {
-	color: black;
+	color: darkgrey;
 	font-size: 2em;
 	left: 0;
 	line-height: 2.5em;
@@ -91,13 +85,17 @@ html, body {
 	}
 }
 .today .day-link {
-	color: olive !important;
+	color: yellowgreen !important;
 }
 .selected .day-link {
-	color: chocolate !important;
+	color: snow;
+	
+	& span {
+		background: black;
+	}
 }
 .sunday .day-link {
-	color: darkred;
+	color: tomato;
 }
 
 /* SWEETS  SWEETS  SWEETS SWEETS SWEETS  SWEETS SWEETS SWEETS  SWEETS  SWEETS */
@@ -110,14 +108,13 @@ input[type="checkbox"] {
 
 	&:not(:checked) {
 		& + .icon {
-			background: lightgrey !important;
-			color: black;
+			background: gainsboro !important;
+			color: gray;
 		}
 	}
 }
 .icon {
 	border-radius: 50%;
-	color: white;
 	display: inline-block;
 	font-size: 8rem;
 	text-align: center;
