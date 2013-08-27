@@ -1,10 +1,14 @@
 // TODO: Can you solve background colours using data-objects or classnames instead?
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
 
-@days-side-margins: 5%;
-@day-width: 13.5%; // (100/7)
+@sweets-padding: 5vmin 0 5vmin;
+@nav-padding: 5vmin 0 0;
+@days-side-margins: 5vmin;
+@days-width: 90vmin;
+@day-total: 100% / 7;
 @day-margin: 0.25%;
-@day-total: @day-width + (@day-margin * 2);
+@day-width: @day-total - (@day-margin * 2);
+
 
 html, body {
 	font-size: 100%;
@@ -15,12 +19,10 @@ html, body {
 
 /* DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE */
 .date-nav {
-	padding-bottom: 5%;
-	padding-top: 10%;
 	position: relative;
 }
 .date-overview {
-	font-size: 2rem;
+	font-size: 5vmin;
 	font-weight: bold;
 	text-align: center;
 }
@@ -28,7 +30,8 @@ html, body {
 	display: none;
 }
 .days {
-	margin: 0 @days-side-margins;
+	margin: 0 auto;
+	width: @days-width;
 }
 .day {
 	display: inline-block;
@@ -100,7 +103,7 @@ html, body {
 		position: absolute;
 		top: 50%;
 		left: 0;
-		font-size: 2em;
+		font-size: 3vmin;
 	}
 }
 .today .day-link {
@@ -119,6 +122,7 @@ html, body {
 
 /* SWEETS  SWEETS  SWEETS SWEETS SWEETS  SWEETS SWEETS SWEETS  SWEETS  SWEETS */
 .sweets {
+	padding: @sweets-padding;
 	position: relative;
 	text-align: center;
 }
@@ -135,11 +139,11 @@ input[type="checkbox"] {
 .icon {
 	border-radius: 50%;
 	display: inline-block;
-	font-size: 8rem;
+	font-size: 12vmin;
 	text-align: center;
-	height: 12rem;
-	width: 12rem;
-	line-height: 13rem !important;
+	height: 16vmin;
+	width: 16vmin;
+	line-height: 17vmin !important;
 }
 
 /* FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT */

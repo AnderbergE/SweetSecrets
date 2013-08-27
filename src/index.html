@@ -6,6 +6,15 @@
 </head>
 <body ng-app="">
 	<div id="main-affairs" ng-controller="SweetDates">
+		<div class="sweets" ng-controller="Sweets">
+			<span ng-repeat="sweet in types">
+				<input type="checkbox" id="{{sweet.name}}"
+					name="{{sweet.name}}" value="{{sweet.name}}"
+					ng-model="dates[selected][sweet.name]"
+					ng-change="setValue(sweet.name)"/>
+				<label class="icon {{sweet.icon}}" for="{{sweet.name}}" style="background: {{sweet.background}}"></label>
+			</span>
+		</div>
 		<nav class="date-nav">
 			<div class="date-overview">
 				<span class="year"
@@ -31,15 +40,6 @@
 				</div>
 			</div>
 		</nav>
-		<div class="sweets" ng-controller="Sweets">
-			<span ng-repeat="sweet in types">
-				<input type="checkbox" id="{{sweet.name}}"
-					name="{{sweet.name}}" value="{{sweet.name}}"
-					ng-model="dates[selected][sweet.name]"
-					ng-change="setValue(sweet.name)"/>
-				<label class="icon {{sweet.icon}}" for="{{sweet.name}}" style="background: {{sweet.background}}"></label>
-			</span>
-		</div>
 	</div>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
