@@ -1,17 +1,38 @@
+/** @global One day in ms. */
 var A_DAY_IN_MS = 86400000;
 
-function getLastDayInMonth(value) {
-	value = new Date(value);
-	return new Date(value.getFullYear(), value.getMonth()+1, 0);
+/**
+ * Returns a Date object from a timestamp.
+ * @param {Number|Date} timestamp Ms from epoch or Date object.
+ * @returns {Date} The timestamp as a Date object.
+ */
+function dateFromTimestamp(timestamp) {
+	var date = timestamp;
+	if (! timestamp) {
+		date = new Date();
+	} else if (! (timestamp instanceof Date)) { 
+		date = new Date(timestamp);
+	}
+	return date;
 }
 
-/* This function strips the supplied date value from time and returns ms */
-function getStrippedTime(value) {
-	if (! value) {
-		value = new Date();
-	} else if (! (value instanceof Date)) { 
-		value = new Date(value);
-	}
-	value.setHours(0,0,0,0);
-	return value.getTime();
+/**
+ * Returns the last day in the month.
+ * @param {Number|Date} date Ms from epoch or Date object.
+ * @returns {Date} The last day in the month of the value supplied.
+ */
+function getLastDayInMonth(date) {
+	date = dateFromTimestamp(date);
+	return new Date(date.getFullYear(), date.getMonth()+1, 0);
+}
+
+/**
+ * Strips a date value from its time part and return ms from epoch.
+ * @param {Number|Date} date Ms from epoch or Date object.
+ * @returns {Number} Ms from epoch of supplied date.
+ */
+function getStrippedTime(date) {
+	date = dateFromTimestamp(date);
+	date.setHours(0,0,0,0);
+	return date.getTime();
 }

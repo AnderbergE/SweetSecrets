@@ -1,3 +1,7 @@
+/**
+ * Dates and their actions.
+ * @param {Object} $scope Angular.js scope.
+ */
 function SweetDates($scope) {
 	/* Fill the calendar for this month. */
 	$scope.fillMonth = function (timestamp) {
@@ -9,6 +13,7 @@ function SweetDates($scope) {
 		}
 	}
 
+	/* Event trigger when changing dates. */
 	$scope.changeSelectedDate = function () {
 		$scope.selected = this.day;
 	}
@@ -19,6 +24,10 @@ function SweetDates($scope) {
 	$scope.fillMonth($scope.selected);
 }
 
+/**
+ * Actions available for a date.
+ * @param {Object} $scope Angular.js scope.
+ */
 function Sweets($scope) {
 	$scope.types = [
 		{ name: "candy", icon: "icon-candy", background: 'lightgreen'},

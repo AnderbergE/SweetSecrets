@@ -1,15 +1,12 @@
-// TODO: Can you solve background colours using data-objects or classnames instead?
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
-
 @sweets-padding: 5vmin 0 5vmin;
-@nav-padding: 5vmin 0 0;
-@days-side-margins: 5vmin;
+
 @days-width: 90vmin;
 @day-total: 100% / 7;
 @day-margin: 0.25%;
 @day-width: @day-total - (@day-margin * 2);
 
-
+/* GENERAL  GENERAL GENERAL GENERAL GENERAL GENERAL GENERAL  GENERAL  GENERAL */
 html, body {
 	font-size: 100%;
 	height: 100%;
@@ -146,7 +143,7 @@ input[type="checkbox"] {
 	line-height: 17vmin !important;
 }
 
-/* FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT FONT */
+/* FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT */
 @font-face {
 	font-family: 'icomoon';
 	src:url('fonts/icomoon.eot');
@@ -157,13 +154,6 @@ input[type="checkbox"] {
 	font-weight: normal;
 	font-style: normal;
 }
-
-/* Use the following CSS code if you want to have a class per icon */
-/*
-Instead of a list of all class selectors,
-you can use the generic selector below, but it's slower:
-[class*="icon-"] {
-*/
 .icon-ian-yates-mr-whippy, .icon-drink, .icon-cupcake, .icon-candy {
 	font-family: 'icomoon';
 	speak: none;

@@ -1,4 +1,8 @@
 These are notes and ideas that has come up during development:
 
+/* NOTES  NOTES NOTES NOTES NOTES NOTES  NOTES NOTES NOTES NOTES NOTES  NOTES /*
+* Comments has been written according to JSDoc format. http://usejsdoc.org/
+
+/* IDEAS  IDEAS IDEAS IDEAS IDEAS IDEAS  IDEAS IDEAS IDEAS IDEAS IDEAS  IDEAS */
 * What about progress bars for the different icons each month?
 * Inverted progress - start 100%, but lose as you use.
