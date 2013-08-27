@@ -1,0 +1,4 @@
+These are notes and ideas that has come up during development:
+
+* What about progress bars for the different icons each month?
+* Inverted progress - start 100%, but lose as you use.

@@ -18,13 +18,16 @@
 				<div class="day {{day | date:'EEEE' | lowercase}}"
 					ng-repeat="(day, sweets) in dates"
 					ng-class="{today: day == today, selected: day == selected}">
+					<div class="day-sweets">
+						<span class="sweet {{sweet.name}}"
+							ng-repeat="sweet in types"
+							ng-class="{show: sweets[sweet.name]}"
+							style="background: {{sweet.background}}"></span>
+					</div>
 					<a href="" class="day-link"
 						ng-click="changeSelectedDate()">
-						<span>{{day | date:'d'}}</span></a>
-					<span class="sweet {{sweet.name}}"
-						ng-repeat="sweet in types"
-						ng-class="{show: sweets[sweet.name]}"
-						style="background: {{sweet.background}}"></span>
+						<span class="circle"><span class="day-text">{{day | date:'d'}}</span></span>
+					</a>
 				</div>
 			</div>
 		</nav>
