@@ -11,7 +11,9 @@
 				<input type="checkbox" id="{{sweet.name}}" class="sweet-check"
 					name="{{sweet.name}}" value="{{sweet.name}}"
 					ng-model="dates[selected][sweet.name]"/>
-				<label class="icon {{sweet.icon}}" for="{{sweet.name}}" style="background: {{sweet.background}}"></label>
+				<label class="icon" for="{{sweet.name}}" style="background: {{sweet.background}}">
+					{{sweet.icon}}
+				</label>
 			</span>
 		</div>
 		<input type="checkbox" id="date-expander" name="date-expander" />
