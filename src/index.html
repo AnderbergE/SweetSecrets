@@ -8,13 +8,13 @@
 	<div id="main-affairs" ng-controller="SweetDates">
 		<div class="sweets" ng-controller="Sweets">
 			<span ng-repeat="sweet in types">
-				<input type="checkbox" id="{{sweet.name}}"
+				<input type="checkbox" id="{{sweet.name}}" class="sweet-check"
 					name="{{sweet.name}}" value="{{sweet.name}}"
-					ng-model="dates[selected][sweet.name]"
-					ng-change="setValue(sweet.name)"/>
+					ng-model="dates[selected][sweet.name]"/>
 				<label class="icon {{sweet.icon}}" for="{{sweet.name}}" style="background: {{sweet.background}}"></label>
 			</span>
 		</div>
+		<input type="checkbox" id="date-expander" name="date-expander" />
 		<nav class="date-nav">
 			<div class="date-overview">
 				<span class="year"
@@ -39,6 +39,7 @@
 					</a>
 				</div>
 			</div>
+			<label class="date-expander-label" for="date-expander"></label>
 		</nav>
 	</div>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>

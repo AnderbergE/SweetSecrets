@@ -1,5 +1,5 @@
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
-@sweets-padding: 5vmin 0 5vmin;
+@sweets-padding: 2vmin 0 3vmin;
 
 @days-width: 90vmin;
 @day-total: 100% / 7;
@@ -14,12 +14,16 @@ html, body {
 	width: 100%;
 }
 
+input[type="checkbox"] {
+	display: none;
+}
+
 /* DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE */
 .date-nav {
 	position: relative;
 }
 .date-overview {
-	font-size: 5vmin;
+	font-size: 4vmin;
 	font-weight: bold;
 	text-align: center;
 }
@@ -117,30 +121,52 @@ html, body {
 	color: tomato;
 }
 
+.date-expander-label {
+	cursor: pointer;
+	display: block;
+	font-size: 3vmin;
+	height: 7vmin;
+	line-height: 7vmin;
+	margin: 0 auto;
+	width: 7vmin;
+
+	&:before {
+		background: gainsboro;
+		border-radius: 50%;
+		content: "+";
+		display: block;
+		text-align: center;
+	}
+}
+
+/* Expanded */
+#date-expander:checked + .date-nav {
+	& .date-expander-label:before {
+		content: "-";
+	}
+	& .day:not(.selected) {
+		display: none;
+	}
+}
+
 /* SWEETS  SWEETS  SWEETS SWEETS SWEETS  SWEETS SWEETS SWEETS  SWEETS  SWEETS */
 .sweets {
 	padding: @sweets-padding;
 	position: relative;
 	text-align: center;
 }
-input[type="checkbox"] {
-	display: none;
-
-	&:not(:checked) {
-		& + .icon {
-			background: gainsboro !important;
-			color: gray;
-		}
-	}
+.sweet-check:not(:checked) + .icon {
+	background: gainsboro !important;
+	color: gray;
 }
 .icon {
 	border-radius: 50%;
 	display: inline-block;
 	font-size: 12vmin;
-	text-align: center;
 	height: 16vmin;
-	width: 16vmin;
 	line-height: 17vmin !important;
+	text-align: center;
+	width: 16vmin;
 }
 
 /* FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT */
