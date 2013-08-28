@@ -1,4 +1,6 @@
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
+@import "mixins.less";
+
 @sweets-padding: 2vmin 0 3vmin;
 
 @days-width: 90vmin;
@@ -70,10 +72,13 @@ input[type="checkbox"] {
 		display: block;
 		float: left;
 		height: 50%;
+		opacity: 0;
 		visibility: hidden;
 		width: 50%;
+		.transitions(opacity, .2s, linear);
 	}
 	& .show {
+		opacity: 1;
 		visibility: visible;
 	}
 }
@@ -144,7 +149,7 @@ input[type="checkbox"] {
 	& .date-expander-label:before {
 		content: "-";
 	}
-	& .day:not(.selected) {
+	& .day:not(.close) {
 		display: none;
 	}
 }
@@ -167,6 +172,8 @@ input[type="checkbox"] {
 	line-height: 17vmin !important;
 	text-align: center;
 	width: 16vmin;
+	
+	.transitions(color, .2s, linear);
 }
 
 /* FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT */

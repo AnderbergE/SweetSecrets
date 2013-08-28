@@ -17,6 +17,12 @@ function SweetDates($scope) {
 	$scope.changeSelectedDate = function () {
 		$scope.selected = this.day;
 	}
+	
+	/* Returns true if the date is within 3 days of the selected date. */
+	$scope.nearbyDate = function (day) {
+		return day >= ($scope.selected - A_DAY_IN_MS*3) &&
+			day <= (A_DAY_IN_MS*3 + parseInt($scope.selected));
+	}
 
 	/* Initialization */
 	$scope.today = getStrippedTime();
