@@ -16,6 +16,10 @@ html, body {
 	width: 100%;
 }
 
+a {	
+	text-decoration: none;
+}
+
 input[type="checkbox"] {
 	display: none;
 }
@@ -29,8 +33,12 @@ input[type="checkbox"] {
 	font-weight: bold;
 	text-align: center;
 }
+.year {
+	color: black;
+	.transitions(color, .2s, linear);
+}
 .this-year {
-	display: none;
+	color: gainsboro;
 }
 .days {
 	margin: 0 auto;
@@ -87,7 +95,6 @@ input[type="checkbox"] {
 	left: 0;
 	height: 100%;
 	position: absolute;
-	text-decoration: none;
 	text-align: center;
 	top: 0;
 	width: 100%;
@@ -101,6 +108,7 @@ input[type="checkbox"] {
 		top: 25%;
 		position: absolute;
 		width: 50%;
+		.transitions(background, .2s, linear);
 	}
 	
 	& .day-text {
@@ -138,7 +146,7 @@ input[type="checkbox"] {
 	&:before {
 		background: gainsboro;
 		border-radius: 50%;
-		content: "+";
+		content: "-";
 		display: block;
 		text-align: center;
 	}
@@ -147,7 +155,7 @@ input[type="checkbox"] {
 /* Expanded */
 #date-expander:checked + .date-nav {
 	& .date-expander-label:before {
-		content: "-";
+		content: "+";
 	}
 	& .day:not(.close) {
 		display: none;

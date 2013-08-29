@@ -11,7 +11,7 @@ function dateFromTimestamp(timestamp) {
 	if (! timestamp) {
 		date = new Date();
 	} else if (! (timestamp instanceof Date)) { 
-		date = new Date(timestamp);
+		date = new Date(parseInt(timestamp));
 	}
 	return date;
 }
