@@ -11,7 +11,7 @@ function SweetDates($scope) {
 		var start = (new Date(timestamp)).setDate(1);
 		var end = getStrippedTime(getLastDayInMonth(timestamp));
 		for (var i = start; i <= end; i += A_DAY_IN_MS) {
-			$scope.dates[i] = {};
+			$scope.dates[i] = retrieve(i);
 		}
 	}
 
@@ -23,6 +23,7 @@ function SweetDates($scope) {
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
 		var temp = dateFromTimestamp($scope.selected);
+		store($scope.dates);
 		var month = temp.getMonth();
 		$scope.selected = temp.setMonth(temp.getMonth()+amount);
 		temp = dateFromTimestamp($scope.selected);
