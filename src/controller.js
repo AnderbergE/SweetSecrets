@@ -5,13 +5,14 @@
 function SweetDates($scope) {
 	/* Fill the calendar for this month. */
 	$scope.fillMonth = function (timestamp) {
-		// TODO: Local storage the dates and update from server.
-		// TODO: Daylight savings time screws things up. See in October.
 		$scope.dates = {};
-		var start = (new Date(timestamp)).setDate(1);
-		var end = getStrippedTime(getLastDayInMonth(timestamp));
-		for (var i = start; i <= end; i += A_DAY_IN_MS) {
-			$scope.dates[i] = retrieve(i);
+		var end = (getLastDayInMonth(timestamp)).getDate();
+		var date = new Date(timestamp);
+		var temp;
+		for (var i = 1; i <= end; i++) {
+			date.setDate(i);
+			temp = date.setHours(0,0,0,0);
+			$scope.dates[temp] = retrieve(temp);
 		}
 	}
 
@@ -22,11 +23,11 @@ function SweetDates($scope) {
 	
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
-		var temp = dateFromTimestamp($scope.selected);
+		// TODO: This storing is not enough, we should store on all changes.
 		store($scope.dates);
+		var temp = dateFromTimestamp($scope.selected);
 		var month = temp.getMonth();
 		$scope.selected = temp.setMonth(temp.getMonth()+amount);
-		temp = dateFromTimestamp($scope.selected);
 		// In case we should allow more than 12 month insert this:
 		// (Math.floor(Math.abs(amount) / 12)*12 +
 		if ((12 + month + amount) % 12 != temp.getMonth())

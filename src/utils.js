@@ -3,8 +3,10 @@ var A_DAY_IN_MS = 86400000;
 
 /* Initialise storage, use local storage, otherwise associative array. */
 var STORAGE;
-if (typeof(Storage) !== "undefined") { STORAGE = localStorage; }
-else { STORAGE = new Object(); }
+if (typeof(Storage) !== "undefined")
+	STORAGE = localStorage;
+else
+	STORAGE = new Object();
 
 /**
  * Returns a Date object from a timestamp.
@@ -38,8 +40,7 @@ function getLastDayInMonth(date) {
  */
 function getStrippedTime(date) {
 	date = dateFromTimestamp(date);
-	date.setHours(0,0,0,0);
-	return date.getTime();
+	return date.setHours(0,0,0,0);
 }
 
 /**
@@ -47,6 +48,7 @@ function getStrippedTime(date) {
  * @param {Object} an associative array with times from epoch.
  */
 function store(obj) {
+	// TODO: Server storing.
 	for (var time in obj) {
 		STORAGE[time] = JSON.stringify(obj[time]);
 	}
@@ -57,6 +59,7 @@ function store(obj) {
  * @returns {Object} An associative array, with stored value or empty.
  */
 function retrieve(time) {
+	// TODO: Server retrieving.
 	if (STORAGE[time])
 		return JSON.parse(STORAGE[time]);
 	return {};

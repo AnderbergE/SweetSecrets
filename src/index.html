@@ -8,7 +8,7 @@
 <body ng-app="">
 	<div id="main-affairs" ng-controller="SweetDates">
 		<div class="sweets" ng-controller="Sweets">
-			<span ng-repeat="sweet in types">
+			<span class="sweet" ng-repeat="sweet in types">
 				<input type="checkbox" id="{{sweet.name}}" class="sweet-check"
 					name="{{sweet.name}}" value="{{sweet.name}}"
 					ng-model="dates[selected][sweet.name]"/>
@@ -32,9 +32,9 @@
 				<div class="day {{day | date:'EEEE' | lowercase}}"
 					ng-repeat="(day, sweets) in dates"
 					ng-class="{today: day == today, selected: day == selected,
-						close: nearbyDate(day)}">
+						nearby: nearbyDate(day)}">
 					<div class="day-sweets">
-						<span class="sweet {{sweet.name}}"
+						<span class="day-sweet {{sweet.name}}"
 							ng-repeat="sweet in types"
 							ng-class="{show: sweets[sweet.name]}"
 							style="background: {{sweet.background}}"></span>
