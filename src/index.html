@@ -25,7 +25,10 @@
 					ng-class="{'this-year': (selected | date:'yyyy') == (today | date:'yyyy')}">
 					{{selected | date:'yyyy'}} - 
 				</span>
-				<span class="month">{{selected | date:'MMM'}}</span>
+				<span class="month"
+					ng-class="{'this-month': (selected | date:'M') == (today | date:'M')}">
+					{{selected | date:'MMM'}}
+				</span>
 				<a href="" class="next" ng-click="changeMonth(1)">></a>
 			</div>
 			<div class="days" ng-controller="Sweets">
