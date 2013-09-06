@@ -37,8 +37,12 @@ function SweetDates($scope) {
 	
 	/* Returns true if the date is within 3 days of the selected date. */
 	$scope.nearbyDate = function (day) {
-		return day >= ($scope.selected - A_DAY_IN_MS*3) &&
-			day <= (A_DAY_IN_MS*3 + parseInt($scope.selected));
+		var start = dateFromTimestamp($scope.selected);
+		start.setDate(start.getDate()-3);
+		var end = dateFromTimestamp($scope.selected);
+		end.setDate(end.getDate()+3);
+		return day >= start.setHours(0,0,0,0) &&
+			day <= end.setHours(0,0,0,0);
 	}
 
 	/* Initialization */
@@ -52,10 +56,34 @@ function SweetDates($scope) {
  * @param {Object} $scope Angular.js scope.
  */
 function Sweets($scope) {
-	$scope.types = [
-		{ name: "candy", icon: "\uf42d", background: 'lightgreen'},
-		{ name: "cake", icon: "\uf35b", background: 'orange'},
-		{ name: "drink", icon: "\ue001", background: 'hotpink'},
-		{ name: "icecream", icon: "\ue000", background: 'powderblue'}
-	];
+	/* Add a new action */
+	$scope.addAction = function(name, icon, background) {
+		// TODO: This should be checked on server.
+		/* Check if values exist. */
+		name = name || "generic";
+		icon = icon || "\ue001";
+		background = background || "green";
+		
+		$scope.types.push({name: name, icon: icon, background: background});
+	}
+
+	/* Update an existing action */
+	$scope.updateAction = function(position, name, icon, background) {
+		// TODO: Error checking and server check.
+		$scope.types[position] = {name: name, icon: icon, background: background}
+	}
+	
+	/* Remove an action */
+	$scope.removeAction = function(position) {
+		$scope.splice(position, 1);
+	}
+	
+	/* Initialization */
+	$scope.types = [];
+	
+	// TODO: remove this debug insertion.
+	$scope.addAction("candy", "\uf42d", "lightgreen");
+	$scope.addAction("cake", "\uf35b", "orange");
+	$scope.addAction("drink", "\ue001", "hotpink");
+	$scope.addAction("icecream", "\ue000", "powderblue");
 }

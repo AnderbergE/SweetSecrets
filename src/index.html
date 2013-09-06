@@ -5,15 +5,22 @@
 	<link rel="stylesheet" href="style.css" type="text/css"/>
 	<title>Test</title>
 </head>
-<body ng-app="">
+<body ng-app="" ng-controller="Sweets">
 	<div id="main-affairs" ng-controller="SweetDates">
-		<div class="sweets" ng-controller="Sweets">
+		<div class="sweets">
 			<span class="sweet" ng-repeat="sweet in types">
 				<input type="checkbox" id="{{sweet.name}}" class="sweet-check"
 					name="{{sweet.name}}" value="{{sweet.name}}"
 					ng-model="dates[selected][sweet.name]"/>
 				<label class="icon" for="{{sweet.name}}" style="background: {{sweet.background}}">
 					{{sweet.icon}}
+				</label>
+			</span>
+			<span class="sweet add-sweet">
+				<input type="checkbox" id="add-new-sweet"
+					name="add-new-sweet"/>
+				<label class="icon generic-icon" for="add-new-sweet" ng-click="addAction()">
+					+
 				</label>
 			</span>
 		</div>
@@ -31,7 +38,7 @@
 				</span>
 				<a href="" class="next" ng-click="changeMonth(1)">></a>
 			</div>
-			<div class="days" ng-controller="Sweets">
+			<div class="days">
 				<div class="day {{day | date:'EEEE' | lowercase}}"
 					ng-repeat="(day, sweets) in dates"
 					ng-class="{today: day == today, selected: day == selected,
