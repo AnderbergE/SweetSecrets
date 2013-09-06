@@ -44,23 +44,44 @@ function getStrippedTime(date) {
 }
 
 /**
- * Store an object in local storage (or browser cache).
- * @param {Object} an associative array with times from epoch.
+ * Store a key in local storage (or browser cache) with a specific value.
+ * @param {number|string|Object} key.
+ * @param {number|string|Object} value.
+ * @throws Error if key or value is not specified.
  */
-function store(obj) {
+function store(key, value) {
 	// TODO: Server storing.
-	for (var time in obj) {
-		STORAGE[time] = JSON.stringify(obj[time]);
+	if (!key || !value) {
+		throw "Incorrect usage of store(key, value)";
+	}
+	STORAGE[JSON.stringify(key)] = JSON.stringify(value);
+}
+
+/**
+ * Store an array in local storage (or browser cache), overwrites current values.
+ * @param {Array|Object} obj,
+ *	if array, it will be stored as [index] = value,
+ *	if associative array it will be stored as [key] = value.
+ * @throws Error if any key does not have a value.
+ */
+function storeArray(obj) {
+	for (var key in obj) {
+		store(key, obj[key]);
 	}
 }
 
 /**
- * Retrieve an object from local storage.
- * @returns {Object} An associative array, with stored value or empty.
+ * Retrieve a value of a specific key from local storage (or browser cache).
+ * @param {number|string|Object} key.
+ * @param {number|string|Object} ifEmpty What to return if key does not exist,
+ *	default value {}.
+ * @returns {number|string|Object} The value in storage, or ifEmpty.
  */
-function retrieve(time) {
+function retrieve(key, ifEmpty) {
 	// TODO: Server retrieving.
-	if (STORAGE[time])
-		return JSON.parse(STORAGE[time]);
-	return {};
+	ifEmpty = ifEmpty || {};
+	key = JSON.parse(key);
+	if (STORAGE[key])
+		return JSON.parse(STORAGE[key]);
+	return ifEmpty;
 }

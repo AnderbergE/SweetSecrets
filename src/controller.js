@@ -24,7 +24,7 @@ function SweetDates($scope) {
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
 		// TODO: This storing is not enough, we should store on all changes.
-		store($scope.dates);
+		storeArray($scope.dates);
 		var temp = dateFromTimestamp($scope.selected);
 		var month = temp.getMonth();
 		$scope.selected = temp.setMonth(temp.getMonth()+amount);
