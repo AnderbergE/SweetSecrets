@@ -6,57 +6,64 @@
 	<title>Test</title>
 </head>
 <body ng-app="" ng-controller="Sweets">
+	<input type="checkbox" id="date-expander" name="date-expander" />
 	<div id="main-affairs" ng-controller="SweetDates">
-		<div class="sweets">
-			<span class="sweet" ng-repeat="sweet in types">
-				<input type="checkbox" id="{{sweet.name}}" class="sweet-check"
-					name="{{sweet.name}}" value="{{sweet.name}}"
-					ng-model="dates[selected][sweet.name]"/>
-				<label class="icon" for="{{sweet.name}}" style="background: {{sweet.background}}">
-					{{sweet.icon}}
-				</label>
-			</span>
-			<span class="sweet add-sweet">
-				<input type="checkbox" id="add-new-sweet"
-					name="add-new-sweet"/>
-				<label class="icon generic-icon" for="add-new-sweet" ng-click="addAction()">
-					+
-				</label>
-			</span>
-		</div>
-		<input type="checkbox" id="date-expander" name="date-expander" />
-		<nav class="date-nav">
-			<div class="date-overview">
-				<a href="" class="prev" ng-click="changeMonth(-1)"><</a>
-				<span class="year"
-					ng-class="{'this-year': (selected | date:'yyyy') == (today | date:'yyyy')}">
-					{{selected | date:'yyyy'}} - 
-				</span>
-				<span class="month"
-					ng-class="{'this-month': (selected | date:'M') == (today | date:'M')}">
-					{{selected | date:'MMM'}}
-				</span>
-				<a href="" class="next" ng-click="changeMonth(1)">></a>
-			</div>
-			<div class="days">
-				<div class="day {{day | date:'EEEE' | lowercase}}"
-					ng-repeat="(day, sweets) in dates"
-					ng-class="{today: day == today, selected: day == selected,
-						nearby: nearbyDate(day)}">
-					<div class="day-sweets">
-						<span class="day-sweet {{sweet.name}}"
-							ng-repeat="sweet in types"
-							ng-class="{show: sweets[sweet.name]}"
-							style="background: {{sweet.background}}"></span>
-					</div>
-					<a href="" class="day-link"
-						ng-click="changeSelectedDate()">
-						<span class="circle"><span class="day-text">{{day | date:'d'}}</span></span>
-					</a>
+
+		<div id="position-wrapper-date">
+			<nav class="date-nav">
+				<div class="date-overview">
+					<a href="" class="prev" ng-click="changeMonth(-1)"><</a>
+					<label class="date-expander-label" for="date-expander">
+						<span class="year"
+							ng-class="{'this-year': (selected | date:'yyyy') == (today | date:'yyyy')}">
+							{{selected | date:'yyyy'}} - 
+						</span>
+						<span class="month"
+							ng-class="{'this-month': (selected | date:'M') == (today | date:'M')}">
+							{{selected | date:'MMM'}}
+						</span>
+					</label>
+					<a href="" class="next" ng-click="changeMonth(1)">></a>
 				</div>
+				<div class="days">
+					<div class="day {{day | date:'EEEE' | lowercase}}"
+						ng-repeat="(day, sweets) in dates"
+						ng-class="{today: day == today, selected: day == selected,
+							nearby: nearbyDate(day)}">
+						<div class="day-sweets">
+							<span class="day-sweet {{sweet.name}}"
+								ng-repeat="sweet in types"
+								ng-class="{show: sweets[sweet.name]}"
+								style="background: {{sweet.background}}"></span>
+						</div>
+						<a href="" class="day-link"
+							ng-click="changeSelectedDate()">
+							<span class="circle"><span class="day-text">{{day | date:'d'}}</span></span>
+						</a>
+					</div>
+				</div>
+			</nav>
+		</div>
+
+		<div id="position-wrapper-sweets">
+			<div class="sweets">
+				<span class="sweet" ng-repeat="sweet in types">
+					<input type="checkbox" id="{{sweet.name}}" class="sweet-check"
+						name="{{sweet.name}}" value="{{sweet.name}}"
+						ng-model="dates[selected][sweet.name]"/>
+					<label class="icon" for="{{sweet.name}}" style="background: {{sweet.background}}">
+						{{sweet.icon}}
+					</label>
+				</span>
+				<span class="sweet add-sweet">
+					<input type="checkbox" id="add-new-sweet"
+						name="add-new-sweet"/>
+					<label class="icon generic-icon" for="add-new-sweet" ng-click="addAction()">
+						+
+					</label>
+				</span>
 			</div>
-			<label class="date-expander-label" for="date-expander"></label>
-		</nav>
+		</div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular.js"></script>
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script> -->

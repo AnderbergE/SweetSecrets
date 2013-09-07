@@ -1,19 +1,22 @@
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
 @import "mixins.less";
 
-@sweets-padding: 2vmin 0 3vmin;
-
-@days-width: 90vmin;
-@day-total: 100% / 7;
+@day-total: 100% / 7; // Seven dates on each row.
 @day-margin: 0.25%;
 @day-width: @day-total - (@day-margin * 2);
+@space-left: 100% - @day-total * 5; // Max five weeks.
 
 /* GENERAL  GENERAL GENERAL GENERAL GENERAL GENERAL GENERAL  GENERAL  GENERAL */
-html, body {
-	font-size: 100%;
+html {
+	font-size: 1vmin;
+}
+html, body, #main-affairs {
 	height: 100%;
 	margin: 0;
 	width: 100%;
+}
+#main-affairs {
+	height: 99%; // Firefox needs this or scroll bar.
 }
 
 a {	
@@ -24,12 +27,61 @@ input[type="checkbox"] {
 	display: none;
 }
 
+/* POSITIONING  POSITIONING POSITIONING  POSITIONING POSITIONING  POSITIONING */
+#main-affairs {
+	display: table;
+}
+
+//@media all and (orientation: landscape)
+#position-wrapper-date,
+#position-wrapper-sweets {
+	display: table-cell;
+	vertical-align: middle;
+}
+#position-wrapper-date {
+	width: 100vh;
+}
+.date-nav {
+	padding: 0 7%;
+}
+
+@media all and (orientation: portrait) {
+	#position-wrapper-date,
+	#position-wrapper-sweets {
+		display: table-row;
+	}
+	.date-nav, .sweets {
+		display: table-cell;
+	}
+	.sweets {
+		vertical-align: bottom;
+	}
+}
+
+/* Expanded */
+#date-expander:checked + #main-affairs {
+	& .prev, .next {
+		display: none;
+	}
+	& .date-nav {
+		width: @day-total;
+	}
+	& .day {
+		margin-left: @day-margin !important;
+		padding: 100% 100% 0 0;
+	}
+	& .day:not(.nearby) {
+		display: none;
+	}
+}
+
 /* DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE */
 .date-nav {
 	position: relative;
+	z-index: 5;
 }
 .date-overview {
-	font-size: 4vmin;
+	font-size: 4rem;
 	font-weight: bold;
 	text-align: center;
 }
@@ -42,14 +94,11 @@ input[type="checkbox"] {
 .this-month {
 	color: gainsboro;
 }
-.days {
-	margin: 0 auto;
-	width: @days-width;
-}
 .day {
 	display: inline-block;
 	margin: @day-margin;
 	position: relative;
+	/* This is a bit of a hack to get the day quadrant perfectly square. */
 	padding: @day-width @day-width 0 0;
 	
 	&:first-child.tuesday {
@@ -119,11 +168,15 @@ input[type="checkbox"] {
 		position: absolute;
 		top: 50%;
 		left: 0;
-		font-size: 3vmin;
+		font-size: 3rem;
 	}
 }
 .today .day-link {
 	color: yellowgreen !important;
+
+	& .circle {
+		border: solid 1px lightgrey;
+	}
 }
 .selected .day-link {
 	color: snow;
@@ -136,43 +189,10 @@ input[type="checkbox"] {
 	color: tomato;
 }
 
-.date-expander-label {
-	cursor: pointer;
-	display: block;
-	font-size: 3vmin;
-	height: 7vmin;
-	line-height: 7vmin;
-	margin: 0 auto;
-	width: 7vmin;
-
-	&:before {
-		background: gainsboro;
-		border-radius: 50%;
-		content: "-";
-		display: block;
-		text-align: center;
-	}
-}
-
-/* Expanded */
-#date-expander:checked + .date-nav {
-	& .date-expander-label:before {
-		content: "+";
-	}
-	& .day {
-		margin-left: @day-margin !important;
-	}
-	& .day:not(.nearby) {
-		display: none;
-	}
-}
-
 /* SWEETS  SWEETS  SWEETS SWEETS SWEETS  SWEETS SWEETS SWEETS  SWEETS  SWEETS */
 .sweets {
-	padding: @sweets-padding;
 	position: relative;
 	text-align: center;
-	z-index: 10;
 }
 .sweet-check:not(:checked) + .icon {
 	background: gainsboro !important;
@@ -183,16 +203,16 @@ input[type="checkbox"] {
 	cursor: pointer;
 	display: inline-block;
 	font-family: 'icomoon';
-	font-size: 12vmin;
+	font-size: 12rem;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: normal;
-	height: 16vmin;
-	line-height: 17vmin !important;
+	height: 16rem;
+	line-height: 17rem !important;
 	speak: none;
 	text-align: center;
 	text-transform: none;
-	width: 16vmin;
+	width: 16rem;
 	
 	-webkit-font-smoothing: antialiased;
 	
