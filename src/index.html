@@ -5,15 +5,40 @@
 	<link rel="stylesheet" href="style.css" type="text/css"/>
 	<title>Test</title>
 </head>
-<body ng-app="" ng-controller="Sweets">
-	<input type="checkbox" id="date-expander" name="date-expander" />
+<body ng-app="" ng-controller="Sweets" ng-cloak>
+
+	<input type="checkbox" id="toggle-config" name="toggle-config"/>
+	<input type="checkbox" id="toggle-edit" name="toggle-edit"/>
+	<input type="checkbox" id="toggle-date-expander" name="toggle-date-expander" />
+	<input type="checkbox" id="add-new-sweet" name="add-new-sweet"/>
+
 	<div id="main-affairs" ng-controller="SweetDates">
+
+		<div id="position-wrapper-config">
+			<div class="config">
+				<span class="config-button">
+					<label class="icon config-icon" for="toggle-config">
+						o
+					</label>
+				</span>
+				<div class="config-menu" ng-controller="Users">
+					<span class="user" ng-repeat="(key, user) in users">
+						<input type="checkbox" id="{{key}}" class="user-check"
+							name="{{key}}" value="{{key}}"/>
+						<label class="icon config-icon" for="{{key}}"
+							style="background: {{user.background}}">
+							{{user.icon}}
+						</label>
+					</span>
+				</div>
+			</div>
+		</div>
 
 		<div id="position-wrapper-date">
 			<nav class="date-nav">
 				<div class="date-overview">
 					<a href="" class="prev" ng-click="changeMonth(-1)"><</a>
-					<label class="date-expander-label" for="date-expander">
+					<label class="toggle-date-expander-label" for="toggle-date-expander">
 						<span class="year"
 							ng-class="{'this-year': (selected | date:'yyyy') == (today | date:'yyyy')}">
 							{{selected | date:'yyyy'}} - 
@@ -56,8 +81,6 @@
 					</label>
 				</span>
 				<span class="sweet add-sweet">
-					<input type="checkbox" id="add-new-sweet"
-						name="add-new-sweet"/>
 					<label class="icon generic-icon" for="add-new-sweet" ng-click="addAction()">
 						+
 					</label>

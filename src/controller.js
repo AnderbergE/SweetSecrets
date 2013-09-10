@@ -87,3 +87,17 @@ function Sweets($scope) {
 	$scope.addAction("drink", "\ue001", "hotpink");
 	$scope.addAction("icecream", "\ue000", "powderblue");
 }
+
+/**
+ * Actions available for a date.
+ * @param {Object} $scope Angular.js scope.
+ */
+function Users($scope) {
+
+	/* Initialization */
+	$scope.users = {};
+
+	// TODO: remove this debug insertion.
+	$scope.users["Erik"] = {name: "Erik Anderberg", background: "beige", icon: "\ue000"};
+	$scope.users["Camilla"] = {name: "Camilla Bergvall", background: "lime", icon: "\uf42d"};
+}

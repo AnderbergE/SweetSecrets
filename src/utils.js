@@ -66,7 +66,7 @@ function store(key, value) {
  */
 function storeArray(obj) {
 	for (var key in obj) {
-		store(key, obj[key]);
+		store(parseInt(key), obj[key]);
 	}
 }
 

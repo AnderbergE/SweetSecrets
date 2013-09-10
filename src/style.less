@@ -1,5 +1,6 @@
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
 @import "mixins.less";
+@import "positioning-table.less";
 
 @day-total: 100% / 7; // Seven dates on each row.
 @day-margin: 0.25%;
@@ -25,54 +26,6 @@ a {
 
 input[type="checkbox"] {
 	display: none;
-}
-
-/* POSITIONING  POSITIONING POSITIONING  POSITIONING POSITIONING  POSITIONING */
-#main-affairs {
-	display: table;
-}
-
-//@media all and (orientation: landscape)
-#position-wrapper-date,
-#position-wrapper-sweets {
-	display: table-cell;
-	vertical-align: middle;
-}
-#position-wrapper-date {
-	width: 100vh;
-}
-.date-nav {
-	padding: 0 7%;
-}
-
-@media all and (orientation: portrait) {
-	#position-wrapper-date,
-	#position-wrapper-sweets {
-		display: table-row;
-	}
-	.date-nav, .sweets {
-		display: table-cell;
-	}
-	.sweets {
-		vertical-align: bottom;
-	}
-}
-
-/* Expanded */
-#date-expander:checked + #main-affairs {
-	& .prev, .next {
-		display: none;
-	}
-	& .date-nav {
-		width: @day-total;
-	}
-	& .day {
-		margin-left: @day-margin !important;
-		padding: 100% 100% 0 0;
-	}
-	& .day:not(.nearby) {
-		display: none;
-	}
 }
 
 /* DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE */
@@ -222,6 +175,29 @@ input[type="checkbox"] {
 .generic-icon {
 	background: LightSkyBlue;
 }
+
+/* CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG */
+.config {
+	height: 12rem;
+	padding: 2px 2px 5px 5px;
+	opacity: 0.9;
+	overflow: hidden;
+
+	.transitions(background, .2s, linear);
+}
+
+.config-button {
+	padding-right: 2%;
+}
+
+.config-icon {
+	background: snow;
+	font-size: 8rem;
+	height: 12rem;
+	line-height: 13rem !important;
+	width: 12rem;
+}
+
 
 /* FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT */
 @font-face {
