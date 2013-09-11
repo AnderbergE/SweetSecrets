@@ -54,8 +54,8 @@
 						ng-repeat="(day, actions) in dates"
 						ng-class="{today: day == today, nearby: nearbyDate(day)}">
 						<input type="radio" name="date" class="action-selected"
-							id="{{day}}" value="{{day}}" ng-model="selected">
-						<label for="{{day}}" class="action-button" ng-click="changeSelectedDate()">
+							id="{{day}}" value="{{day}}" ng-model="$parent.selected">
+						<label for="{{day}}" class="action-button">
 							<div class="action-bgs">
 								<div class="action-bg"
 									ng-repeat="action in types"

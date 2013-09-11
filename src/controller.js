@@ -15,11 +15,6 @@ function DateActions($scope) {
 			$scope.dates[temp] = retrieve(temp);
 		}
 	}
-
-	/* Event trigger when changing dates. */
-	$scope.changeSelectedDate = function () {
-		$scope.selected = this.day;
-	}
 	
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
