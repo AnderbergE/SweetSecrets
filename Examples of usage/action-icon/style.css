@@ -1,0 +1,138 @@
+.action-button {
+	border-radius: inherit;
+	cursor: pointer;
+	display: block;
+	overflow: inherit;
+	padding: 50% 0;
+	position: relative;
+	width: 100%;
+	
+	/* Disable selectable text, it looks odd. */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* This is for the circle in the middle of the action-button. */
+.action-button:after {
+	border-radius: 50%;
+	content: "";
+	left: 49%;
+	padding: 1px;
+	position: absolute;
+	top: 49%;
+	z-index: 1;
+}
+
+.action-text {
+	display: block;
+	height: 0;
+	margin-top: -0.6em;
+	position: relative;
+	text-align: center;
+	width: 100%;
+	z-index: 2;
+}
+
+.action-bgs {
+	border-radius: inherit;
+	height: 100%;
+	left: 0;
+	overflow: inherit;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.action-bg {
+	display: block;
+	float: left;
+	opacity: 0;
+	visibility: hidden;
+}
+
+/* 
+ * You can use action-icon to set width (=height), background, color and font-size.
+ *
+ * You can also set a couple of different classes on it for various effects:
+ * circle: The icon will be circle shaped.
+ * always-bg: Always show the background components (action-bg).
+ */
+.action-icon {
+	width: 100%; /* Default width. */ 
+}
+
+/* circle: The shape of the icon is a circle. */
+.action-icon.circle {
+	border-radius: 50%;
+	overflow: hidden;
+	/* Webkit does not respect overflow hidden, we need this hack: */
+	-webkit-mask-image: -webkit-radial-gradient(#fff 0%, #fff 70%, transparent 70%);
+}
+
+/* always-bg: Display custom background if item is selected. */
+.action-selected:checked + .action-button .action-bg,
+.action-icon.always-bg .action-bg {
+	visibility: inherit;
+	opacity: 1;
+}
+
+
+
+/* EXAMPLES EXAMPLES EXAMPLES EXAMPLES EXAMPLES EXAMPLES EXAMPLES EXAMPLES EXAMPLES */
+/*
+ * Here are some examples of what you can add to the action-icon.
+ * The action-button:after element is in the center of the icon, by using
+ * box-shadow you can create an effect in the middle of the icon, underneath the text.
+ */
+ 
+/* Set the action-icon width, etc */
+.action-icon {
+	background: gainsboro;
+	color: gray;
+	float: left;
+	font-size: 200%;
+	width: 14%;
+}
+ 
+/* inner-circle: Create an inner circle in the icon (see action-button:after) */
+.action-icon.inner-circle .action-button:after,
+.action-icon.inner-circle-selected .action-button:after {
+	background: white;
+	-webkit-box-shadow: 0 0 1px 0.8em white;
+	        box-shadow: 0 0 1px 0.8em white;
+
+	-webkit-transition: all .2s linear;
+	        transition: all .2s linear;
+}
+/* inner-circle-selected: Change colors of the inner circle when selected. */
+.action-icon.inner-circle-selected .action-selected:checked + .action-button:after {
+	background: black;
+	-webkit-box-shadow: 0 0 1px 0.8em black;
+	        box-shadow: 0 0 1px 0.8em black;
+}
+.action-icon.inner-circle-selected .action-selected:checked + .action-button {
+	color: white;
+}
+
+/* inner-circle-border: Creates a border around the circle. */
+.action-icon.inner-circle-border .action-button:after {
+	background: white;
+	-webkit-box-shadow: 0 0 1px 0.8em white, 0 0 1px 0.8em black;
+	        box-shadow: 0 0 1px 0.8em white, 0 0 1px 0.8em black;
+}
+
+/* If you want the colors to fade in, add this:
+.action-bg {
+	-webkit-transition: opacity @duration @timing @delay;
+	        transition: opacity @duration @timing @delay;
+}
+*/
+/* If you want the color of the font to change when selected, add this:
+.action-selected:checked + .action-button  {
+	color: @color;
+}
+*/
