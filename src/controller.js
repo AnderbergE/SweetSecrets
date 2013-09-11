@@ -78,6 +78,23 @@ function Sweets($scope) {
 		$scope.splice(position, 1);
 	}
 	
+	$scope.calculateStyle = function(action, show) {
+		var amount = $scope.types.length;
+		var attr = {};
+		if (show) attr["background"] = action.background;
+			
+		if (amount < 6) {
+			attr["height"] = (100 / amount) + "%";
+			attr["width"] = "100%";
+		} else {
+			attr["height"] = (200 / amount) + "%";
+			if (this.$index == amount - 1 && amount % 2 > 0)
+				attr["width"] = "100%";
+			else attr["width"] = "50%";
+		}
+		return attr;
+	}
+	
 	/* Initialization */
 	$scope.types = [];
 	

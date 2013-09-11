@@ -2,3 +2,21 @@
 	-webkit-transition: @property @duration @timing @delay;
 	        transition: @property @duration @timing @delay;
 }
+
+/* 
+ * Syntax:
+ * For one shadow:  .box-shadows(1px 1px 1px 1px black);
+ * For two shadows: .box-shadows(~"1px 1px 1px 1px black, 1px 1px 2px 2px white");
+ */
+.box-shadows (@attributes) {
+	-webkit-box-shadow: @attributes;
+	        box-shadow: @attributes;	
+}
+
+/* Creates a circle of an element, hides what is in the element if it sticks out */
+.circle-shape(@radius: 50%) {	
+	border-radius: @radius;
+	overflow: hidden;
+	/* Webkit does not respect overflow hidden, we need this hack: */
+	-webkit-mask-image: -webkit-radial-gradient(#fff 0%, #fff 70%, transparent 70%);
+}

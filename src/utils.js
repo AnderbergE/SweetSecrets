@@ -8,6 +8,7 @@ if (typeof(Storage) !== "undefined")
 else
 	STORAGE = new Object();
 
+
 /**
  * Returns a Date object from a timestamp.
  * @param {Number|Date} timestamp Ms from epoch or Date object.

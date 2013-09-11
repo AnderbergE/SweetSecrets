@@ -10,7 +10,6 @@
 	<input type="checkbox" id="toggle-config" name="toggle-config"/>
 	<input type="checkbox" id="toggle-edit" name="toggle-edit"/>
 	<input type="checkbox" id="toggle-date-expander" name="toggle-date-expander" />
-	<input type="checkbox" id="add-new-sweet" name="add-new-sweet"/>
 
 	<div id="main-affairs" ng-controller="SweetDates">
 
@@ -51,40 +50,46 @@
 					<a href="" class="next" ng-click="changeMonth(1)">></a>
 				</div>
 				<div class="days">
-					<div class="day {{day | date:'EEEE' | lowercase}}"
+					<div class="action-icon inner-circle-selected always-bg day {{day | date:'EEEE' | lowercase}}"
 						ng-repeat="(day, sweets) in dates"
-						ng-class="{today: day == today, selected: day == selected,
-							nearby: nearbyDate(day)}">
-						<div class="day-sweets">
-							<span class="day-sweet {{sweet.name}}"
-								ng-repeat="sweet in types"
-								ng-class="{show: sweets[sweet.name]}"
-								style="background: {{sweet.background}}"></span>
-						</div>
-						<a href="" class="day-link"
-							ng-click="changeSelectedDate()">
-							<span class="circle"><span class="day-text">{{day | date:'d'}}</span></span>
-						</a>
+						ng-class="{today: day == today, nearby: nearbyDate(day)}">
+						<input type="radio" name="date" class="action-selected"
+							id="{{day}}" value="{{day}}" ng-model="selected">
+						<label for="{{day}}" class="action-button" ng-click="changeSelectedDate()">
+							<div class="action-bgs">
+								<div class="action-bg"
+									ng-repeat="action in types"
+									ng-style="calculateStyle(action, sweets[action.name])"></div>
+							</div>
+							<span class="action-text">{{day | date:'d'}}</span>
+						</label>
 					</div>
 				</div>
 			</nav>
 		</div>
 
-		<div id="position-wrapper-sweets">
-			<div class="sweets">
-				<span class="sweet" ng-repeat="sweet in types">
-					<input type="checkbox" id="{{sweet.name}}" class="sweet-check"
-						name="{{sweet.name}}" value="{{sweet.name}}"
-						ng-model="dates[selected][sweet.name]"/>
-					<label class="icon" for="{{sweet.name}}" style="background: {{sweet.background}}">
-						{{sweet.icon}}
+		<div id="position-wrapper-actions">
+			<div class="actions">
+				<div class="action-icon circle" ng-repeat="sweet in types">
+					<input type="checkbox" class="action-selected"
+						id="{{sweet.name}}" value="{{sweet.name}}"
+						ng-model="dates[selected][sweet.name]">
+					<label for="{{sweet.name}}" class="action-button">
+						<div class="action-bgs">
+							<div class="action-bg" style="background: {{sweet.background}};"></div>
+						</div>
+						<span class="action-text">{{sweet.icon}}</span>
 					</label>
-				</span>
-				<span class="sweet add-sweet">
-					<label class="icon generic-icon" for="add-new-sweet" ng-click="addAction()">
-						+
+				</div>
+				<div class="action-icon circle add-new always-bg">
+					<input type="checkbox" class="action-selected" id="add-new-action">
+					<label for="add-new-action" class="action-button" ng-click="addAction()">
+						<div class="action-bgs">
+							<div class="action-bg"></div>
+						</div>
+						<span class="action-text">+</span>
 					</label>
-				</span>
+				</div>
 			</div>
 		</div>
 	</div>
