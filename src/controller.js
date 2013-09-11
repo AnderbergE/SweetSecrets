@@ -2,7 +2,7 @@
  * Dates and their actions.
  * @param {Object} $scope Angular.js scope.
  */
-function SweetDates($scope) {
+function DateActions($scope) {
 	/* Fill the calendar for this month. */
 	$scope.fillMonth = function (timestamp) {
 		$scope.dates = {};
@@ -55,7 +55,7 @@ function SweetDates($scope) {
  * Actions available for a date.
  * @param {Object} $scope Angular.js scope.
  */
-function Sweets($scope) {
+function Actions($scope) {
 	/* Add a new action */
 	$scope.addAction = function(name, icon, background) {
 		// TODO: This should be checked on server.

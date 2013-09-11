@@ -5,13 +5,13 @@
 	<link rel="stylesheet" href="style.css" type="text/css"/>
 	<title>Test</title>
 </head>
-<body ng-app="" ng-controller="Sweets" ng-cloak>
+<body ng-app="" ng-controller="Actions" ng-cloak>
 
 	<input type="checkbox" id="toggle-config" name="toggle-config"/>
 	<input type="checkbox" id="toggle-edit" name="toggle-edit"/>
 	<input type="checkbox" id="toggle-date-expander" name="toggle-date-expander" />
 
-	<div id="main-affairs" ng-controller="SweetDates">
+	<div id="main-affairs" ng-controller="DateActions">
 
 		<div id="position-wrapper-config">
 			<div class="config">
@@ -51,7 +51,7 @@
 				</div>
 				<div class="days">
 					<div class="action-icon inner-circle-selected always-bg day {{day | date:'EEEE' | lowercase}}"
-						ng-repeat="(day, sweets) in dates"
+						ng-repeat="(day, actions) in dates"
 						ng-class="{today: day == today, nearby: nearbyDate(day)}">
 						<input type="radio" name="date" class="action-selected"
 							id="{{day}}" value="{{day}}" ng-model="selected">
@@ -59,7 +59,7 @@
 							<div class="action-bgs">
 								<div class="action-bg"
 									ng-repeat="action in types"
-									ng-style="calculateStyle(action, sweets[action.name])"></div>
+									ng-style="calculateStyle(action, actions[action.name])"></div>
 							</div>
 							<span class="action-text">{{day | date:'d'}}</span>
 						</label>
@@ -70,15 +70,15 @@
 
 		<div id="position-wrapper-actions">
 			<div class="actions">
-				<div class="action-icon circle" ng-repeat="sweet in types">
+				<div class="action-icon circle" ng-repeat="action in types">
 					<input type="checkbox" class="action-selected"
-						id="{{sweet.name}}" value="{{sweet.name}}"
-						ng-model="dates[selected][sweet.name]">
-					<label for="{{sweet.name}}" class="action-button">
+						id="{{action.name}}" value="{{action.name}}"
+						ng-model="dates[selected][action.name]">
+					<label for="{{action.name}}" class="action-button">
 						<div class="action-bgs">
-							<div class="action-bg" style="background: {{sweet.background}};"></div>
+							<div class="action-bg" style="background: {{action.background}};"></div>
 						</div>
-						<span class="action-text">{{sweet.icon}}</span>
+						<span class="action-text">{{action.icon}}</span>
 					</label>
 				</div>
 				<div class="action-icon circle add-new always-bg">
