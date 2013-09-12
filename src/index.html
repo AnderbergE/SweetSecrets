@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="style.css" type="text/css"/>
 	<title>Test</title>
 </head>
-<body ng-app="" ng-controller="Actions" ng-cloak>
+<body ng-app="" ng-controller="ActionTypes" ng-cloak>
 
 	<input type="checkbox" id="toggle-config" name="toggle-config"/>
 	<input type="checkbox" id="toggle-edit" name="toggle-edit"/>
@@ -15,20 +15,27 @@
 
 		<div id="position-wrapper-config">
 			<div class="config">
-				<span class="config-button">
-					<label class="icon config-icon" for="toggle-config">
-						o
+				<div class="action-icon circle config-icon config-button">
+					<input type="checkbox" class="action-selected" id="toggle-config">
+					<label for="toggle-config" class="action-button">
+						<div class="action-bgs">
+							<div class="action-bg" style="background: powderblue;"></div>
+						</div>
+						<span class="action-text">O</span>
 					</label>
-				</span>
+				</div>
 				<div class="config-menu" ng-controller="Users">
-					<span class="user" ng-repeat="(key, user) in users">
-						<input type="checkbox" id="{{key}}" class="user-check"
-							name="{{key}}" value="{{key}}"/>
-						<label class="icon config-icon" for="{{key}}"
-							style="background: {{user.background}}">
-							{{user.icon}}
+					<div class="action-icon circle config-icon user"
+						ng-repeat="(key, user) in users">
+						<input type="radio" class="action-selected"
+							id="{{key}}" name="user" value="{{key}}">
+						<label for="{{key}}" class="action-button">
+							<div class="action-bgs">
+								<div class="action-bg" style="background: {{user.background}};"></div>
+							</div>
+							<span class="action-text">{{user.icon}}</span>
 						</label>
-					</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -70,20 +77,20 @@
 
 		<div id="position-wrapper-actions">
 			<div class="actions">
-				<div class="action-icon circle" ng-repeat="action in types">
+				<div class="action-icon circle action" ng-repeat="type in types">
 					<input type="checkbox" class="action-selected"
-						id="{{action.name}}" value="{{action.name}}"
-						ng-model="dates[selected][action.name]">
-					<label for="{{action.name}}" class="action-button">
+						id="{{type.name}}" value="{{type.name}}"
+						ng-model="dates[selected][type.name]">
+					<label for="{{type.name}}" class="action-button">
 						<div class="action-bgs">
-							<div class="action-bg" style="background: {{action.background}};"></div>
+							<div class="action-bg" style="background: {{type.background}};"></div>
 						</div>
-						<span class="action-text">{{action.icon}}</span>
+						<span class="action-text">{{type.icon}}</span>
 					</label>
 				</div>
-				<div class="action-icon circle add-new always-bg">
+				<div class="action-icon circle always-bg add-new action">
 					<input type="checkbox" class="action-selected" id="add-new-action">
-					<label for="add-new-action" class="action-button" ng-click="addAction()">
+					<label for="add-new-action" class="action-button" ng-click="addType()">
 						<div class="action-bgs">
 							<div class="action-bg"></div>
 						</div>

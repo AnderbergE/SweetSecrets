@@ -29,6 +29,18 @@ input[type="checkbox"] {
 	display: none;
 }
 
+/* Font icon */
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot');
+	src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.woff') format('woff'),
+		url('fonts/icomoon.ttf') format('truetype'),
+		url('fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /* DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE */
 .date-nav {
 	position: relative;
@@ -52,7 +64,6 @@ input[type="checkbox"] {
 .day {
 	color: gray;
 	float: left;
-	font-family: 'icomoon';
 	font-size: 3.5rem;
 	margin: @day-margin;
 	width: @day-width;
@@ -88,19 +99,15 @@ input[type="checkbox"] {
 	color: tomato;
 }
 
-/* SWEETS  SWEETS  SWEETS SWEETS SWEETS  SWEETS SWEETS SWEETS  SWEETS  SWEETS */
-.actions {
-	position: relative;
-	margin: 0 auto;
-	
-	& .action-icon {
-		background: gainsboro;
-		color: gray;
-		float: left;
-		font-family: 'icomoon';
-		font-size: 12rem;
-		width: 16rem;
-	}
+/* ACTIONS ACTIONS ACTIONS ACTIONS  ACTIONS  ACTIONS ACTIONS  ACTIONS ACTIONS */
+.action {
+	background: gainsboro;
+	color: gray;
+	float: left;
+	font-family: 'icomoon';
+	font-size: 12rem;
+	width: 16rem;
+
 	& .action-selected:checked + .action-button  {
 		color: black;
 	}
@@ -114,35 +121,6 @@ input[type="checkbox"] {
 	}
 }
 
-.sweet-check:not(:checked) + .icon {
-	background: gainsboro !important;
-	color: gray;
-}
-.icon {
-	border-radius: 50%;
-	cursor: pointer;
-	display: inline-block;
-	font-family: 'icomoon';
-	font-size: 12rem;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: normal;
-	height: 16rem;
-	line-height: 17rem !important;
-	speak: none;
-	text-align: center;
-	text-transform: none;
-	width: 16rem;
-	
-	-webkit-font-smoothing: antialiased;
-	
-	.transitions(color, .2s, linear);
-}
-
-.generic-icon {
-	background: LightSkyBlue;
-}
-
 /* CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG */
 .config {
 	height: 12rem;
@@ -153,27 +131,14 @@ input[type="checkbox"] {
 	.transitions(background, .2s, linear);
 }
 
-.config-button {
-	padding-right: 2%;
-}
-
 .config-icon {
 	background: snow;
+	float: left;
+	font-family: 'icomoon';
 	font-size: 8rem;
-	height: 12rem;
-	line-height: 13rem !important;
 	width: 12rem;
 }
 
-
-/* FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT ICON FONT */
-@font-face {
-	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot');
-	src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('fonts/icomoon.woff') format('woff'),
-		url('fonts/icomoon.ttf') format('truetype'),
-		url('fonts/icomoon.svg#icomoon') format('svg');
-	font-weight: normal;
-	font-style: normal;
+.config-button {
+	margin-right: 2%;
 }

@@ -47,12 +47,12 @@ function DateActions($scope) {
 }
 
 /**
- * Actions available for a date.
+ * Action types available for a date.
  * @param {Object} $scope Angular.js scope.
  */
-function Actions($scope) {
-	/* Add a new action */
-	$scope.addAction = function(name, icon, background) {
+function ActionTypes($scope) {
+	/* Add a new type of action */
+	$scope.addType = function(name, icon, background) {
 		// TODO: This should be checked on server.
 		/* Check if values exist. */
 		name = name || "generic";
@@ -62,27 +62,29 @@ function Actions($scope) {
 		$scope.types.push({name: name, icon: icon, background: background});
 	}
 
-	/* Update an existing action */
-	$scope.updateAction = function(position, name, icon, background) {
+	/* Update an existing type */
+	$scope.updateType = function(position, name, icon, background) {
 		// TODO: Error checking and server check.
 		$scope.types[position] = {name: name, icon: icon, background: background}
 	}
 	
-	/* Remove an action */
-	$scope.removeAction = function(position) {
+	/* Remove an type */
+	$scope.removeType = function(position) {
+		// TODO: Error checking and server check.
 		$scope.splice(position, 1);
 	}
 	
-	$scope.calculateStyle = function(action, show) {
+	/* Calculate the style of a type among types */
+	$scope.calculateStyle = function(type, show) {
 		var amount = $scope.types.length;
 		var attr = {};
-		if (show) attr["background"] = action.background;
+		if (show) attr["background"] = type.background;
 			
 		if (amount < 6) {
 			attr["height"] = (100 / amount) + "%";
 			attr["width"] = "100%";
 		} else {
-			attr["height"] = (200 / amount) + "%";
+			attr["height"] = (100 / Math.ceil(amount/2)) + "%";
 			if (this.$index == amount - 1 && amount % 2 > 0)
 				attr["width"] = "100%";
 			else attr["width"] = "50%";
@@ -94,14 +96,14 @@ function Actions($scope) {
 	$scope.types = [];
 	
 	// TODO: remove this debug insertion.
-	$scope.addAction("candy", "\uf42d", "lightgreen");
-	$scope.addAction("cake", "\uf35b", "orange");
-	$scope.addAction("drink", "\ue001", "hotpink");
-	$scope.addAction("icecream", "\ue000", "powderblue");
+	$scope.addType("candy", "\uf42d", "lightgreen");
+	$scope.addType("cake", "\uf35b", "orange");
+	$scope.addType("drink", "\ue001", "hotpink");
+	$scope.addType("icecream", "\ue000", "powderblue");
 }
 
 /**
- * Actions available for a date.
+ * Users for the app.
  * @param {Object} $scope Angular.js scope.
  */
 function Users($scope) {

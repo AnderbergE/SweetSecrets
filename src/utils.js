@@ -1,7 +1,5 @@
-/** @global One day in ms. */
-var A_DAY_IN_MS = 86400000;
-
 /* Initialise storage, use local storage, otherwise associative array. */
+/** @global STORAGE - storage cache on client, localStorage or an object. */
 var STORAGE;
 if (typeof(Storage) !== "undefined")
 	STORAGE = localStorage;
