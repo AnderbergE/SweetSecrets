@@ -4,7 +4,7 @@ var STORAGE;
 if (typeof(Storage) !== "undefined")
 	STORAGE = localStorage;
 else
-	STORAGE = new Object();
+	STORAGE = {};
 
 
 /**
