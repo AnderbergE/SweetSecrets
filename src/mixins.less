@@ -1,6 +1,12 @@
-.transitions (@property: all, @duration: 0, @timing: linear, @delay: 0) {
+.transitions(@property: all, @duration: 0, @timing: linear, @delay: 0) {
 	-webkit-transition: @property @duration @timing @delay;
 	        transition: @property @duration @timing @delay;
+}
+
+.transforms(@attributes) {
+	transform: @attributes;
+	-ms-transform: @attributes;
+	-webkit-transform: @attributes;
 }
 
 /* 
@@ -8,7 +14,7 @@
  * For one shadow:  .box-shadows(1px 1px 1px 1px black);
  * For two shadows: .box-shadows(~"1px 1px 1px 1px black, 1px 1px 2px 2px white");
  */
-.box-shadows (@attributes) {
+.box-shadows(@attributes) {
 	-webkit-box-shadow: @attributes;
 	        box-shadow: @attributes;	
 }

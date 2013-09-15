@@ -6,3 +6,36 @@ These are notes and ideas that has come up during development:
 /* IDEAS  IDEAS IDEAS IDEAS IDEAS IDEAS  IDEAS IDEAS IDEAS IDEAS IDEAS  IDEAS */
 * What about progress bars for the different icons each month?
 * Inverted progress - start 100%, but lose as you use.
+
+/* FONT ICONS */
+.icon-cake:before {
+	content: "\e002";
+}
+.icon-ice-cream:before {
+	content: "\e009";
+}
+.icon-mug:before {
+	content: "\e00a";
+}
+.icon-checkmark:before {
+	content: "\e00b";
+}
+.icon-cancel:before {
+	content: "\e00c";
+}
+.icon-heart:before {
+	content: "\e004";
+}
+.icon-cog:before {
+	content: "\e000";
+}
+.icon-space-invaders:before {
+	content: "\e006";
+}
+.icon-brush:before {
+	content: "\e008";
+}
+.icon-reply:before {
+	content: "\e001";
+}
+

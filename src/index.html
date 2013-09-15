@@ -16,12 +16,12 @@
 		<div id="position-wrapper-config">
 			<div class="config">
 				<div class="action-icon circle config-icon config-button">
-					<input type="checkbox" class="action-selected" id="toggle-config">
+					<!-- input is at the top. -->
 					<label for="toggle-config" class="action-button">
 						<div class="action-bgs">
 							<div class="action-bg" style="background: powderblue;"></div>
 						</div>
-						<span class="action-text">O</span>
+						<span class="action-text">&#xe000</span>
 					</label>
 				</div>
 				<div class="config-menu" ng-controller="Users">
@@ -36,6 +36,15 @@
 							<span class="action-text">{{user.icon}}</span>
 						</label>
 					</div>
+				</div>
+				<div class="action-icon circle config-icon edit-button">
+					<!-- input is at the top. -->
+					<label for="toggle-edit" class="action-button">
+						<div class="action-bgs">
+							<div class="action-bg" style="background: powderblue;"></div>
+						</div>
+						<span class="action-text">&#xe008</span>
+					</label>
 				</div>
 			</div>
 		</div>
@@ -57,7 +66,7 @@
 					<a href="" class="next" ng-click="changeMonth(1)">></a>
 				</div>
 				<div class="days">
-					<div class="action-icon inner-circle-selected always-bg day {{day | date:'EEEE' | lowercase}}"
+					<div class="action-icon circle inner-circle-selected always-bg day {{day | date:'EEEE' | lowercase}}"
 						ng-repeat="(day, actions) in dates"
 						ng-class="{today: day == today, nearby: nearbyDate(day)}">
 						<input type="radio" name="date" class="action-selected"

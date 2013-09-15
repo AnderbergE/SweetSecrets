@@ -71,7 +71,7 @@ function ActionTypes($scope) {
 	/* Remove an type */
 	$scope.removeType = function(position) {
 		// TODO: Error checking and server check.
-		$scope.splice(position, 1);
+		$scope.types.splice(position, 1);
 	}
 	
 	/* Calculate the style of a type among types */
@@ -96,10 +96,10 @@ function ActionTypes($scope) {
 	$scope.types = [];
 	
 	// TODO: remove this debug insertion.
-	$scope.addType("candy", "\uf42d", "lightgreen");
-	$scope.addType("cake", "\uf35b", "orange");
-	$scope.addType("drink", "\ue001", "hotpink");
-	$scope.addType("icecream", "\ue000", "powderblue");
+	$scope.addType("candy", "\ue006", "lightgreen");
+	$scope.addType("cake", "\ue002", "orange");
+	$scope.addType("drink", "\ue00a", "hotpink");
+	$scope.addType("icecream", "\ue009", "powderblue");
 }
 
 /**
@@ -112,6 +112,6 @@ function Users($scope) {
 	$scope.users = {};
 
 	// TODO: remove this debug insertion.
-	$scope.users["Erik"] = {name: "Erik Anderberg", background: "beige", icon: "\ue000"};
-	$scope.users["Camilla"] = {name: "Camilla Bergvall", background: "lime", icon: "\uf42d"};
+	$scope.users["Erik"] = {name: "Erik Anderberg", background: "beige", icon: "\ue006"};
+	$scope.users["Camilla"] = {name: "Camilla Bergvall", background: "lime", icon: "\ue004"};
 }

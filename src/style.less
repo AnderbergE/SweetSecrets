@@ -8,6 +8,15 @@
 @day-width: @day-total - (@day-margin * 2);
 @space-left: 100% - @day-total * 5; // Max five weeks.
 
+.font-icons () {
+	font-family: 'icons';
+
+	& .action-text {
+		margin-top: -0.55em;
+	}
+}
+
+
 /* GENERAL  GENERAL GENERAL GENERAL GENERAL GENERAL GENERAL  GENERAL  GENERAL */
 html {
 	font-size: 1vmin;
@@ -31,12 +40,12 @@ input[type="checkbox"] {
 
 /* Font icon */
 @font-face {
-	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot');
-	src:url('fonts/icomoon.eot?#iefix') format('embedded-opentype'),
-		url('fonts/icomoon.woff') format('woff'),
-		url('fonts/icomoon.ttf') format('truetype'),
-		url('fonts/icomoon.svg#icomoon') format('svg');
+	font-family: 'icons';
+	src:url('fonts/icons.eot');
+	src:url('fonts/icons.eot?#iefix') format('embedded-opentype'),
+		url('fonts/icons.woff') format('woff'),
+		url('fonts/icons.ttf') format('truetype'),
+		url('fonts/icons.svg#icons') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -104,7 +113,7 @@ input[type="checkbox"] {
 	background: gainsboro;
 	color: gray;
 	float: left;
-	font-family: 'icomoon';
+	.font-icons();
 	font-size: 12rem;
 	width: 16rem;
 
@@ -127,18 +136,43 @@ input[type="checkbox"] {
 	padding: 2px 2px 5px 5px;
 	opacity: 0.9;
 	overflow: hidden;
-
 	.transitions(background, .2s, linear);
 }
 
 .config-icon {
 	background: snow;
 	float: left;
-	font-family: 'icomoon';
+	.font-icons();
 	font-size: 8rem;
 	width: 12rem;
 }
 
 .config-button {
 	margin-right: 2%;
+}
+
+.edit-button {
+	float: right;
+}
+
+#toggle-edit:checked ~ #main-affairs {
+	& .action, .user {
+		animation: action-icon-pulse 1s infinite;
+		-webkit-animation: action-icon-pulse 1s infinite;
+	}
+}
+
+/* Since these inputs are not in the action-icons, we need to add them manually */
+#toggle-config:checked ~ #main-affairs .config-button .action-bg,
+#toggle-edit:checked ~ #main-affairs .edit-button .action-bg {
+	visibility: inherit;
+	opacity: 1;
+}
+
+@keyframes action-icon-pulse {
+	50% {.transforms(scale(1.05));}
+}
+
+@-webkit-keyframes action-icon-pulse {
+	50% {-webkit-transform:scale(1.05);}
 }
