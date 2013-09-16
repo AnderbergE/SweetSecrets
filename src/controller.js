@@ -107,11 +107,33 @@ function ActionTypes($scope) {
  * @param {Object} $scope Angular.js scope.
  */
 function Users($scope) {
+	/* Add a new type of action */
+	$scope.addUser = function(name, icon, background) {
+		// TODO: This should be checked on server.
+		/* Check if values exist. */
+		name = name || "generic";
+		icon = icon || "\ue001";
+		background = background || "green";
+		
+		$scope.users.push({name: name, icon: icon, background: background});
+	}
+
+	/* Update an existing type */
+	$scope.updateUser = function(position, name, icon, background) {
+		// TODO: Error checking and server check.
+		$scope.users[position] = {name: name, icon: icon, background: background}
+	}
+	
+	/* Remove an type */
+	$scope.removeUser = function(position) {
+		// TODO: Error checking and server check.
+		$scope.users.splice(position, 1);
+	}
 
 	/* Initialization */
-	$scope.users = {};
+	$scope.users = [];
 
 	// TODO: remove this debug insertion.
-	$scope.users["Erik"] = {name: "Erik Anderberg", background: "beige", icon: "\ue006"};
-	$scope.users["Camilla"] = {name: "Camilla Bergvall", background: "lime", icon: "\ue004"};
+	$scope.addUser("Erik Anderberg", "\ue006", "red");
+	$scope.addUser("Camilla Bergvall", "\ue004", "lime");
 }

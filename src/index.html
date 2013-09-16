@@ -36,15 +36,24 @@
 							<span class="action-text">{{user.icon}}</span>
 						</label>
 					</div>
-				</div>
-				<div class="action-icon circle config-icon edit-button">
-					<!-- input is at the top. -->
-					<label for="toggle-edit" class="action-button">
-						<div class="action-bgs">
-							<div class="action-bg" style="background: powderblue;"></div>
-						</div>
-						<span class="action-text">&#xe008</span>
-					</label>
+					<div class="action-icon circle config-icon always-bg add-user user">
+						<input type="checkbox" class="action-selected" id="add-new-user">
+						<label for="add-new-user" class="action-button" ng-click="addUser()">
+							<div class="action-bgs">
+								<div class="action-bg" style="background: powderblue;"></div>
+							</div>
+							<span class="action-text">+</span>
+						</label>
+					</div>
+					<div class="action-icon circle config-icon edit-button">
+						<!-- input is at the top. -->
+						<label for="toggle-edit" class="action-button">
+							<div class="action-bgs">
+								<div class="action-bg" style="background: powderblue;"></div>
+							</div>
+							<span class="action-text">&#xe008</span>
+						</label>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -97,7 +106,7 @@
 						<span class="action-text">{{type.icon}}</span>
 					</label>
 				</div>
-				<div class="action-icon circle always-bg add-new action">
+				<div class="action-icon circle always-bg add-action action">
 					<input type="checkbox" class="action-selected" id="add-new-action">
 					<label for="add-new-action" class="action-button" ng-click="addType()">
 						<div class="action-bgs">
