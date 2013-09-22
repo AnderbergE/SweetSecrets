@@ -4,6 +4,7 @@
 	<meta charset="UTF-8" />
 	<link rel="stylesheet" href="style.css" type="text/css"/>
 	<title>Test</title>
+	<link href='http://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister' rel='stylesheet' type='text/css'>
 </head>
 <body ng-app="" ng-controller="ActionTypes" ng-cloak>
 
@@ -61,7 +62,7 @@
 		<div id="position-wrapper-date">
 			<nav class="date-nav">
 				<div class="date-overview">
-					<a href="" class="prev" ng-click="changeMonth(-1)"><</a>
+					<a href="" class="month-change prev" ng-click="changeMonth(-1)"><</a>
 					<label class="toggle-date-expander-label" for="toggle-date-expander">
 						<span class="year"
 							ng-class="{'this-year': (selected | date:'yyyy') == (today | date:'yyyy')}">
@@ -72,7 +73,7 @@
 							{{selected | date:'MMM'}}
 						</span>
 					</label>
-					<a href="" class="next" ng-click="changeMonth(1)">></a>
+					<a href="" class="month-change next" ng-click="changeMonth(1)">></a>
 				</div>
 				<div class="days">
 					<div class="action-icon circle inner-circle-selected always-bg day {{day | date:'EEEE' | lowercase}}"

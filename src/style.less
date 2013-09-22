@@ -10,7 +10,7 @@
 @space-left: 100% - @day-total * 5; // Max five weeks.
 
 .font-icons () {
-	font-family: 'icons';
+	font-family: 'icons', 'Love Ya Like A Sister', sans-serif;
 
 	& .action-text {
 		margin-top: -0.55em;
@@ -88,11 +88,14 @@ input[type="checkbox"] {
 
 .add-user {
 	display: none;
+	font-size: @config-size + 8;
 }
 
 /* DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE */
 .date-nav {
+	font-family: 'Love Ya Like A Sister', /* Josefin Slab, */ sans-serif;
 	position: relative;
+	text-shadow: 1px 1px 3px lightgrey;
 	z-index: 5;
 }
 .date-overview {
@@ -107,7 +110,15 @@ input[type="checkbox"] {
 }
 .this-year,
 .this-month {
-	color: gainsboro;
+	color: dimgray;
+}
+
+.month-change {
+	color: dimgray;
+	border-radius: 50%;
+	background: white;
+	width: 4.5rem;
+	display: inline-block;
 }
 
 .day {
@@ -141,7 +152,7 @@ input[type="checkbox"] {
 		visibility: visible;
 	}
 }
-.today .action-text {
+.today .action-button .action-text {
 	color: yellowgreen !important;
 }
 .sunday .action-text {
@@ -154,11 +165,17 @@ input[type="checkbox"] {
 	color: gray;
 	float: left;
 	.font-icons();
-	font-size: 20rem;
-	width: 24rem;
+	font-size: 16rem;
+	margin-right: 1px;
+	margin-bottom: 1px;
+	width: 21rem;
 
 	& .action-selected:checked + .action-button  {
 		color: black;
+	}
+
+	& .action-bg {
+		.transitions(opacity, .3s, linear);
 	}
 }
 
