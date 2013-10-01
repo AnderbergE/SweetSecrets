@@ -95,6 +95,9 @@ function ActionTypes($scope) {
 	/* Initialization */
 	$scope.types = [];
 	
+	// TODO: This should have its own controller.
+	$scope.icons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
+	
 	// TODO: remove this debug insertion.
 	$scope.addType("candy", "\ue006", "lightgreen");
 	$scope.addType("cake", "\ue002", "orange");

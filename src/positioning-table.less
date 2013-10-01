@@ -7,6 +7,18 @@
 }
 
 //@media all and (orientation: landscape)
+#position-wrapper-editor {
+	background: white;
+	.box-shadows(1px 1px 5px 2px lightgray);
+	display: none;
+	height: 80%;
+	left: 1%;
+	position: absolute;
+	top: 12%;
+	width: 98%;
+	z-index: -1;
+}
+
 #position-wrapper-config {
 	left: 0;
 	position: absolute;
@@ -83,5 +95,13 @@
 #toggle-edit:checked ~ #main-affairs {
 	& .add-action, .add-user {
 		display: block;
+	}
+}
+
+/* Editor active */
+#add-new-action:checked ~ #main-affairs {
+	& #position-wrapper-editor {
+		display: block;
+		z-index: 50;
 	}
 }

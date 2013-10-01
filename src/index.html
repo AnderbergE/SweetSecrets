@@ -8,12 +8,39 @@
 </head>
 <body ng-app="" ng-controller="ActionTypes" ng-cloak>
 
-	<input type="checkbox" id="toggle-config" name="toggle-config"/>
-	<input type="checkbox" id="toggle-edit" name="toggle-edit"/>
-	<input type="checkbox" id="toggle-date-expander" name="toggle-date-expander" />
+	<input type="checkbox" id="toggle-config" />
+	<input type="checkbox" id="toggle-edit" />
+	<input type="checkbox" id="toggle-date-expander" />
+	<input type="checkbox" id="add-new-action" />
 
 	<div id="main-affairs" ng-controller="DateActions">
 
+		<div id="position-wrapper-editor">
+			<div class="editor">
+				<div class="editor-header">
+					<div class="action-icon circle editor-icon">
+						<label class="action-button">
+							<div class="action-bgs">
+							</div>
+							<span class="action-text">&#xe000</span>
+						</label>
+					</div>
+				</div>
+				<div class="editor-choices">
+					<div class="action-icon circle editor-icon editor-icon-choices" ng-repeat="icon in icons">
+						<label class="action-button">
+							<div class="action-bgs">
+							</div>
+							<span class="action-text">{{icon}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="editor-footer">
+				
+				</div>
+			</div>
+		</div>
+		
 		<div id="position-wrapper-config">
 			<div class="config">
 				<div class="action-icon circle config-icon config-button">
@@ -108,7 +135,6 @@
 					</label>
 				</div>
 				<div class="action-icon circle always-bg add-action action">
-					<input type="checkbox" class="action-selected" id="add-new-action">
 					<label for="add-new-action" class="action-button" ng-click="addType()">
 						<div class="action-bgs">
 							<div class="action-bg"></div>

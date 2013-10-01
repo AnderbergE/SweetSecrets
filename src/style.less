@@ -8,6 +8,7 @@
 @day-margin: 0.25%;
 @day-width: @day-total - (@day-margin * 2);
 @space-left: 100% - @day-total * 5; // Max five weeks.
+@standard-background: gainsboro;
 
 .font-icons () {
 	font-family: 'icons', 'Love Ya Like A Sister', sans-serif;
@@ -161,7 +162,7 @@ input[type="checkbox"] {
 
 /* ACTIONS ACTIONS ACTIONS ACTIONS  ACTIONS  ACTIONS ACTIONS  ACTIONS ACTIONS */
 .action {
-	background: gainsboro;
+	background: @standard-background;
 	color: gray;
 	float: left;
 	.font-icons();
@@ -201,6 +202,32 @@ input[type="checkbox"] {
 #toggle-edit:checked ~ #main-affairs .edit-button .action-bg {
 	visibility: inherit;
 	opacity: 1;
+}
+
+/* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
+.editor {
+	padding: 10px;
+}
+
+.editor-header {
+	.box-shadows(0 3px 4px -2px lightgray);
+	padding-bottom: 10px;
+}
+.editor-choices {
+	padding: 10px 0;
+}
+
+.editor-icon {
+	background: @standard-background;
+	color: gray;
+	.font-icons();
+	font-size: 9rem;
+	margin: 0 auto;
+	width: 13rem;
+}
+.editor-icon-choices {
+	float: left;
+	margin: 0 1px 1px 0;
 }
 
 @keyframes action-icon-pulse {
