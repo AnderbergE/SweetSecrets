@@ -6,6 +6,7 @@ These are notes and ideas that has come up during development:
 /* IDEAS  IDEAS IDEAS IDEAS IDEAS IDEAS  IDEAS IDEAS IDEAS IDEAS IDEAS  IDEAS */
 * What about progress bars for the different icons each month?
 * Inverted progress - start 100%, but lose as you use.
+* Gravatar
 
 /* FONT ICONS */
 .icon-cake:before {

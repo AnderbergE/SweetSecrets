@@ -123,7 +123,8 @@
 
 		<div id="position-wrapper-actions">
 			<div class="actions">
-				<div class="action-icon circle action" ng-repeat="type in types">
+				<div class="action-icon circle action"
+					ng-repeat="type in types">
 					<input type="checkbox" class="action-selected"
 						id="{{type.name}}" value="{{type.name}}"
 						ng-model="dates[selected][type.name]">
