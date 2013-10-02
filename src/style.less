@@ -125,7 +125,7 @@ input[type="checkbox"] {
 
 .day {
 	color: gray;
-	float: left;
+	display: inline-block;
 	font-size: 3.5rem;
 	margin: @day-margin;
 	width: @day-width;
@@ -165,7 +165,7 @@ input[type="checkbox"] {
 .action {
 	background: @standard-background;
 	color: gray;
-	float: left;
+	display: inline-block;
 	.font-icons();
 	font-size: 16rem;
 	margin-right: 1px;
@@ -207,17 +207,19 @@ input[type="checkbox"] {
 
 /* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
 .editor {
+	height: 100%;
 	padding: 10px;
+	position: relative;
 }
-
 .editor-header {
 	.box-shadows(0 3px 4px -2px lightgray);
-	padding-bottom: 10px;
+	height: 14rem;
 }
 .editor-choices {
-	padding: 10px 0;
+	height: 75%;
+	overflow: auto;
+	margin: 10px 0;
 }
-
 .editor-icon {
 	background: @standard-background;
 	color: gray;
@@ -227,7 +229,7 @@ input[type="checkbox"] {
 	width: 13rem;
 }
 .editor-icon-choices {
-	float: left;
+	display: inline-block;
 	margin: 0 1px 1px 0;
 }
 
