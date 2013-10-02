@@ -9,8 +9,8 @@ window.onload = calculateGeneralStyle;
  * Calculates the width of the position wrapper date.
  * This is needed because some browsers do not handle vh and vw correctly.
  */
- // TODO: Only do this when it is needed (webkit).
 function calculateGeneralStyle () {
+	// TODO: Only do this when it is needed (webkit).
 	var landscape = window.innerHeight < window.innerWidth;
 	if (landscape) {
 		position_wrapper_date.style.paddingTop = (3*window.innerHeight/25) + "px";
@@ -18,13 +18,14 @@ function calculateGeneralStyle () {
 	}
 	html.style.fontSize = "1vmin";
 
-    var types = position_wrapper_actions.children[0].children;
-    var len = types.length;
-    if (getComputedStyle(types[len-1]).display == 'none') {
-    	len--;
-    }
+	// Calculate the size of the action buttons.
+	var types = position_wrapper_actions.children[0].children;
+	var len = types.length;
+	if (getComputedStyle(types[len-1]).display == 'none') {
+		len--;
+	}
 
-    var size;
+	var size;
 	if (landscape) {
 		size = calculateActionSize(position_wrapper_actions.clientWidth-len,
 			window.innerHeight-len, len);
@@ -37,6 +38,13 @@ function calculateGeneralStyle () {
 	}
 }
 
+/**
+ * Calculates the size of the actions icons.
+ * @param {Number} width Width of the container.
+ * @param {Number} height Height of the container.
+ * @param {Number} amount Amount of action icons.
+ * @returns {String} The suggested size, either percentage or pixel.
+ */
 function calculateActionSize (width, height, amount) {
 	var max = 0;
 	var big, small, temp, i;
@@ -60,5 +68,5 @@ function calculateActionSize (width, height, amount) {
 	if (max*i < width) {
 		return Math.floor(max) + "px";
 	}
-	return 99/i + "%";
+	return (99-amount*0.25)/i + "%";
 }
