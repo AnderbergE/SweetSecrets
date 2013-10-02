@@ -207,18 +207,28 @@ input[type="checkbox"] {
 
 /* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
 .editor {
+	background: white;
+	.box-shadows(0 0 0 0 white);
+	box-sizing: border-box;
 	height: 100%;
-	padding: 10px;
+	margin: 0 auto;
+	padding: 16rem 1rem 1rem;
 	position: relative;
+	width: 95%;
 }
 .editor-header {
 	.box-shadows(0 3px 4px -2px lightgray);
-	height: 14rem;
+	height: 13rem;
+	left: 0;
+	margin: 0 1rem;
+	padding: 1rem 0;
+	position: absolute;
+	top: 0;
+	width: 98%;
 }
 .editor-choices {
-	height: 75%;
+	height: 100%;
 	overflow: auto;
-	margin: 10px 0;
 }
 .editor-icon {
 	background: @standard-background;
@@ -227,6 +237,9 @@ input[type="checkbox"] {
 	font-size: 9rem;
 	margin: 0 auto;
 	width: 13rem;
+}
+editor-icon-header {
+	
 }
 .editor-icon-choices {
 	display: inline-block;

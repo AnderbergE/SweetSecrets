@@ -8,17 +8,13 @@
 
 //@media all and (orientation: landscape)
 #position-wrapper-editor {
-	background: white;
-	.box-shadows(0 0 0 0 white);
 	height: 80%;
-	left: 1%;
+	left: 0;
 	position: absolute;
 	top: 12%;
 	visibility: hidden;
-	width: 98%;
+	width: 100%;
 	z-index: 50;
-	
-	.transitions(box-shadow, .5s, linear);
 }
 
 #position-wrapper-config {
@@ -104,6 +100,9 @@
 #add-new-action:checked ~ #main-affairs {
 	& #position-wrapper-editor {
 		visibility: visible;
+	}
+	& .editor {
 		.box-shadows(0 0 7px 3px lightgray);
+		.transitions(box-shadow, .5s, linear);
 	}
 }
