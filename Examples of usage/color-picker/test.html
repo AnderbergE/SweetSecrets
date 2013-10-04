@@ -1,0 +1,48 @@
+<!doctype html>
+<html ng-app="MyApp" >
+    <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular.js"></script>
+        <script type="text/javascript">
+            var app = angular.module('MyApp', []);
+ 
+            app.directive('colorpicker', function($parse) {
+                // sample color picker directive
+                // todo : bound to a ng-model
+                return {
+                    restrict: 'E',
+                    scope: {
+                        colorClick:'&'
+                    },
+                    template: 'R:<input ng-model="r" type="range" min="0" max="255">{{ r }}<br>' +
+                              'G:<input ng-model="g" type="range" min="0" max="255">{{ g }}<br>' +
+                              'B:<input ng-model="b" type="range" min="0" max="255">{{ b }}<br>' +
+                              '<div ng-click="colorClick({r: r, g: g, b: b})" style="cursor:pointer;background-color:rgb({{ r }}, {{ g }}, {{ b }});width:200px;height:40px;"></div>',
+                    link: function(scope, iElement, iAttrs) {
+                        scope.r = 42;
+                        scope.g = 142;
+                        scope.b = 200;
+                        // if not directly in the template, you can add an event handler
+                        // iElement.find('div').bind('click', function() {
+                        //     scope.colorClick({r: scope.r, g: scope.g, b: scope.b});
+                        // })
+                    }
+                };
+            });
+ 
+            function MyCtrl($scope) {
+                $scope.colorSelected = function(r, g, b) {
+                    var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+                    alert('you selected : ' + color);
+                };
+            }
+ 
+        </script>
+    </head>
+    <body>
+ 
+        <div ng-controller="MyCtrl">
+            <colorpicker color-click="colorSelected(r, g, b)"></colorpicker>
+        </div>
+ 
+    </body>
+</html>

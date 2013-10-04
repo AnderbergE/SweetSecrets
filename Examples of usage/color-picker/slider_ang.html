@@ -1,0 +1,118 @@
+<!doctype html>
+<html ng-app="MyApp" >
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular.js"></script>
+	<script type="text/javascript">
+		var app = angular.module('MyApp', []);
+
+		app.directive('colorpicker', function($parse) {
+			// sample color picker directive
+			// todo : bound to a ng-model
+			return {
+				restrict: 'E',
+				scope: {
+					colorClick:'&'
+				},
+				template: 
+					'<div class="slider red" onmousedown="setActive(true, event)" data-color="r">' +
+						'<div class="slider-line"></div>' +
+						'<div class="slider-header"></div>' +
+					'</div>' +
+					'<div class="slider green" onmousedown="setActive(true, event)" data-color="g">' +
+						'<div class="slider-line"></div>' +
+						'<div class="slider-header"></div>' +
+					'</div>' +
+					'<div class="slider blue" onmousedown="setActive(true, event)" data-color="b">' +
+						'<div class="slider-line"></div>' +
+						'<div class="slider-header"></div>' +
+					'</div>'
+				link: function(scope, iElement, iAttrs) {
+					scope.r = 42;
+					scope.g = 142;
+					scope.b = 200;
+					// if not directly in the template, you can add an event handler
+					// iElement.find('div').bind('click', function() {
+					//     scope.colorClick({r: scope.r, g: scope.g, b: scope.b});
+					// })
+				}
+			};
+		});
+
+		function MyCtrl($scope) {
+			$scope.colorSelected = function(r, g, b) {
+				var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+				alert('you selected : ' + color);
+			};
+		}
+	</script>
+	<style>
+		html { height: 100%; margin: 0; }
+		body { height: 96%; margin: 2%; }
+		
+		.container {
+			background: beige;
+			height: 50%;
+			margin: auto;
+			padding: 2%;
+			width: 90%;
+		}
+		.slider {
+			margin: 1% auto;
+			height: 5rem;
+			position: relative;
+			width: 90%;
+		}
+		.slider-line {
+			background: gray;
+			border-radius: 1rem;
+			height: 1rem;
+			left: 0;
+			position: absolute;
+			top: 2rem;
+			width: 100%;
+		}
+		.slider-header {
+			cursor: move;
+			left: 100%;
+			position: absolute;
+			top: 0;
+		}
+		.slider-header:after {
+			background: inherit;
+			border-radius: 50%;
+			content: "";
+			height: 5rem;
+			left: -2.5rem;
+			position: absolute;
+			top: 0;
+			width: 5rem;
+		}
+		
+		.red .slider-header {
+			background: red;
+		}
+		.red .slider-header:after {
+			box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red;
+		}
+		
+		.green .slider-header {
+			background: lime;
+		}
+		.green .slider-header:after {
+			box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime;
+		}
+		
+		.blue .slider-header {
+			background: blue;
+		}
+		.blue .slider-header:after {
+			box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue;
+		}
+	</style>
+</head>
+<body onmousemove="sliderChange(event)" onmouseup="setActive(false)">
+	<div ng-controller="MyCtrl">
+		<colorpicker color-click="colorSelected(r, g, b)"></colorpicker>
+	</div>
+</body>
+</html>
