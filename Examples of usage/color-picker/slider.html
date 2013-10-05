@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular.js"></script>
+	<script type="text/javascript">
+		var active = null;
+		
+		function setActive (val, event) {
+			if (val)
+				active = event.currentTarget;
+			else
+				active = null;
+		}
+		function sliderChange (event) {
+			if (active) {
+				var head = active.querySelector(".slider-header");
+				var pos = active.querySelector(".slider-line").getBoundingClientRect();
+				
+				var x;
+				if (event.x < pos.left)
+					x = 0;
+				else if (event.x > pos.right)
+					x = 100;
+				else
+					x = Math.round(((event.x - pos.left) / pos.width)*100);
+				
+				head.style.left = x + "%";
+				var c = 255 - Math.round(255*x/100);
+				var col = active.getAttribute("data-color");
+				head.style.backgroundColor = "rgb(" + 
+					(col=="r"?255:c) + "," +
+					(col=="g"?255:c) + "," +
+					(col=="b"?255:c) + ")";
+				// Firefox spas out about this and run last line for some reason.
+			}
+		}
+	</script>
+	<style>
+		html { height: 100%; margin: 0; }
+		body { height: 96%; margin: 2%; }
+		
+		.container {
+			background: beige;
+			height: 50%;
+			margin: auto;
+			padding: 2%;
+			width: 90%;
+		}
+		.slider {
+			margin: 1% auto;
+			height: 5rem;
+			position: relative;
+			width: 90%;
+		}
+		.slider-line {
+			background: gray;
+			border-radius: 1rem;
+			height: 1rem;
+			left: 0;
+			position: absolute;
+			top: 2rem;
+			width: 100%;
+		}
+		.slider-header {
+			cursor: move;
+			left: 100%;
+			position: absolute;
+			top: 0;
+		}
+		.slider-header:after {
+			background: inherit;
+			border-radius: 50%;
+			content: "";
+			height: 5rem;
+			left: -2.5rem;
+			position: absolute;
+			top: 0;
+			width: 5rem;
+		}
+		
+		.red .slider-header {
+			background: red;
+		}
+		.red .slider-header:after {
+			box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red;
+		}
+		
+		.green .slider-header {
+			background: lime;
+		}
+		.green .slider-header:after {
+			box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime;
+		}
+		
+		.blue .slider-header {
+			background: blue;
+		}
+		.blue .slider-header:after {
+			box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue;
+		}
+	</style>
+</head>
+<body onmousemove="sliderChange(event)" onmouseup="setActive(false)">
+	<div class="container">
+		<div class="slider red" onmousedown="setActive(true, event)" data-color="r">
+			<div class="slider-line"></div>
+			<div class="slider-header"></div>
+		</div>
+		<div class="slider green" onmousedown="setActive(true, event)" data-color="g">
+			<div class="slider-line"></div>
+			<div class="slider-header"></div>
+		</div>
+		<div class="slider blue" onmousedown="setActive(true, event)" data-color="b">
+			<div class="slider-line"></div>
+			<div class="slider-header"></div>
+		</div>
+	</div>
+</body>
+</html>
