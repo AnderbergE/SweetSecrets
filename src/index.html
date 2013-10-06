@@ -28,7 +28,9 @@
 				</div>
 				<div class="editor-choices">
 					<div class="action-icon circle editor-icon editor-icon-choices" ng-repeat="icon in icons">
-						<label class="action-button">
+						<input type="radio" class="action-selected"
+							id="ac{{$index}}" name="choice" value="ac{{$index}}">
+						<label for="ac{{$index}}" class="action-button">
 							<div class="action-bgs">
 							</div>
 							<span class="action-text">{{icon}}</span>
@@ -63,7 +65,7 @@
 					</div>
 					<div class="action-icon circle config-icon always-bg add-user user">
 						<input type="checkbox" class="action-selected" id="add-new-user">
-						<label for="add-new-user" class="action-button" ng-click="addUser()">
+						<label for="add-new-user" class="action-button">
 							<div class="action-bgs">
 								<div class="action-bg" style="background: powderblue;"></div>
 							</div>
@@ -133,7 +135,7 @@
 					</label>
 				</div>
 				<div class="action-icon circle always-bg add-action action">
-					<label for="add-new-action" class="action-button" ng-click="addType()">
+					<label for="add-new-action" class="action-button">
 						<div class="action-bgs">
 							<div class="action-bg"></div>
 						</div>
