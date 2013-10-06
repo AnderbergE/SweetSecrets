@@ -1,14 +1,4 @@
-.transitions(@property: all, @duration: 0, @timing: linear, @delay: 0) {
-	-webkit-transition: @property @duration @timing @delay;
-	        transition: @property @duration @timing @delay;
-}
-
-.transforms(@attributes) {
-	transform: @attributes;
-	-ms-transform: @attributes;
-	-webkit-transform: @attributes;
-}
-
+/* MIXINS MIXINS  MIXINS MIXINS  MIXINS  MIXINS  MIXINS MIXINS  MIXINS MIXINS */
 /* 
  * Syntax:
  * For one shadow:  .box-shadows(1px 1px 1px 1px black);
@@ -19,7 +9,26 @@
 	        box-shadow: @attributes;	
 }
 
-/* Creates a circle of an element, hides what is in the element if it sticks out */
+.border-box() {
+	-webkit-box-sizing: -webkit-border-box;
+	   -moz-box-sizing:    -moz-border-box;
+	        box-sizing:         border-box;
+}
+
+.transforms(@attributes) {
+	-webkit-transform: @attributes;
+	    -ms-transform: @attributes;
+	        transform: @attributes;
+}
+
+.transitions(@property: all, @duration: 0, @timing: linear, @delay: 0) {
+	-webkit-transition: @property @duration @timing @delay;
+	        transition: @property @duration @timing @delay;
+}
+
+
+/* SPECIFIC SPECIFIC  SPECIFIC SPECIFIC  SPECIFIC SPECIFIC  SPECIFIC SPECIFIC */
+/* Creates a circle of an element, hides what sticks out */
 .circle-shape(@radius: 50%) {	
 	border-radius: @radius;
 	overflow: hidden;
