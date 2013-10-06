@@ -10,13 +10,19 @@ window.onload = calculateGeneralStyle;
  * This is needed because some browsers do not handle vh and vw correctly.
  */
 function calculateGeneralStyle () {
-	// TODO: Only do this when it is needed (webkit).
+	// TODO: Only do stuff when it is needed (webkit, vmin, etc).
 	var landscape = window.innerHeight < window.innerWidth;
 	if (landscape) {
-		position_wrapper_date.style.paddingTop = (3*window.innerHeight/25) + "px";
 		position_wrapper_date.style.width = window.innerHeight + "px";
+		position_wrapper_actions.style.paddingLeft = window.innerHeight + "px";
+		position_wrapper_actions.style.paddingTop = "";
+	} else {
+		position_wrapper_date.style.width = "";
+		position_wrapper_actions.style.paddingLeft = "";
+		position_wrapper_actions.style.paddingTop = window.getComputedStyle(position_wrapper_date).height;
 	}
 	html.style.fontSize = "1vmin";
+
 
 	// Calculate the size of the action buttons.
 	var types = position_wrapper_actions.children[0].children;
@@ -27,12 +33,14 @@ function calculateGeneralStyle () {
 
 	var size;
 	if (landscape) {
-		size = calculateActionSize(position_wrapper_actions.clientWidth-len,
+		size = calculateActionSize(position_wrapper_actions.clientWidth-position_wrapper_date.clientWidth-len,
 			window.innerHeight-len, len);
 	} else {
 		size = calculateActionSize(window.innerWidth-len,
 			window.innerHeight-position_wrapper_date.clientHeight-len, len);
 	}
+	// TODO: Can this be done using css class instead?
+	// Such as: document.styleSheets[1].insertRule(".action { height: " + size + "; width: " + size + "; }");
 	for (var i = 0; i < len; i++) {
 		types[i].style.width = types[i].style.height = size;
 	}

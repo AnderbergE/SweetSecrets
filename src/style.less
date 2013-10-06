@@ -1,7 +1,7 @@
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
 @import "mixins.less";
 @import "action-icon.less";
-@import "positioning-table.less";
+@import "positioning-absolute.less";
 
 @config-size: 10rem;
 @day-total: 100% / 7; // Seven dates on each row.
@@ -63,6 +63,7 @@ input[type="checkbox"] {
 	font-style: normal;
 }
 
+
 /* CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG */
 .config {
 	height: @config-size;
@@ -93,16 +94,20 @@ input[type="checkbox"] {
 	font-size: @config-size + 8;
 }
 
+
 /* DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE */
 .date-nav {
 	font-family: 'Love Ya Like A Sister', /* Josefin Slab, */ sans-serif;
+	margin: 0 auto;
 	position: relative;
 	text-shadow: 1px 1px 3px lightgrey;
+	width: 90%;
 	z-index: 5;
 }
 .date-overview {
 	font-size: 4rem;
 	font-weight: bold;
+	margin-bottom: 2rem;
 	text-align: center;
 }
 .year,
@@ -161,6 +166,7 @@ input[type="checkbox"] {
 	color: tomato !important;
 }
 
+
 /* ACTIONS ACTIONS ACTIONS ACTIONS  ACTIONS  ACTIONS ACTIONS  ACTIONS ACTIONS */
 .action {
 	background: @standard-background;
@@ -205,6 +211,7 @@ input[type="checkbox"] {
 	opacity: 1;
 }
 
+
 /* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
 .editor {
 	background: white;
@@ -246,6 +253,8 @@ editor-icon-header {
 	margin: 0 1px 1px 0;
 }
 
+
+/* ANIMATIONS   ANIMATIONS   ANIMATIONS  ANIMATIONS   ANIMATIONS   ANIMATIONS */
 @keyframes action-icon-pulse {
 	50% {.transforms(scale(1.05));}
 }
