@@ -1,49 +1,56 @@
 <!doctype html>
-<html ng-app="MyApp" >
+<html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular.js"></script>
 	<script type="text/javascript">
 		var app = angular.module('MyApp', []);
 
-		app.directive('colorpicker', function($parse) {
-			// sample color picker directive
-			// todo : bound to a ng-model
-			return {
-				restrict: 'E',
-				scope: {
-					colorClick:'&'
-				},
-				template: 
-					'<div class="slider red" onmousedown="setActive(true, event)" data-color="r">' +
-						'<div class="slider-line"></div>' +
-						'<div class="slider-header"></div>' +
-					'</div>' +
-					'<div class="slider green" onmousedown="setActive(true, event)" data-color="g">' +
-						'<div class="slider-line"></div>' +
-						'<div class="slider-header"></div>' +
-					'</div>' +
-					'<div class="slider blue" onmousedown="setActive(true, event)" data-color="b">' +
-						'<div class="slider-line"></div>' +
-						'<div class="slider-header"></div>' +
-					'</div>'
-				link: function(scope, iElement, iAttrs) {
-					scope.r = 42;
-					scope.g = 142;
-					scope.b = 200;
-					// if not directly in the template, you can add an event handler
-					// iElement.find('div').bind('click', function() {
-					//     scope.colorClick({r: scope.r, g: scope.g, b: scope.b});
-					// })
-				}
-			};
-		});
-
 		function MyCtrl($scope) {
-			$scope.colorSelected = function(r, g, b) {
-				var color = 'rgb(' + r + ',' + g + ',' + b + ')';
-				alert('you selected : ' + color);
-			};
+			$scope.r = 100;
+			$scope.g = 100;
+			$scope.b = 100;
+			$scope.active = null;
+			$scope.combo = document.querySelector(".combined-color");
+
+			$scope.sliderActive = function (color) {
+				if (color)
+					$scope.active = color;
+				else
+					$scope.active = null;
+			}
+
+			$scope.sliderChange = function (event) {
+				if ($scope.active) {
+					var head = document.querySelector("." + $scope.active + " .slider-header");
+					var pos = document.querySelector("." + $scope.active + " .slider-line").getBoundingClientRect();
+
+					var x;
+					if (event.x < pos.left)
+						x = 0;
+					else if (event.x > pos.right)
+						x = 100;
+					else
+						x = Math.round(((event.x - pos.left) / pos.width)*100);
+					
+					head.style.left = x + "%";
+
+					var c = 255 - Math.round(255*x/100);
+					switch ($scope.active) {
+						case "red":
+							$scope.r = x;
+							break;
+						case "green":
+							$scope.g = c;
+							break;
+						case "blue":
+							$scope.b = c;
+							break;
+					}
+				}
+			}
 		}
+
+		
 	</script>
 	<style>
 		html { height: 100%; margin: 0; }
@@ -51,7 +58,7 @@
 		
 		.container {
 			background: beige;
-			height: 50%;
+			height: 65%;
 			margin: auto;
 			padding: 2%;
 			width: 90%;
@@ -88,31 +95,43 @@
 			width: 5rem;
 		}
 		
-		.red .slider-header {
-			background: red;
-		}
 		.red .slider-header:after {
 			box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red;
 		}
 		
-		.green .slider-header {
-			background: lime;
-		}
 		.green .slider-header:after {
 			box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime;
 		}
 		
-		.blue .slider-header {
-			background: blue;
-		}
 		.blue .slider-header:after {
 			box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue;
 		}
+
+		.combined-color {
+			border-radius: 50%;
+			height: 5rem;
+			margin: 3rem auto;
+			width: 5rem;
+		}
 	</style>
 </head>
-<body onmousemove="sliderChange(event)" onmouseup="setActive(false)">
-	<div ng-controller="MyCtrl">
-		<colorpicker color-click="colorSelected(r, g, b)"></colorpicker>
+<body ng-app="MyApp" ng-controller="MyCtrl" ng-mousemove="sliderChange($event)" ng-mouseup="sliderActive()">
+	<div class="container">
+		<div class="slider red" ng-mousedown="sliderActive('red')">
+			<input type="number" ng-model="r">
+			<div class="slider-line"></div>
+			<div class="slider-header" ng-style="{'background': 'rgba(255, 0, 0, {{r}})'}"></div>
+		</div>
+		<div class="slider green" ng-mousedown="sliderActive('green')">
+			<div class="slider-line"></div>
+			<div class="slider-header" ng-style="{'background': 'rgb(255, {{g}}, 255)'}"></div>
+		</div>
+		<div class="slider blue" ng-mousedown="sliderActive('blue')">
+			<div class="slider-line"></div>
+			<div class="slider-header" ng-style="{'background': 'rgb(255, 255, {{b}})'}"></div>
+		</div>
+		<div class="combined-color" ng-style="{'background': 'rgb({{r}}, {{g}}, {{b}})'}">
+		</div>
 	</div>
 </body>
 </html>
