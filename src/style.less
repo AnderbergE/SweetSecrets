@@ -219,9 +219,21 @@ input[type="checkbox"] {
 	box-sizing: border-box;
 	height: 100%;
 	margin: 0 auto;
+	max-width: 134rem;
 	padding: 16rem 1rem 1rem;
 	position: relative;
 	width: 95%;
+}
+.editor-icon {
+	background: @standard-background;
+	color: gray;
+	.font-icons();
+	font-size: 9rem;
+	width: 13rem;
+
+	& .action-selected:checked + .action-button  {
+		color: black;
+	}
 }
 .editor-header {
 	.box-shadows(0 3px 4px -2px lightgray);
@@ -233,21 +245,38 @@ input[type="checkbox"] {
 	top: 0;
 	width: 98%;
 }
+.editor-header-icons {
+	text-align: center;
+	width: 100%;
+}
+.editor-icon-header {
+	display: inline-block;
+}
+.editor-nav-prev,
+.editor-nav-next {
+	font-size: 15rem;
+
+	& .action-text {
+		margin-top: -0.65em;
+	}
+}
+.editor-nav-prev {
+	margin-right: 13rem;
+
+	& .action-text {
+		color: firebrick !important;
+	}
+}
+.editor-nav-next {
+	margin-left: 13rem;
+
+	& .action-text {
+		color: limegreen !important;
+	}
+}
 .editor-choices {
 	height: 100%;
 	overflow: auto;
-}
-.editor-icon {
-	background: @standard-background;
-	color: gray;
-	.font-icons();
-	font-size: 9rem;
-	margin: 0 auto;
-	width: 13rem;
-
-	& .action-selected:checked + .action-button  {
-		color: black;
-	}
 }
 .editor-icon-choices {
 	display: inline-block;
