@@ -43,17 +43,17 @@
 					else if (mouseX > pos.right)
 						x = 100;
 					else
-						x = Math.round(((mouseX - pos.left) / pos.width)*100);
+						x = Math.round((mouseX - pos.left) / pos.width*100)/100;
 					
 					switch ($scope.active) {
 						case "red":
-							$scope.r = x/100;
+							$scope.r = x;
 							break;
 						case "green":
-							$scope.g = x/100;
+							$scope.g = x;
 							break;
 						case "blue":
-							$scope.b = x/100;
+							$scope.b = x;
 							break;
 					}
 				}
@@ -67,13 +67,16 @@
 				return attr;
 			}
 			$scope.calculateRed = function () {
-				return {background: "rgba(255, 0, 0, " + $scope.r + ")", left: $scope.r*100 + "%"};
+				var w = 255 - Math.round(255*$scope.r);
+				return {background: "rgb(255, " + w + ", " + w + ")", left: $scope.r*100 + "%"};
 			}
 			$scope.calculateGreen = function () {
-				return {background: "rgba(0, 255, 0, " + $scope.g + ")", left: $scope.g*100 + "%"};
+				var w = 255 - Math.round(255*$scope.g);
+				return {background: "rgb(" + w + ", 255, " + w + ")", left: $scope.g*100 + "%"};
 			}
 			$scope.calculateBlue = function () {
-				return {background: "rgba(0, 0, 255, " + $scope.b + ")", left: $scope.b*100 + "%"};
+				var w = 255 - Math.round(255*$scope.b);
+				return {background: "rgb(" + w + ", " + w + ", 255)", left: $scope.b*100 + "%"};
 			}
 		}
 
@@ -151,7 +154,7 @@
 </head>
 <body ng-app="MyApp" ng-controller="MyCtrl">
 	<div class="container">
-		<div class="slider red" ng-mousedown="sliderActive('red', $event)">
+		<div class="slider red" ng-mousedown="sliderActive('red', $event)" ng-model="r">
 			<div class="slider-line"></div>
 			<div class="slider-header" ng-style="calculateRed()"></div>
 		</div>
