@@ -10,23 +10,22 @@
 			$scope.g = {name: "green", intensity: 0.7, others: 255 - Math.round(255*0.7)};
 			$scope.b = {name: "blue", intensity: 1, others: 255 - Math.round(255*1)};
 			$scope.active = null;
+			$scope.body = document.querySelector("body");
 
 			$scope.sliderActive = function (color, event) {
 				if (color) {
 					$scope.active = color;
 					$scope.sliderChange(event);
-					var b = document.querySelector("body");
-					b.onmousemove = function (e) {
-						$scope.$apply($scope.sliderChange(e));
+					$scope.body.onmousemove = function (e) {
+						$scope.$apply($scope.sliderChange(e ? e : window.event));
 					};
-					b.onmouseup = function () {
+					$scope.body.onmouseup = function () {
 						$scope.$apply($scope.sliderActive());
 					};
 				} else {
 					$scope.active = null;
-					var b = document.querySelector("body");
-					b.onmousemove = null;
-					b.onmouseup = null;
+					$scope.body.onmousemove = null;
+					$scope.body.onmouseup = null;
 				}
 			}
 
@@ -42,7 +41,8 @@
 					else if (mouseX > pos.right)
 						x = 1;
 					else
-						x = Math.round((mouseX - pos.left) / pos.width*100)/100;
+						x = Math.round((mouseX - pos.left) / (pos.right - pos.left)*100)/100;
+						// pos.width does not work on IE8.
 						
 					$scope.active.intensity = x;
 					$scope.active.others = 255 - Math.round(255 * x);
@@ -54,7 +54,7 @@
 	</script>
 	<style>
 		html { height: 100%; margin: 0; }
-		body { height: 96%; margin: 2%; }
+		body { height: 96%; margin: 0; padding: 2%; }
 		
 		.container {
 			background: beige;
@@ -65,7 +65,7 @@
 		}
 		.slider {
 			margin: 1% auto;
-			height: 5rem;
+			height: 5em;
 			position: relative;
 			width: 90%;
 			
@@ -77,12 +77,13 @@
 			user-select: none;
 		}
 		.slider-line {
-			background: gray;
-			border-radius: 1rem;
-			height: 1rem;
+			background: ghostwhite;
+			box-shadow: 0 1px 2px 0 gray inset, 0 -1px 2px 0 snow inset;
+			border-radius: 1em;
+			height: 1em;
 			left: 0;
 			position: absolute;
-			top: 2rem;
+			top: 1em;
 			width: 100%;
 		}
 		.slider-header {
@@ -95,34 +96,34 @@
 			background: inherit;
 			border-radius: 50%;
 			content: "";
-			height: 5rem;
-			left: -2.5rem;
+			height: 3em;
+			left: -1.5em;
 			position: absolute;
 			top: 0;
-			width: 5rem;
+			width: 3em;
 		}
 		
 		.red .slider-header:after {
-			box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red;
+			box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red, 2px 2px 6px 1px gray;
 		}
 		
 		.green .slider-header:after {
-			box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime;
+			box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime, 2px 2px 6px 1px gray;
 		}
 		
 		.blue .slider-header:after {
-			box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue;
+			box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue, 2px 2px 6px 1px gray;
 		}
 
 		.combined-color {
 			border-radius: 50%;
-			height: 5rem;
-			margin: 3rem auto;
-			width: 5rem;
+			height: 5em;
+			margin: 3em auto;
+			width: 5em;
 		}
 	</style>
 </head>
-<body ng-app="MyApp" ng-controller="MyCtrl">
+<body ng-app="MyApp" id="ng-app" ng-controller="MyCtrl">
 	<div class="container">
 		<div class="slider red" ng-mousedown="sliderActive(r, $event)">
 			<div class="slider-line"></div>
