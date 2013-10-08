@@ -6,11 +6,10 @@
 		var app = angular.module('MyApp', []);
 
 		function MyCtrl($scope) {
-			$scope.r = 0.5;
-			$scope.g = 0.7;
-			$scope.b = 1;
+			$scope.r = {name: "red", intensity: 0.5, others: 255 - Math.round(255*0.5)};
+			$scope.g = {name: "green", intensity: 0.7, others: 255 - Math.round(255*0.7)};
+			$scope.b = {name: "blue", intensity: 1, others: 255 - Math.round(255*1)};
 			$scope.active = null;
-			$scope.combo = document.querySelector(".combined-color");
 
 			$scope.sliderActive = function (color, event) {
 				if (color) {
@@ -33,50 +32,21 @@
 
 			$scope.sliderChange = function (event) {
 				if ($scope.active) {
-					var head = document.querySelector("." + $scope.active + " .slider-header");
-					var pos = document.querySelector("." + $scope.active + " .slider-line").getBoundingClientRect();
+					var head = document.querySelector("." + $scope.active.name + " .slider-header");
+					var pos = document.querySelector("." + $scope.active.name + " .slider-line").getBoundingClientRect();
 					var mouseX = event.clientX;
 
 					var x;
 					if (mouseX < pos.left)
 						x = 0;
 					else if (mouseX > pos.right)
-						x = 100;
+						x = 1;
 					else
 						x = Math.round((mouseX - pos.left) / pos.width*100)/100;
-					
-					switch ($scope.active) {
-						case "red":
-							$scope.r = x;
-							break;
-						case "green":
-							$scope.g = x;
-							break;
-						case "blue":
-							$scope.b = x;
-							break;
-					}
+						
+					$scope.active.intensity = x;
+					$scope.active.others = 255 - Math.round(255 * x);
 				}
-			}
-			
-			$scope.calculateStyle = function () {
-				var attr = {};
-				attr["background"] = "rgb(" + Math.round($scope.r*255) + ", " +
-					Math.round($scope.g*255) + ", " + Math.round($scope.b*255) + ")";
-				
-				return attr;
-			}
-			$scope.calculateRed = function () {
-				var w = 255 - Math.round(255*$scope.r);
-				return {background: "rgb(255, " + w + ", " + w + ")", left: $scope.r*100 + "%"};
-			}
-			$scope.calculateGreen = function () {
-				var w = 255 - Math.round(255*$scope.g);
-				return {background: "rgb(" + w + ", 255, " + w + ")", left: $scope.g*100 + "%"};
-			}
-			$scope.calculateBlue = function () {
-				var w = 255 - Math.round(255*$scope.b);
-				return {background: "rgb(" + w + ", " + w + ", 255)", left: $scope.b*100 + "%"};
 			}
 		}
 
@@ -154,19 +124,29 @@
 </head>
 <body ng-app="MyApp" ng-controller="MyCtrl">
 	<div class="container">
-		<div class="slider red" ng-mousedown="sliderActive('red', $event)" ng-model="r">
+		<div class="slider red" ng-mousedown="sliderActive(r, $event)">
 			<div class="slider-line"></div>
-			<div class="slider-header" ng-style="calculateRed()"></div>
+			<div class="slider-header" ng-style="{
+				'background-color': 'rgb(255, ' + r.others + ', ' + r.others + ')',
+				'left': r.intensity * 100 + '%'}">
+			</div>
 		</div>
-		<div class="slider green" ng-mousedown="sliderActive('green', $event)">
+		<div class="slider green" ng-mousedown="sliderActive(g, $event)">
 			<div class="slider-line"></div>
-			<div class="slider-header" ng-style="calculateGreen()"></div>
+			<div class="slider-header" ng-style="{
+				'background-color': 'rgb(' + g.others + ', 255, ' + g.others + ')',
+				'left': g.intensity * 100 + '%'}">
+			</div>
 		</div>
-		<div class="slider blue" ng-mousedown="sliderActive('blue', $event)">
+		<div class="slider blue" ng-mousedown="sliderActive(b, $event)">
 			<div class="slider-line"></div>
-			<div class="slider-header" ng-style="calculateBlue()"></div>
+			<div class="slider-header" ng-style="{
+				'background-color': 'rgb(' + b.others + ', ' + b.others + ', 255)',
+				'left': b.intensity * 100 + '%'}">
+			</div>
 		</div>
-		<div class="combined-color" ng-style="calculateStyle()">
+		<div class="combined-color" ng-style="{
+			'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}">
 		</div>
 	</div>
 </body>
