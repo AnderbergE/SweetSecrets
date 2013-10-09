@@ -140,3 +140,53 @@ function Users($scope) {
 	$scope.addUser("Erik Anderberg", "\ue006", "red");
 	$scope.addUser("Camilla Bergvall", "\ue004", "lime");
 }
+
+function ColorSlider($scope) {
+	$scope.r = {name: "red", value: 120};
+	$scope.g = {name: "green", value: 160};
+	$scope.b = {name: "blue", value: 255};
+	$scope.$watch('r.value', function(value, old) { setColor($scope.r, value, old); });
+	$scope.$watch('g.value', function(value, old) { setColor($scope.g, value, old); });
+	$scope.$watch('b.value', function(value, old) { setColor($scope.b, value, old); });
+	$scope.active = null;
+
+	$scope.sliderActive = function (color, event) {
+		var body = document.querySelector("body");
+		if (color) {
+			$scope.active = color;
+			$scope.sliderChange(event);
+			body.onmousemove = function (e) {
+				$scope.$apply($scope.sliderChange(e ? e : window.event));
+			};
+			body.onmouseup = function () {
+				$scope.$apply($scope.sliderActive());
+			};
+		} else {
+			$scope.active = null;
+			body.onmousemove = null;
+			body.onmouseup = null;
+		}
+	}
+
+	$scope.sliderChange = function (event) {
+		if ($scope.active) {
+			var head = document.querySelector("." + $scope.active.name + " .slider-header");
+			var pos = document.querySelector("." + $scope.active.name + " .slider-line").getBoundingClientRect();
+			var mouseX = event.clientX;
+
+			if (mouseX < pos.left)
+				$scope.active.value = 0;
+			else if (mouseX > pos.right)
+				$scope.active.value = 255;
+			else
+				$scope.active.value = Math.round((mouseX - pos.left) / (pos.right - pos.left)*255);
+		}
+	}
+	
+	function setColor (color, value, old) {
+		value = value == "" ? 0 : parseInt(value);
+		color.value = isNaN(value) ? old : value < 0 ? 0 : value > 255 ? 255 : value;
+		color.intensity = value/255;
+		color.others = 255 - color.value;
+	}
+}

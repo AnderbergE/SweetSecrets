@@ -10,6 +10,9 @@
 @space-left: 100% - @day-total * 5; // Max five weeks.
 @standard-background: gainsboro;
 
+.font-standard () {
+	font-family: 'Love Ya Like A Sister', /* Josefin Slab, */ sans-serif;
+}
 .font-icons () {
 	font-family: 'icons', 'Love Ya Like A Sister', sans-serif;
 
@@ -97,7 +100,7 @@ input[type="checkbox"] {
 
 /* DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE DATE */
 .date-nav {
-	font-family: 'Love Ya Like A Sister', /* Josefin Slab, */ sans-serif;
+	.font-standard();
 	margin: 0 auto;
 	position: relative;
 	text-shadow: 1px 1px 3px lightgrey;
@@ -281,6 +284,87 @@ input[type="checkbox"] {
 .editor-icon-choices {
 	display: inline-block;
 	margin: 0 1px 1px 0;
+}
+
+@slider-size: 10rem;
+.editor-choose-background {
+	margin: 0 auto;
+	width: 90%;
+}
+.color-slider {
+	box-sizing: border-box;
+	padding-right: @slider-size*1.75;
+	position: relative;
+	width: 100%;
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.slider {
+	margin: 2% auto;
+	height: @slider-size;
+	position: relative;
+	width: 100%;
+}
+.slider-line {
+	background: ghostwhite;
+	box-shadow: 0 1px 2px 0 gray inset, 0 -1px 2px 0 snow inset;
+	border-radius: 1rem;
+	height: 2rem;
+	left: 0;
+	position: absolute;
+	top: @slider-size/2 - 1;
+	width: 100%;
+}
+.slider-header {
+	cursor: move;
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+.slider-header:after {
+	background: inherit;
+	border-radius: 50%;
+	content: "";
+	height: @slider-size;
+	left: @slider-size/-2;
+	position: absolute;
+	top: 0;
+	width: @slider-size;
+}
+.red .slider-header:after {
+	box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red, 2px 2px 6px 1px gray;
+}
+.green .slider-header:after {
+	box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime, 2px 2px 6px 1px gray;
+}
+.blue .slider-header:after {
+	box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue, 2px 2px 6px 1px gray;
+}
+.slider-number {
+	border: none;
+	background: snow;
+	border-radius: 50%;
+	box-shadow: 0 1px 2px 0 gray inset, 0 -1px 2px 0 snow inset;
+	font-size: 4rem;
+	.font-standard();
+	height: @slider-size;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	top: 0;
+	width: @slider-size;
+}
+
+.combined-color {
+	border-radius: 50%;
+	height: 13rem;
+	margin: 0 auto;
+	width: 13rem;
 }
 
 

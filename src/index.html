@@ -44,14 +44,51 @@
 					</div>
 				</div>
 				<div class="editor-choices">
-					<div class="action-icon circle editor-icon editor-icon-choices" ng-repeat="icon in icons">
-						<input type="radio" class="action-selected"
-							id="ac{{$index}}" name="choice" value="ac{{$index}}">
-						<label for="ac{{$index}}" class="action-button">
-							<div class="action-bgs">
+					<div class="editor-choose-icon">
+						<div class="action-icon circle editor-icon editor-icon-choices" ng-repeat="icon in icons">
+							<input type="radio" class="action-selected"
+								id="ac{{$index}}" name="choice" value="ac{{$index}}">
+							<label for="ac{{$index}}" class="action-button">
+								<div class="action-bgs">
+								</div>
+								<span class="action-text">{{icon}}</span>
+							</label>
+						</div>
+					</div>
+					<div class="editor-choose-background" ng-controller="ColorSlider">
+						<div class="color-slider red">
+							<div class="slider" ng-mousedown="sliderActive(r, $event)">
+								<div class="slider-line"></div>
+								<div class="slider-header" ng-style="{
+									'background-color': 'rgb(255, ' + r.others + ', ' + r.others + ')',
+									'left': r.intensity * 100 + '%'}">
+								</div>
 							</div>
-							<span class="action-text">{{icon}}</span>
-						</label>
+							<input class="slider-number" ng-model="r.value" />
+						</div>
+						<div class="color-slider green">
+							<div class="slider" ng-mousedown="sliderActive(g, $event)">
+								<div class="slider-line"></div>
+								<div class="slider-header" ng-style="{
+									'background-color': 'rgb(' + g.others + ', 255, ' + g.others + ')',
+									'left': g.intensity * 100 + '%'}">
+								</div>
+							</div>
+							<input class="slider-number" ng-model="g.value" />
+						</div>
+						<div class="color-slider blue">
+							<div class="slider" ng-mousedown="sliderActive(b, $event)">
+								<div class="slider-line"></div>
+								<div class="slider-header" ng-style="{
+									'background-color': 'rgb(' + b.others + ', ' + b.others + ', 255)',
+									'left': b.intensity * 100 + '%'}">
+								</div>
+							</div>
+							<input class="slider-number" ng-model="b.value" />
+						</div>
+						<div class="combined-color" ng-style="{
+							'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}">
+						</div>
 					</div>
 				</div>
 			</div>
