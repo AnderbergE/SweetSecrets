@@ -5,27 +5,30 @@
 	<script type="text/javascript">
 		var app = angular.module('MyApp', []);
 
-		function MyCtrl($scope) {
-			$scope.r = {name: "red", intensity: 0.5, others: 255 - Math.round(255*0.5)};
-			$scope.g = {name: "green", intensity: 0.7, others: 255 - Math.round(255*0.7)};
-			$scope.b = {name: "blue", intensity: 1, others: 255 - Math.round(255*1)};
+		function ColorSlider($scope) {
+			$scope.r = {name: "red", value: 120};
+			$scope.g = {name: "green", value: 160};
+			$scope.b = {name: "blue", value: 255};
+			$scope.$watch('r.value', function(value, old) { setColor($scope.r, value, old); });
+			$scope.$watch('g.value', function(value, old) { setColor($scope.g, value, old); });
+			$scope.$watch('b.value', function(value, old) { setColor($scope.b, value, old); });
 			$scope.active = null;
-			$scope.body = document.querySelector("body");
 
 			$scope.sliderActive = function (color, event) {
+				var body = document.querySelector("body");
 				if (color) {
 					$scope.active = color;
 					$scope.sliderChange(event);
-					$scope.body.onmousemove = function (e) {
+					body.onmousemove = function (e) {
 						$scope.$apply($scope.sliderChange(e ? e : window.event));
 					};
-					$scope.body.onmouseup = function () {
+					body.onmouseup = function () {
 						$scope.$apply($scope.sliderActive());
 					};
 				} else {
 					$scope.active = null;
-					$scope.body.onmousemove = null;
-					$scope.body.onmouseup = null;
+					body.onmousemove = null;
+					body.onmouseup = null;
 				}
 			}
 
@@ -35,18 +38,19 @@
 					var pos = document.querySelector("." + $scope.active.name + " .slider-line").getBoundingClientRect();
 					var mouseX = event.clientX;
 
-					var x;
 					if (mouseX < pos.left)
-						x = 0;
+						$scope.active.value = 0;
 					else if (mouseX > pos.right)
-						x = 1;
+						$scope.active.value = 255;
 					else
-						x = Math.round((mouseX - pos.left) / (pos.right - pos.left)*100)/100;
-						// pos.width does not work on IE8.
-						
-					$scope.active.intensity = x;
-					$scope.active.others = 255 - Math.round(255 * x);
+						$scope.active.value = Math.round((mouseX - pos.left) / (pos.right - pos.left)*255);
 				}
+			}
+			
+			function setColor (color, value, old) {
+				color.value =  color.value == null ? old : color.value < 0 ? 0 : color.value > 255 ? 255 : color.value;
+				color.intensity = value/255;
+				color.others = 255 - color.value;
 			}
 		}
 
@@ -54,7 +58,7 @@
 	</script>
 	<style>
 		html { height: 100%; margin: 0; }
-		body { height: 96%; margin: 0; padding: 2%; }
+		body { height: 95%; margin: 0; padding: 2%; }
 		
 		.container {
 			background: beige;
@@ -63,11 +67,12 @@
 			padding: 2%;
 			width: 90%;
 		}
-		.slider {
-			margin: 1% auto;
-			height: 5em;
+		
+		.color-slider {
+			box-sizing: border-box;
+			padding-right: 6em;
 			position: relative;
-			width: 90%;
+			width: 100%
 			
 			-webkit-touch-callout: none;
 			-webkit-user-select: none;
@@ -75,6 +80,12 @@
 			-moz-user-select: none;
 			-ms-user-select: none;
 			user-select: none;
+		}
+		.slider {
+			margin: 2% auto;
+			height: 3em;
+			position: relative;
+			width: 100%;
 		}
 		.slider-line {
 			background: ghostwhite;
@@ -102,17 +113,27 @@
 			top: 0;
 			width: 3em;
 		}
-		
 		.red .slider-header:after {
 			box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red, 2px 2px 6px 1px gray;
 		}
-		
 		.green .slider-header:after {
 			box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime, 2px 2px 6px 1px gray;
 		}
-		
 		.blue .slider-header:after {
 			box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue, 2px 2px 6px 1px gray;
+		}
+		.slider-number {
+			border: none;
+			background: snow;
+			border-radius: 50%;
+			box-shadow: 0 1px 2px 0 gray inset, 0 -1px 2px 0 snow inset;
+			font-size: 1em;
+			height: 3em;
+			position: absolute;
+			right: 0;
+			text-align: center;
+			top: 0;
+			width: 3em;
 		}
 
 		.combined-color {
@@ -123,28 +144,37 @@
 		}
 	</style>
 </head>
-<body ng-app="MyApp" id="ng-app" ng-controller="MyCtrl">
-	<div class="container">
-		<div class="slider red" ng-mousedown="sliderActive(r, $event)">
-			<div class="slider-line"></div>
-			<div class="slider-header" ng-style="{
-				'background-color': 'rgb(255, ' + r.others + ', ' + r.others + ')',
-				'left': r.intensity * 100 + '%'}">
+<body ng-app="MyApp" id="ng-app">
+	<div class="container" ng-controller="ColorSlider">
+		<div class="color-slider red">
+			<div class="slider" ng-mousedown="sliderActive(r, $event)">
+				<div class="slider-line"></div>
+				<div class="slider-header" ng-style="{
+					'background-color': 'rgb(255, ' + r.others + ', ' + r.others + ')',
+					'left': r.intensity * 100 + '%'}">
+				</div>
 			</div>
+			<input class="slider-number" ng-model="r.value" />
 		</div>
-		<div class="slider green" ng-mousedown="sliderActive(g, $event)">
-			<div class="slider-line"></div>
-			<div class="slider-header" ng-style="{
-				'background-color': 'rgb(' + g.others + ', 255, ' + g.others + ')',
-				'left': g.intensity * 100 + '%'}">
+		<div class="color-slider green">
+			<div class="slider" ng-mousedown="sliderActive(g, $event)">
+				<div class="slider-line"></div>
+				<div class="slider-header" ng-style="{
+					'background-color': 'rgb(' + g.others + ', 255, ' + g.others + ')',
+					'left': g.intensity * 100 + '%'}">
+				</div>
 			</div>
+			<input class="slider-number" ng-model="g.value" />
 		</div>
-		<div class="slider blue" ng-mousedown="sliderActive(b, $event)">
-			<div class="slider-line"></div>
-			<div class="slider-header" ng-style="{
-				'background-color': 'rgb(' + b.others + ', ' + b.others + ', 255)',
-				'left': b.intensity * 100 + '%'}">
+		<div class="color-slider blue">
+			<div class="slider" ng-mousedown="sliderActive(b, $event)">
+				<div class="slider-line"></div>
+				<div class="slider-header" ng-style="{
+					'background-color': 'rgb(' + b.others + ', ' + b.others + ', 255)',
+					'left': b.intensity * 100 + '%'}">
+				</div>
 			</div>
+			<input class="slider-number" ng-model="b.value" />
 		</div>
 		<div class="combined-color" ng-style="{
 			'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}">
