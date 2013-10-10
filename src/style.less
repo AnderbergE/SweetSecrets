@@ -219,7 +219,7 @@ input[type="checkbox"] {
 .editor {
 	background: white;
 	.box-shadows(0 0 0 0 white);
-	box-sizing: border-box;
+	.border-box();
 	height: 100%;
 	margin: 0 auto;
 	max-width: 134rem;
@@ -281,19 +281,22 @@ input[type="checkbox"] {
 	height: 100%;
 	overflow: auto;
 }
+
+/* Icon choice */
 .editor-icon-choices {
 	display: inline-block;
 	margin: 0 1px 1px 0;
 }
 
+/* Background choice */
 @slider-size: 10rem;
 .editor-choose-background {
 	margin: 0 auto;
-	width: 90%;
+	width: 88%;
 }
 .color-slider {
-	box-sizing: border-box;
-	padding-right: @slider-size*1.75;
+	.border-box();
+	padding-right: @slider-size*1.33;
 	position: relative;
 	width: 100%;
 	
@@ -354,17 +357,10 @@ input[type="checkbox"] {
 	.font-standard();
 	height: @slider-size;
 	position: absolute;
-	right: 0;
+	right: -4rem;
 	text-align: center;
 	top: 0;
 	width: @slider-size;
-}
-
-.combined-color {
-	border-radius: 50%;
-	height: 13rem;
-	margin: 0 auto;
-	width: 13rem;
 }
 
 

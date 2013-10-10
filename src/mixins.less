@@ -11,7 +11,7 @@
 
 .border-box() {
 	-webkit-box-sizing: -webkit-border-box;
-	   -moz-box-sizing:    -moz-border-box;
+	   -moz-box-sizing:         border-box;
 	        box-sizing:         border-box;
 }
 
@@ -21,7 +21,7 @@
 	        transform: @attributes;
 }
 
-.transitions(@property: all, @duration: 0, @timing: linear, @delay: 0) {
+.transitions(@property: all, @duration: 0s, @timing: linear, @delay: 0s) {
 	-webkit-transition: @property @duration @timing @delay;
 	        transition: @property @duration @timing @delay;
 }

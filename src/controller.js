@@ -153,6 +153,7 @@ function ColorSlider($scope) {
 	$scope.sliderActive = function (color, event) {
 		var body = document.querySelector("body");
 		if (color) {
+			event.preventDefault ? event.preventDefault() : event.returnValue = false;
 			$scope.active = color;
 			$scope.sliderChange(event);
 			body.onmousemove = function (e) {
