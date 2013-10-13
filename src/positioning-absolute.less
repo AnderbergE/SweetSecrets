@@ -34,6 +34,8 @@
 
 #position-wrapper-date {
 	.border-box();
+	//TODO: Can I change value for day-total variable?
+	height: 600/7vw;
 	left: 0;
 	position: absolute;
 	top: 0;
@@ -104,18 +106,6 @@
 		display: inline;
 		opacity: 0.75;
 	}
-
-	//TODO: Remove these below, it's debugging purposes of editor
-	& #position-wrapper-editor {
-		visibility: visible;
-	}
-	& .editor {
-		.box-shadows(0 0 7px 3px lightgray);
-		.transitions(box-shadow, .5s, linear);
-	}
-	& .editor-choose-icon {
-		display: none;
-	}
 }
 
 /* Edit mode active */
@@ -134,7 +124,13 @@
 		.box-shadows(0 0 7px 3px lightgray);
 		.transitions(box-shadow, .5s, linear);
 	}
-	& .editor-choose-icon {
-		display: none;
-	}
+}
+
+//TODO: Remove these below, it's debugging purposes of editor
+#position-wrapper-editor {
+	visibility: visible;
+}
+.editor {
+	.box-shadows(0 0 7px 3px lightgray);
+	.transitions(box-shadow, .5s, linear);
 }

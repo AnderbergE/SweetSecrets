@@ -15,11 +15,11 @@
 
 	<div id="main-affairs" ng-controller="DateActions">
 
-		<div id="position-wrapper-editor">
-			<div class="editor"  ng-controller="ColorSlider">
+		<div id="position-wrapper-editor" ng-controller="Editor" ng-class="currentState">
+			<div class="editor">
 				<div class="editor-header">
 					<div class="editor-header-icons">
-						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-prev">
+						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-prev" ng-click="prevState()">
 							<label class="action-button">
 								<div class="action-bgs">
 								</div>
@@ -33,10 +33,10 @@
 									<div class="action-bg" ng-style="{'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}">
 									</div>
 								</div>
-								<span class="action-text">&#xe000</span>
+								<span class="action-text">{{icon}}</span>
 							</label>
 						</div>
-						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-next">
+						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-next" ng-click="nextState()">
 							<label class="action-button">
 								<div class="action-bgs">
 								</div>
@@ -102,8 +102,8 @@
 					<div class="action-icon circle config-icon user"
 						ng-repeat="(key, user) in users">
 						<input type="radio" class="action-selected"
-							id="{{key}}" name="user" value="{{key}}">
-						<label for="{{key}}" class="action-button">
+							id="user{{key}}" name="user" value="{{key}}">
+						<label for="user{{key}}" class="action-button" ng-click="edit(key, user)">
 							<div class="action-bgs">
 								<div class="action-bg" style="background: {{user.background}};"></div>
 							</div>

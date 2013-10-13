@@ -57,7 +57,7 @@ function ActionTypes($scope) {
 		/* Check if values exist. */
 		name = name || "generic";
 		icon = icon || "\ue001";
-		background = background || "green";
+		background = background || "rgb(0, 128, 0)";
 		
 		$scope.types.push({name: name, icon: icon, background: background});
 	}
@@ -99,10 +99,10 @@ function ActionTypes($scope) {
 	$scope.icons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 	
 	// TODO: remove this debug insertion.
-	$scope.addType("candy", "\ue006", "lightgreen");
-	$scope.addType("cake", "\ue002", "orange");
-	$scope.addType("drink", "\ue00a", "hotpink");
-	$scope.addType("icecream", "\ue009", "powderblue");
+	$scope.addType("candy", "\ue006", "rgb(144, 238, 144)");
+	$scope.addType("cake", "\ue002", "rgb(255, 165, 0)");
+	$scope.addType("drink", "\ue00a", "rgb(255, 105, 180)");
+	$scope.addType("icecream", "\ue009", "rgb(176, 224, 230)");
 }
 
 /**
@@ -116,15 +116,15 @@ function Users($scope) {
 		/* Check if values exist. */
 		name = name || "generic";
 		icon = icon || "\ue001";
-		background = background || "green";
+		background = background || "rgb(138, 43, 226)";
 		
-		$scope.users.push({name: name, icon: icon, background: background});
+		$scope.users.push({user: name, icon: icon, background: background});
 	}
 
 	/* Update an existing type */
 	$scope.updateUser = function(position, name, icon, background) {
 		// TODO: Error checking and server check.
-		$scope.users[position] = {name: name, icon: icon, background: background}
+		$scope.users[position] = {user: name, icon: icon, background: background}
 	}
 	
 	/* Remove an type */
@@ -133,23 +133,91 @@ function Users($scope) {
 		$scope.users.splice(position, 1);
 	}
 
+	/* Open editor for this user */
+	$scope.edit = function(position, user) {
+		//TODO: Only edit when applicable
+		$scope.$root.$broadcast('editValue', position, user);
+	}
+
 	/* Initialization */
 	$scope.users = [];
 
 	// TODO: remove this debug insertion.
-	$scope.addUser("Erik Anderberg", "\ue006", "red");
-	$scope.addUser("Camilla Bergvall", "\ue004", "lime");
+	$scope.addUser("Erik Anderberg", "\ue006", "rgb(255, 0, 0)");
+	$scope.addUser("Camilla Bergvall", "\ue004", "rgb(0, 255, 0)");
 }
 
-function ColorSlider($scope) {
-	$scope.r = {name: "red", value: 120};
-	$scope.g = {name: "green", value: 160};
-	$scope.b = {name: "blue", value: 255};
+/**
+ * Editor for the actions and users.
+ * @param {Object} $scope Angular.js scope.
+ */
+function Editor($scope) {
+	$scope.editor = document.querySelector(".editor");
+	$scope.states = {
+		HIDE: "hide",
+		MENU: "menu-choice",
+		ICON: "icon-choice",
+		BACKGROUND: "background-choice"
+	}
+	$scope.currentState = $scope.states.HIDE;
+
+	$scope.isEditing = false;
+	$scope.isUser = false;
+	$scope.editPosition = null;
+
+	$scope.icon = "\ue006";
+	$scope.r = {name: "red", value: 200};
+	$scope.g = {name: "green", value: 200};
+	$scope.b = {name: "blue", value: 200};
+	/* Watch value changes to update color variables */
 	$scope.$watch('r.value', function(value, old) { setColor($scope.r, value, old); });
 	$scope.$watch('g.value', function(value, old) { setColor($scope.g, value, old); });
 	$scope.$watch('b.value', function(value, old) { setColor($scope.b, value, old); });
 	$scope.active = null;
 
+	/* Listen to edit events */
+	$scope.$on('editValue', function(event, position, type) {
+		var colors = type.background.match(/\d+/g);
+		if (!isNaN(position && colors.length == 3)) {
+			$scope.editPosition = position;
+			if (type.user)
+				$scope.isUser = true;
+			else
+				$scope.isUser = false;
+			$scope.icon = type.icon;
+			$scope.r.value = colors[0];
+			$scope.g.value = colors[1];
+			$scope.b.value = colors[2];
+
+			$scope.isEditing = true;
+			$scope.currentState = $scope.states.MENU;
+		}
+	});
+
+	/* State machine, go to previous */
+	$scope.prevState = function () {
+		if ($scope.currentState == $scope.states.MENU) {
+			$scope.currentState = $scope.states.HIDE;
+		} else if ($scope.currentState == $scope.states.ICON) {
+			if ($scope.editAction)
+				$scope.currentState = $scope.states.MENU;
+			else
+				$scope.currentState = $scope.states.HIDE;
+		} else if ($scope.currentState == $scope.states.BACKGROUND) {
+			$scope.currentState = $scope.states.ICON;
+		}
+	}
+
+	/* State machine, go to next */
+	$scope.nextState = function () {
+		if ($scope.currentState == $scope.states.ICON) {
+			$scope.currentState = $scope.states.BACKGROUND;
+		} else if ($scope.currentState == $scope.states.BACKGROUND) {
+			$scope.currentState = $scope.states.HIDE;
+		}
+	}
+
+	/* Activate a slider */
 	$scope.sliderActive = function (color, event) {
 		var body = document.querySelector("body");
 		if (color) {
@@ -169,6 +237,7 @@ function ColorSlider($scope) {
 		}
 	}
 
+	/* Change a slider when applicable */
 	$scope.sliderChange = function (event) {
 		if ($scope.active) {
 			var head = document.querySelector("." + $scope.active.name + " .slider-header");
@@ -184,6 +253,7 @@ function ColorSlider($scope) {
 		}
 	}
 	
+	/* Update color values */
 	function setColor (color, value, old) {
 		value = value == "" ? 0 : parseInt(value);
 		color.value = isNaN(value) ? old : value < 0 ? 0 : value > 255 ? 255 : value;
