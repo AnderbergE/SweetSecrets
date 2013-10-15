@@ -46,8 +46,24 @@
 					</div>
 				</div>
 				<div class="editor-choices">
+					<div class="editor-choose-menu">
+						<div class="action-icon circle editor-icon editor-menu-choice"  ng-click="setState(states.ICON)">
+							<label class="action-button">
+								<div class="action-bgs">
+								</div>
+								<span class="action-text">&#xe008</span>
+							</label>
+						</div>
+						<div class="action-icon circle editor-icon editor-menu-choice"  ng-click="setState(states.BACKGROUND)">
+							<label class="action-button">
+								<div class="action-bgs">
+								</div>
+								<span class="action-text">&#xe002</span>
+							</label>
+						</div>
+					</div>
 					<div class="editor-choose-icon">
-						<div class="action-icon circle editor-icon editor-icon-choices" ng-repeat="icon in icons">
+						<div class="action-icon circle editor-icon editor-icon-choice" ng-repeat="icon in icons">
 							<input type="radio" class="action-selected"
 								id="ac{{$index}}" name="choice" value="ac{{$index}}">
 							<label for="ac{{$index}}" class="action-button">

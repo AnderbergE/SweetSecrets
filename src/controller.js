@@ -190,30 +190,34 @@ function Editor($scope) {
 			$scope.b.value = colors[2];
 
 			$scope.isEditing = true;
-			$scope.currentState = $scope.states.MENU;
+			$scope.setState($scope.states.MENU);
 		}
 	});
+	
+	$scope.setState = function (state) {
+		$scope.currentState = state;
+	}
 
 	/* State machine, go to previous */
 	$scope.prevState = function () {
 		if ($scope.currentState == $scope.states.MENU) {
-			$scope.currentState = $scope.states.HIDE;
+			$scope.setState($scope.states.HIDE);
 		} else if ($scope.currentState == $scope.states.ICON) {
-			if ($scope.editAction)
-				$scope.currentState = $scope.states.MENU;
+			if ($scope.isEditing)
+				$scope.setState($scope.states.MENU);
 			else
-				$scope.currentState = $scope.states.HIDE;
+				$scope.setState($scope.states.HIDE);
 		} else if ($scope.currentState == $scope.states.BACKGROUND) {
-			$scope.currentState = $scope.states.ICON;
+			$scope.setState($scope.states.ICON);
 		}
 	}
 
 	/* State machine, go to next */
 	$scope.nextState = function () {
 		if ($scope.currentState == $scope.states.ICON) {
-			$scope.currentState = $scope.states.BACKGROUND;
+			$scope.setState($scope.states.BACKGROUND);
 		} else if ($scope.currentState == $scope.states.BACKGROUND) {
-			$scope.currentState = $scope.states.HIDE;
+			$scope.setState($scope.states.HIDE);
 		}
 	}
 
