@@ -16,6 +16,7 @@
 	<div id="main-affairs" ng-controller="DateActions">
 
 		<div id="position-wrapper-editor" ng-controller="Editor" ng-class="currentState">
+			<div class="editor-overlay" ng-click="setState(states.HIDE)"></div>
 			<div class="editor">
 				<div class="editor-header">
 					<div class="editor-header-icons">
@@ -47,19 +48,37 @@
 				</div>
 				<div class="editor-choices">
 					<div class="editor-choose-menu">
-						<div class="action-icon circle editor-icon editor-menu-choice"  ng-click="setState(states.ICON)">
-							<label class="action-button">
-								<div class="action-bgs">
-								</div>
-								<span class="action-text">&#xe008</span>
-							</label>
+						<div class="center">
+							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.ICON)">
+								<label class="action-button">
+									<div class="action-bgs">
+									</div>
+									<span class="action-text">&#xe008</span>
+								</label>
+							</div>
+							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.BACKGROUND)">
+								<label class="action-button">
+									<div class="action-bgs">
+									</div>
+									<span class="action-text">&#xe002</span>
+								</label>
+							</div>
 						</div>
-						<div class="action-icon circle editor-icon editor-menu-choice"  ng-click="setState(states.BACKGROUND)">
-							<label class="action-button">
-								<div class="action-bgs">
-								</div>
-								<span class="action-text">&#xe002</span>
-							</label>
+						<div class="center">
+							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.USER)">
+								<label class="action-button">
+									<div class="action-bgs">
+									</div>
+									<span class="action-text">&#xe00a</span>
+								</label>
+							</div>
+							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.DELETE)">
+								<label class="action-button">
+									<div class="action-bgs">
+									</div>
+									<span class="action-text">&#xe00c</span>
+								</label>
+							</div>
 						</div>
 					</div>
 					<div class="editor-choose-icon">

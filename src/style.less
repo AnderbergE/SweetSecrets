@@ -66,8 +66,15 @@ input[type="checkbox"] {
 	font-style: normal;
 }
 
+/* Display: none will disable transitions, use this instead */
 .hide {
-	display: none;
+    height: 0 !important;
+    overflow: hidden !important;
+    z-index: -1 !important;
+}
+.center {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /* CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG */
@@ -219,9 +226,21 @@ input[type="checkbox"] {
 
 
 /* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
+.editor-overlay {
+	background: black;
+	height: 100%;
+	left: 0;
+	opacity: 0.5;
+	position: fixed;
+	.transitions(opacity, 1s, linear);
+	top: 0;
+	width: 100%;
+}
+.hide .editor-overlay {
+	opacity: 0;
+}
 .editor {
 	background: white;
-	.box-shadows(0 0 0 0 white);
 	.border-box();
 	height: 100%;
 	margin: 0 auto;
@@ -286,12 +305,18 @@ input[type="checkbox"] {
 }
 
 
-/* Icon choice */
+/* Menu choice */
 .editor-choose-menu {
 	display: none;
+	text-align: center;
 }
 .menu-choice .editor-choose-menu {
 	display: block;
+}
+.editor-menu-choice {
+	display: inline-block;
+	font-size: 20rem;
+	width: 30rem;
 }
 
 /* Icon choice */
@@ -350,16 +375,17 @@ input[type="checkbox"] {
 	left: 0;
 	position: absolute;
 	top: 0;
-}
-.slider-header:after {
-	background: inherit;
-	border-radius: 50%;
-	content: "";
-	height: @slider-size;
-	left: @slider-size/-2;
-	position: absolute;
-	top: 0;
-	width: @slider-size;
+
+	&:after {
+		background: inherit;
+		border-radius: 50%;
+		content: "";
+		height: @slider-size;
+		left: @slider-size/-2;
+		position: absolute;
+		top: 0;
+		width: @slider-size;
+	}
 }
 .red .slider-header:after {
 	box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red, 2px 2px 6px 1px gray;

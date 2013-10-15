@@ -156,8 +156,10 @@ function Editor($scope) {
 	$scope.states = {
 		HIDE: "hide",
 		MENU: "menu-choice",
+		USER: "user-choice",
 		ICON: "icon-choice",
-		BACKGROUND: "background-choice"
+		BACKGROUND: "background-choice",
+		DELETE: "delete-choice"
 	}
 	$scope.currentState = $scope.states.HIDE;
 

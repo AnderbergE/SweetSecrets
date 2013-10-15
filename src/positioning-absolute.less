@@ -12,9 +12,8 @@
 	left: 0;
 	position: absolute;
 	top: 12%;
-	visibility: hidden;
 	width: 100%;
-	z-index: 50;
+	z-index: 200;
 }
 
 #position-wrapper-config {
@@ -45,6 +44,7 @@
 	.border-box();
 	height: 100%;
 	position: relative;
+	text-align: center;
 	width: 100%;
 }
 
@@ -113,24 +113,4 @@
 	& .add-action, .add-user {
 		display: block;
 	}
-}
-
-/* Editor active */
-#add-new-action:checked ~ #main-affairs {
-	& #position-wrapper-editor {
-		visibility: visible;
-	}
-	& .editor {
-		.box-shadows(0 0 7px 3px lightgray);
-		.transitions(box-shadow, .5s, linear);
-	}
-}
-
-//TODO: Remove these below, it's debugging purposes of editor
-#position-wrapper-editor {
-	visibility: visible;
-}
-.editor {
-	.box-shadows(0 0 7px 3px lightgray);
-	.transitions(box-shadow, .5s, linear);
 }
