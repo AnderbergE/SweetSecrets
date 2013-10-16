@@ -138,6 +138,12 @@ function Users($scope) {
 		//TODO: Only edit when applicable
 		$scope.$root.$broadcast('editValue', position, user);
 	}
+	
+	/* Open editor for this user */
+	$scope.add = function() {
+		//TODO: Only edit when applicable
+		$scope.$root.$broadcast('addValue', "user");
+	}
 
 	/* Initialization */
 	$scope.users = [];
@@ -152,75 +158,47 @@ function Users($scope) {
  * @param {Object} $scope Angular.js scope.
  */
 function Editor($scope) {
-	$scope.editor = document.querySelector(".editor");
-	$scope.states = {
-		HIDE: "hide",
-		MENU: "menu-choice",
-		USER: "user-choice",
-		ICON: "icon-choice",
-		BACKGROUND: "background-choice",
-		DELETE: "delete-choice"
-	}
-	$scope.currentState = $scope.states.HIDE;
-
-	$scope.isEditing = false;
-	$scope.isUser = false;
-	$scope.editPosition = null;
-
-	$scope.icon = "\ue006";
-	$scope.r = {name: "red", value: 200};
-	$scope.g = {name: "green", value: 200};
-	$scope.b = {name: "blue", value: 200};
-	/* Watch value changes to update color variables */
-	$scope.$watch('r.value', function(value, old) { setColor($scope.r, value, old); });
-	$scope.$watch('g.value', function(value, old) { setColor($scope.g, value, old); });
-	$scope.$watch('b.value', function(value, old) { setColor($scope.b, value, old); });
-	$scope.active = null;
-
-	/* Listen to edit events */
-	$scope.$on('editValue', function(event, position, type) {
-		var colors = type.background.match(/\d+/g);
-		if (!isNaN(position && colors.length == 3)) {
-			$scope.editPosition = position;
-			if (type.user)
-				$scope.isUser = true;
-			else
-				$scope.isUser = false;
-			$scope.icon = type.icon;
-			$scope.r.value = colors[0];
-			$scope.g.value = colors[1];
-			$scope.b.value = colors[2];
-
-			$scope.isEditing = true;
-			$scope.setState($scope.states.MENU);
+	/* Set the state of the state machine */
+	$scope.setState = function (state, back, forward) {
+		if (state == $scope.states.HIDE) {
+			$scope.currentState = $scope.states.HIDING;
+			setTimeout(function() {
+				$scope.currentState = $scope.states.HIDE;
+				$scope.$apply();
+			}, 500);
+			return
 		}
-	});
-	
-	$scope.setState = function (state) {
+		
+		if ($scope.currentState == $scope.states.HIDE) {
+			$scope.prevStates = [];
+			$scope.nextStates = [];
+		} else if (back)
+			$scope.nextStates.push($scope.currentState);
+		else
+			$scope.prevStates.push($scope.currentState);
+		if (!forward && !back)
+			$scope.nextStates = [];
+		
 		$scope.currentState = state;
+		console.log("c: " +$scope.currentState +
+			"\np: " + $scope.prevStates +
+			"\nn: " + $scope.nextStates);
 	}
 
 	/* State machine, go to previous */
 	$scope.prevState = function () {
-		if ($scope.currentState == $scope.states.MENU) {
+		if ($scope.prevStates.length == 0)
 			$scope.setState($scope.states.HIDE);
-		} else if ($scope.currentState == $scope.states.ICON) {
-			if ($scope.isEditing)
-				$scope.setState($scope.states.MENU);
-			else
-				$scope.setState($scope.states.HIDE);
-		} else if ($scope.currentState == $scope.states.BACKGROUND) {
-			$scope.setState($scope.states.ICON);
-		}
+		else
+			$scope.setState($scope.prevStates.pop(), true);
 	}
 
 	/* State machine, go to next */
 	$scope.nextState = function () {
-		if ($scope.currentState == $scope.states.ICON) {
-			$scope.setState($scope.states.BACKGROUND);
-		} else if ($scope.currentState == $scope.states.BACKGROUND) {
+		if ($scope.nextStates.length == 0)
 			$scope.setState($scope.states.HIDE);
-		}
+		else
+			$scope.setState($scope.nextStates.pop(), false, true);
 	}
 
 	/* Activate a slider */
@@ -266,4 +244,63 @@ function Editor($scope) {
 		color.intensity = value/255;
 		color.others = 255 - color.value;
 	}
+	
+	/* Listen to edit events */
+	$scope.$on('editValue', function(event, position, type) {
+		var colors = type.background.match(/\d+/g);
+		if (isNaN(position) || colors.length != 3) {
+			throw "Edit values incorrect";
+		}
+		$scope.editPosition = position;
+		if (type.user)
+			$scope.isUser = true;
+		else
+			$scope.isUser = false;
+		$scope.icon = type.icon;
+		$scope.r.value = colors[0];
+		$scope.g.value = colors[1];
+		$scope.b.value = colors[2];
+
+		$scope.isEditing = true;
+		$scope.setState($scope.states.MENU);
+	});
+	/* Listen to add events */
+	$scope.$on('addValue', function(event, type) {
+		$scope.setState($scope.states.ICON, true);
+		if (type == "user") {
+			$scope.isUser = true;
+			$scope.nextStates.push($scope.states.USER);
+		} else {
+			$scope.isUser = false;
+		}
+		$scope.nextStates.push($scope.states.BACKGROUND);
+	});
+	
+	/* Initialization */
+	$scope.states = {
+		HIDE: "hide",
+		HIDING: "hiding",
+		MENU: "menu-choice",
+		USER: "user-choice",
+		ICON: "icon-choice",
+		BACKGROUND: "background-choice",
+		DELETE: "delete-choice"
+	}
+	$scope.prevStates = [];
+	$scope.nextStates = [];
+	$scope.setState($scope.states.HIDE);
+
+	$scope.isEditing = false;
+	$scope.isUser = false;
+	$scope.editPosition = null;
+
+	$scope.icon = "\ue006";
+	$scope.r = {name: "red", value: 200};
+	$scope.g = {name: "green", value: 200};
+	$scope.b = {name: "blue", value: 200};
+	/* Watch value changes to update color variables */
+	$scope.$watch('r.value', function(value, old) { setColor($scope.r, value, old); });
+	$scope.$watch('g.value', function(value, old) { setColor($scope.g, value, old); });
+	$scope.$watch('b.value', function(value, old) { setColor($scope.b, value, old); });
+	$scope.active = null;
 }

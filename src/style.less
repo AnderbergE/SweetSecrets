@@ -232,11 +232,12 @@ input[type="checkbox"] {
 	left: 0;
 	opacity: 0.5;
 	position: fixed;
-	.transitions(opacity, 1s, linear);
 	top: 0;
+	.transitions(opacity, .5s, linear);
 	width: 100%;
 }
-.hide .editor-overlay {
+.hide .editor-overlay,
+.hiding .editor-overlay {
 	opacity: 0;
 }
 .editor {

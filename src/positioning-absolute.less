@@ -12,8 +12,14 @@
 	left: 0;
 	position: absolute;
 	top: 12%;
+	.transforms(translateZ(1)); // Do I need this?
+	.transitions(top, .5s, linear);
 	width: 100%;
 	z-index: 200;
+}
+#position-wrapper-editor.hide,
+#position-wrapper-editor.hiding {
+	top: -92%;
 }
 
 #position-wrapper-config {

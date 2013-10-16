@@ -24,7 +24,9 @@
 							<label class="action-button">
 								<div class="action-bgs">
 								</div>
-								<span class="action-text"><</span>
+								<span class="action-text">
+									{{currentState == states.MENU || currentState == states.HIDING ? "|" : prevStates.length == 0 || isEditing ? "O" : "<"}}
+								</span>
 							</label>
 						</div>
 						<div class="action-icon circle editor-icon editor-icon-header">
@@ -37,11 +39,14 @@
 								<span class="action-text">{{icon}}</span>
 							</label>
 						</div>
-						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-next" ng-click="nextState()">
+						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-next"
+							ng-click="nextState()" ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}">
 							<label class="action-button">
 								<div class="action-bgs">
 								</div>
-								<span class="action-text">></span>
+								<span class="action-text">
+									{{nextStates.length == 0 || isEditing ? "v" : ">"}}
+								</span>
 							</label>
 						</div>
 					</div>
@@ -147,7 +152,7 @@
 					</div>
 					<div class="action-icon circle config-icon always-bg add-user user">
 						<input type="checkbox" class="action-selected" id="add-new-user">
-						<label for="add-new-user" class="action-button">
+						<label for="add-new-user" class="action-button" ng-click="add()">
 							<div class="action-bgs">
 								<div class="action-bg" style="background: powderblue;"></div>
 							</div>
