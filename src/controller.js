@@ -51,25 +51,34 @@ function DateActions($scope) {
  * @param {Object} $scope Angular.js scope.
  */
 function ActionTypes($scope) {
-	/* Add a new type of action */
-	$scope.addType = function (name, icon, background) {
-		// TODO: This should be checked on server.
+	/* Open editor for this type */
+	$scope.add = function () {
+		$scope.$root.$broadcast('addValue', null, updateType);
+	}
+
+	/* Open editor for this type */
+	$scope.edit = function (position, type) {
+		$scope.$root.$broadcast('editValue', type, updateType, position);
+	}
+	
+	/* Update an existing type (position -1 will add a type) */
+	function updateType (name, icon, background, position) {
+		// TODO: Error checking and server check.
 		/* Check if values exist. */
 		name = name || "generic";
 		icon = icon || "\ue001";
 		background = background || "rgb(0, 128, 0)";
-		
-		$scope.types.push({name: name, icon: icon, background: background});
-	}
-
-	/* Update an existing type */
-	$scope.updateType = function (name, icon, background, position) {
-		// TODO: Error checking and server check.
-		$scope.types[position] = {name: name, icon: icon, background: background}
+		if (position == null || position < 0)
+			$scope.types.push({name: name, icon: icon, background: background});
+		else {
+			$scope.types[position].name = name;
+			$scope.types[position].icon = icon;
+			$scope.types[position].background = background;
+		}
 	}
 	
-	/* Remove an type */
-	$scope.removeType = function (position) {
+	/* Remove a type */
+	function removeType (position) {
 		// TODO: Error checking and server check.
 		$scope.types.splice(position, 1);
 	}
@@ -99,10 +108,10 @@ function ActionTypes($scope) {
 	$scope.icons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 	
 	// TODO: remove this debug insertion.
-	$scope.addType("candy", "\ue006", "rgb(144, 238, 144)");
-	$scope.addType("cake", "\ue002", "rgb(255, 165, 0)");
-	$scope.addType("drink", "\ue00a", "rgb(255, 105, 180)");
-	$scope.addType("icecream", "\ue009", "rgb(176, 224, 230)");
+	updateType("candy", "\ue006", "rgb(144, 238, 144)");
+	updateType("cake", "\ue002", "rgb(255, 165, 0)");
+	updateType("drink", "\ue00a", "rgb(255, 105, 180)");
+	updateType("icecream", "\ue009", "rgb(176, 224, 230)");
 }
 
 /**
@@ -127,7 +136,7 @@ function Users($scope) {
 		name = name || "generic";
 		icon = icon || "\ue001";
 		background = background || "rgb(138, 43, 226)";
-		if (position < 0)
+		if (position == null || position < 0)
 			$scope.users.push({user: name, icon: icon, background: background});
 		else {
 			$scope.users[position].user = name;
@@ -146,8 +155,8 @@ function Users($scope) {
 	$scope.users = [];
 
 	// TODO: remove this debug insertion.
-	updateUser("Erik Anderberg", "\ue006", "rgb(255, 0, 0)", -1);
-	updateUser("Camilla Bergvall", "\ue004", "rgb(0, 255, 0)", -1);
+	updateUser("Erik Anderberg", "\ue006", "rgb(255, 0, 0)");
+	updateUser("Camilla Bergvall", "\ue004", "rgb(0, 255, 0)");
 }
 
 /**
