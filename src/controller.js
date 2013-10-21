@@ -52,7 +52,7 @@ function DateActions($scope) {
  */
 function ActionTypes($scope) {
 	/* Add a new type of action */
-	$scope.addType = function(name, icon, background) {
+	$scope.addType = function (name, icon, background) {
 		// TODO: This should be checked on server.
 		/* Check if values exist. */
 		name = name || "generic";
@@ -63,19 +63,19 @@ function ActionTypes($scope) {
 	}
 
 	/* Update an existing type */
-	$scope.updateType = function(name, icon, background, position) {
+	$scope.updateType = function (name, icon, background, position) {
 		// TODO: Error checking and server check.
 		$scope.types[position] = {name: name, icon: icon, background: background}
 	}
 	
 	/* Remove an type */
-	$scope.removeType = function(position) {
+	$scope.removeType = function (position) {
 		// TODO: Error checking and server check.
 		$scope.types.splice(position, 1);
 	}
 	
 	/* Calculate the style of a type among types */
-	$scope.calculateStyle = function(type, show) {
+	$scope.calculateStyle = function (type, show) {
 		var amount = $scope.types.length;
 		var attr = {};
 		if (show) attr["background"] = type.background;
@@ -111,12 +111,12 @@ function ActionTypes($scope) {
  */
 function Users($scope) {
 	/* Open editor for this user */
-	$scope.add = function() {
+	$scope.add = function () {
 		$scope.$root.$broadcast('addValue', {user: true}, updateUser);
 	}
 
 	/* Open editor for this user */
-	$scope.edit = function(position, user) {
+	$scope.edit = function (position, user) {
 		$scope.$root.$broadcast('editValue', user, updateUser, position);
 	}
 	

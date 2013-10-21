@@ -12,7 +12,7 @@ else
  * @param {Number|Date} timestamp Ms from epoch or Date object.
  * @returns {Date} The timestamp as a Date object.
  */
-function dateFromTimestamp(timestamp) {
+function dateFromTimestamp (timestamp) {
 	var date = timestamp;
 	if (! timestamp) {
 		date = new Date();
@@ -27,7 +27,7 @@ function dateFromTimestamp(timestamp) {
  * @param {Number|Date} date Ms from epoch or Date object.
  * @returns {Date} The last day in the month of the value supplied.
  */
-function getLastDayInMonth(date) {
+function getLastDayInMonth (date) {
 	date = dateFromTimestamp(date);
 	return new Date(date.getFullYear(), date.getMonth()+1, 0);
 }
@@ -37,7 +37,7 @@ function getLastDayInMonth(date) {
  * @param {Number|Date} date Ms from epoch or Date object.
  * @returns {Number} Ms from epoch of supplied date.
  */
-function getStrippedTime(date) {
+function getStrippedTime (date) {
 	date = dateFromTimestamp(date);
 	return date.setHours(0,0,0,0);
 }
@@ -48,7 +48,7 @@ function getStrippedTime(date) {
  * @param {number|string|Object} value.
  * @throws Error if key or value is not specified.
  */
-function store(key, value) {
+function store (key, value) {
 	// TODO: Server storing.
 	if (!key || !value) {
 		throw "Incorrect usage of store(key, value)";
@@ -63,7 +63,7 @@ function store(key, value) {
  *	if associative array it will be stored as [key] = value.
  * @throws Error if any key does not have a value.
  */
-function storeArray(obj) {
+function storeArray (obj) {
 	for (var key in obj) {
 		store(parseInt(key), obj[key]);
 	}
@@ -76,7 +76,7 @@ function storeArray(obj) {
  *	default value {}.
  * @returns {number|string|Object} The value in storage, or ifEmpty.
  */
-function retrieve(key, ifEmpty) {
+function retrieve (key, ifEmpty) {
 	// TODO: Server retrieving.
 	ifEmpty = ifEmpty || {};
 	key = JSON.parse(key);
