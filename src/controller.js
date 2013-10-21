@@ -63,7 +63,7 @@ function ActionTypes($scope) {
 	}
 
 	/* Update an existing type */
-	$scope.updateType = function(position, name, icon, background) {
+	$scope.updateType = function(name, icon, background, position) {
 		// TODO: Error checking and server check.
 		$scope.types[position] = {name: name, icon: icon, background: background}
 	}
@@ -110,47 +110,44 @@ function ActionTypes($scope) {
  * @param {Object} $scope Angular.js scope.
  */
 function Users($scope) {
-	/* Add a new type of action */
-	$scope.addUser = function(name, icon, background) {
-		// TODO: This should be checked on server.
-		/* Check if values exist. */
-		name = name || "generic";
-		icon = icon || "\ue001";
-		background = background || "rgb(138, 43, 226)";
-		
-		$scope.users.push({user: name, icon: icon, background: background});
-	}
-
-	/* Update an existing type */
-	$scope.updateUser = function(position, name, icon, background) {
-		// TODO: Error checking and server check.
-		$scope.users[position] = {user: name, icon: icon, background: background}
-	}
-	
-	/* Remove an type */
-	$scope.removeUser = function(position) {
-		// TODO: Error checking and server check.
-		$scope.users.splice(position, 1);
+	/* Open editor for this user */
+	$scope.add = function() {
+		$scope.$root.$broadcast('addValue', {user: true}, updateUser);
 	}
 
 	/* Open editor for this user */
 	$scope.edit = function(position, user) {
-		//TODO: Only edit when applicable
-		$scope.$root.$broadcast('editValue', position, user);
+		$scope.$root.$broadcast('editValue', user, updateUser, position);
 	}
 	
-	/* Open editor for this user */
-	$scope.add = function() {
-		//TODO: Only edit when applicable
-		$scope.$root.$broadcast('addValue', "user");
+	/* Update an existing user (position -1 will add a user) */
+	function updateUser (name, icon, background, position) {
+		// TODO: Error checking and server check.
+		/* Check if values exist. */
+		name = name || "generic";
+		icon = icon || "\ue001";
+		background = background || "rgb(138, 43, 226)";
+		if (position < 0)
+			$scope.users.push({user: name, icon: icon, background: background});
+		else {
+			$scope.users[position].user = name;
+			$scope.users[position].icon = icon;
+			$scope.users[position].background = background;
+		}
+	}
+	
+	/* Remove a user */
+	function removeUser (position) {
+		// TODO: Error checking and server check.
+		$scope.users.splice(position, 1);
 	}
 
 	/* Initialization */
 	$scope.users = [];
 
 	// TODO: remove this debug insertion.
-	$scope.addUser("Erik Anderberg", "\ue006", "rgb(255, 0, 0)");
-	$scope.addUser("Camilla Bergvall", "\ue004", "rgb(0, 255, 0)");
+	updateUser("Erik Anderberg", "\ue006", "rgb(255, 0, 0)", -1);
+	updateUser("Camilla Bergvall", "\ue004", "rgb(0, 255, 0)", -1);
 }
 
 /**
@@ -180,24 +177,24 @@ function Editor($scope) {
 			$scope.nextStates = [];
 		
 		$scope.currentState = state;
-		console.log("c: " +$scope.currentState +
-			"\np: " + $scope.prevStates +
-			"\nn: " + $scope.nextStates);
 	}
 
 	/* State machine, go to previous */
 	$scope.prevState = function () {
-		if ($scope.prevStates.length == 0)
+		if ($scope.prevStates.length == 0) {
+			// TODO: This might be cancel, not save.
+			save();
 			$scope.setState($scope.states.HIDE);
-		else
+		} else
 			$scope.setState($scope.prevStates.pop(), true);
 	}
 
 	/* State machine, go to next */
 	$scope.nextState = function () {
-		if ($scope.nextStates.length == 0)
+		if ($scope.nextStates.length == 0) {
+			save();
 			$scope.setState($scope.states.HIDE);
-		else
+		} else
 			$scope.setState($scope.nextStates.pop(), false, true);
 	}
 
@@ -207,9 +204,9 @@ function Editor($scope) {
 		if (color) {
 			event.preventDefault ? event.preventDefault() : event.returnValue = false;
 			$scope.active = color;
-			$scope.sliderChange(event);
+			sliderChange(event);
 			body.onmousemove = function (e) {
-				$scope.$apply($scope.sliderChange(e ? e : window.event));
+				$scope.$apply(sliderChange(e ? e : window.event));
 			};
 			body.onmouseup = function () {
 				$scope.$apply($scope.sliderActive());
@@ -222,7 +219,7 @@ function Editor($scope) {
 	}
 
 	/* Change a slider when applicable */
-	$scope.sliderChange = function (event) {
+	function sliderChange (event) {
 		if ($scope.active) {
 			var head = document.querySelector("." + $scope.active.name + " .slider-header");
 			var pos = document.querySelector("." + $scope.active.name + " .slider-line").getBoundingClientRect();
@@ -245,34 +242,49 @@ function Editor($scope) {
 		color.others = 255 - color.value;
 	}
 	
-	/* Listen to edit events */
-	$scope.$on('editValue', function(event, position, type) {
-		var colors = type.background.match(/\d+/g);
-		if (isNaN(position) || colors.length != 3) {
-			throw "Edit values incorrect";
+	function save () {
+		$scope.save(null, $scope.icon,
+			"rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")",
+			$scope.editPosition);
+	}
+	
+	/* Setup the editor from input */
+	function setupEditor (saveFunc, position, isUser) {
+		if (isNaN(position) || !saveFunc) {
+			throw "Strange editor setup values, check them out";
 		}
+		$scope.save = saveFunc;
+		
 		$scope.editPosition = position;
-		if (type.user)
+		if (isUser)
 			$scope.isUser = true;
 		else
 			$scope.isUser = false;
+	}
+	
+	/* Listen to edit events */
+	$scope.$on('editValue', function(event, type, saveFunc, position) {
+		var colors = type.background.match(/\d+/g);
+		if (colors.length != 3) {
+			throw "Strange editor setup values, check them out";
+		}
 		$scope.icon = type.icon;
 		$scope.r.value = colors[0];
 		$scope.g.value = colors[1];
 		$scope.b.value = colors[2];
 
-		$scope.isEditing = true;
+		setupEditor(saveFunc, position, type.user != null);
 		$scope.setState($scope.states.MENU);
 	});
+	
 	/* Listen to add events */
-	$scope.$on('addValue', function(event, type) {
+	$scope.$on('addValue', function(event, type, saveFunc) {
+		var isUser = type.user != null;
+		setupEditor(saveFunc, -1, isUser);
 		$scope.setState($scope.states.ICON, true);
-		if (type == "user") {
-			$scope.isUser = true;
+		
+		if (isUser)
 			$scope.nextStates.push($scope.states.USER);
-		} else {
-			$scope.isUser = false;
-		}
 		$scope.nextStates.push($scope.states.BACKGROUND);
 	});
 	
@@ -290,7 +302,7 @@ function Editor($scope) {
 	$scope.nextStates = [];
 	$scope.setState($scope.states.HIDE);
 
-	$scope.isEditing = false;
+	$scope.save = null;
 	$scope.isUser = false;
 	$scope.editPosition = null;
 

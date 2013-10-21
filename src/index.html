@@ -70,7 +70,7 @@
 							</div>
 						</div>
 						<div class="center">
-							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.USER)">
+							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.USER)" ng-class="{'hide': !isUser}">
 								<label class="action-button">
 									<div class="action-bgs">
 									</div>
@@ -89,7 +89,8 @@
 					<div class="editor-choose-icon">
 						<div class="action-icon circle editor-icon editor-icon-choice" ng-repeat="icon in icons">
 							<input type="radio" class="action-selected"
-								id="ac{{$index}}" name="choice" value="ac{{$index}}">
+								id="ac{{$index}}" name="choice" value="{{icon}}"
+								ng-model="$parent.icon">
 							<label for="ac{{$index}}" class="action-button">
 								<div class="action-bgs">
 								</div>
