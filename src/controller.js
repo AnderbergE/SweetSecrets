@@ -1,3 +1,29 @@
+var app = angular.module('theApp', []);
+
+app.service('collectionHandler', function () {
+	/* Update an existing collection (position -1 will add a user) */
+	this.updateCollection = function (collection, name, icon, background, position) {
+		// TODO: Error checking and server check.
+		/* Check if values exist. */
+		name = name || "generic";
+		icon = icon || "\ue001";
+		background = background || "rgb(138, 43, 226)";
+		if (position == null || position < 0)
+			collection.push({name: name, icon: icon, background: background});
+		else {
+			collection[position].user = name;
+			collection[position].icon = icon;
+			collection[position].background = background;
+		}
+	}
+	
+	/* Remove a user */
+	this.removeCollection = function (collection, position) {
+		// TODO: Error checking and server check.
+		collection.splice(position, 1);
+	}
+});
+
 /**
  * Dates and their actions.
  * @param {Object} $scope Angular.js scope.
@@ -50,37 +76,19 @@ function DateActions($scope) {
  * Action types available for a date.
  * @param {Object} $scope Angular.js scope.
  */
-function ActionTypes($scope) {
-	/* Open editor for this type */
+function ActionTypes($scope, collectionHandler) {
+	/* Open editor for this user */
 	$scope.add = function () {
-		$scope.$root.$broadcast('addValue', null, updateType);
+		$scope.$root.$broadcast('addValue', {user: true}, function (name, icon, background) {
+			collectionHandler.updateCollection($scope.types, name, icon, background);
+		}, position);
 	}
 
-	/* Open editor for this type */
-	$scope.edit = function (position, type) {
-		$scope.$root.$broadcast('editValue', type, updateType, position);
-	}
-	
-	/* Update an existing type (position -1 will add a type) */
-	function updateType (name, icon, background, position) {
-		// TODO: Error checking and server check.
-		/* Check if values exist. */
-		name = name || "generic";
-		icon = icon || "\ue001";
-		background = background || "rgb(0, 128, 0)";
-		if (position == null || position < 0)
-			$scope.types.push({name: name, icon: icon, background: background});
-		else {
-			$scope.types[position].name = name;
-			$scope.types[position].icon = icon;
-			$scope.types[position].background = background;
-		}
-	}
-	
-	/* Remove a type */
-	function removeType (position) {
-		// TODO: Error checking and server check.
-		$scope.types.splice(position, 1);
+	/* Open editor for this user */
+	$scope.edit = function (position, user) {
+		$scope.$root.$broadcast('editValue', user, function (name, icon, background) {
+			collectionHandler.updateCollection($scope.types, name, icon, background, position);
+		}, position);
 	}
 	
 	/* Calculate the style of a type among types */
@@ -108,55 +116,37 @@ function ActionTypes($scope) {
 	$scope.icons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 	
 	// TODO: remove this debug insertion.
-	updateType("candy", "\ue006", "rgb(144, 238, 144)");
-	updateType("cake", "\ue002", "rgb(255, 165, 0)");
-	updateType("drink", "\ue00a", "rgb(255, 105, 180)");
-	updateType("icecream", "\ue009", "rgb(176, 224, 230)");
+	collectionHandler.updateCollection($scope.types, "candy", "\ue006", "rgb(144, 238, 144)");
+	collectionHandler.updateCollection($scope.types, "cake", "\ue002", "rgb(255, 165, 0)");
+	collectionHandler.updateCollection($scope.types, "drink", "\ue00a", "rgb(255, 105, 180)");
+	collectionHandler.updateCollection($scope.types, "icecream", "\ue009", "rgb(176, 224, 230)");
 }
 
 /**
  * Users for the app.
  * @param {Object} $scope Angular.js scope.
  */
-function Users($scope) {
+function Users($scope, collectionHandler) {
 	/* Open editor for this user */
 	$scope.add = function () {
-		$scope.$root.$broadcast('addValue', {user: true}, updateUser);
+		$scope.$root.$broadcast('addValue', {user: true}, function (name, icon, background) {
+			collectionHandler.updateCollection($scope.users, name, icon, background);
+		}, position);
 	}
 
 	/* Open editor for this user */
 	$scope.edit = function (position, user) {
-		$scope.$root.$broadcast('editValue', user, updateUser, position);
-	}
-	
-	/* Update an existing user (position -1 will add a user) */
-	function updateUser (name, icon, background, position) {
-		// TODO: Error checking and server check.
-		/* Check if values exist. */
-		name = name || "generic";
-		icon = icon || "\ue001";
-		background = background || "rgb(138, 43, 226)";
-		if (position == null || position < 0)
-			$scope.users.push({user: name, icon: icon, background: background});
-		else {
-			$scope.users[position].user = name;
-			$scope.users[position].icon = icon;
-			$scope.users[position].background = background;
-		}
-	}
-	
-	/* Remove a user */
-	function removeUser (position) {
-		// TODO: Error checking and server check.
-		$scope.users.splice(position, 1);
+		$scope.$root.$broadcast('editValue', user, function (name, icon, background) {
+			collectionHandler.updateCollection($scope.users, name, icon, background, position);
+		}, position);
 	}
 
 	/* Initialization */
 	$scope.users = [];
 
 	// TODO: remove this debug insertion.
-	updateUser("Erik Anderberg", "\ue006", "rgb(255, 0, 0)");
-	updateUser("Camilla Bergvall", "\ue004", "rgb(0, 255, 0)");
+	collectionHandler.updateCollection($scope.users, "Erik Anderberg", "\ue006", "rgb(255, 0, 0)");
+	collectionHandler.updateCollection($scope.users, "Camilla Bergvall", "\ue004", "rgb(0, 255, 0)");
 }
 
 /**
