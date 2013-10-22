@@ -11,7 +11,7 @@
 	<input type="checkbox" id="toggle-config" />
 	<input type="checkbox" id="toggle-edit" />
 	<input type="checkbox" id="toggle-date-expander" />
-	<input type="checkbox" id="add-new-action" />
+	<input type="checkbox" id="toggle-editor" />
 
 	<div id="main-affairs" ng-controller="DateActions">
 
@@ -124,6 +124,30 @@
 							<input class="slider-number" ng-model="b.value" />
 						</div>
 					</div>
+					<div class="editor-choose-user">
+						<div class="editor-choose-user-section">
+							<input type="email" class="editor-user-input" placeholder="info@secrets.com" autofocus>
+							<div class="action-icon circle editor-icon editor-user-choice">
+								<label class="action-button">
+									<div class="action-bgs">
+										<div class="action-bg" style="background: orange;"></div>
+									</div>
+									<span class="action-text">&#xe008</span>
+								</label>
+							</div>
+						</div>
+						<div class="editor-choose-user-section">
+							<input type="email" class="editor-user-input" placeholder="********">
+							<div class="action-icon circle editor-icon editor-user-choice">
+								<label class="action-button">
+									<div class="action-bgs">
+										<div class="action-bg" style="background: tomato;"></div>
+									</div>
+									<span class="action-text">&#xe00a</span>
+								</label>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -152,8 +176,7 @@
 						</label>
 					</div>
 					<div class="action-icon circle config-icon always-bg add-user user">
-						<input type="checkbox" class="action-selected" id="add-new-user">
-						<label for="add-new-user" class="action-button" ng-click="add()">
+						<label for="toggle-editor" class="action-button" ng-click="add()">
 							<div class="action-bgs">
 								<div class="action-bg" style="background: powderblue;"></div>
 							</div>
@@ -223,7 +246,7 @@
 					</label>
 				</div>
 				<div class="action-icon circle always-bg add-action action">
-					<label for="add-new-action" class="action-button">
+					<label for="toggle-editor" class="action-button">
 						<div class="action-bgs">
 							<div class="action-bg"></div>
 						</div>

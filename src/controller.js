@@ -5,13 +5,29 @@ app.service('collectionHandler', function () {
 	this.updateCollection = function (collection, name, icon, background, position) {
 		// TODO: Error checking and server check.
 		/* Check if values exist. */
-		name = name || "generic";
-		icon = icon || "\ue001";
-		background = background || "rgb(138, 43, 226)";
+		if (!name) {
+			if (position >= 0)
+				name = collection[position].name;
+			else
+				name = "generic";
+		}
+		if (!icon) {
+			if (position >= 0)
+				icon = collection[position].icon;
+			else
+				icon = "\ue001";
+		}
+		if (!background) {
+			if (position >= 0)
+				background = collection[position].background;
+			else
+				background = "rgb(012, 123, 234)";
+		}
+		
 		if (position == null || position < 0)
 			collection.push({name: name, icon: icon, background: background});
 		else {
-			collection[position].user = name;
+			collection[position].name = name;
 			collection[position].icon = icon;
 			collection[position].background = background;
 		}
@@ -77,16 +93,16 @@ function DateActions($scope) {
  * @param {Object} $scope Angular.js scope.
  */
 function ActionTypes($scope, collectionHandler) {
-	/* Open editor for this user */
+	/* Open editor for this type */
 	$scope.add = function () {
-		$scope.$root.$broadcast('addValue', {user: true}, function (name, icon, background) {
+		$scope.$root.$broadcast('addValue', null, function (name, icon, background) {
 			collectionHandler.updateCollection($scope.types, name, icon, background);
-		}, position);
+		});
 	}
 
-	/* Open editor for this user */
-	$scope.edit = function (position, user) {
-		$scope.$root.$broadcast('editValue', user, function (name, icon, background) {
+	/* Open editor for this type */
+	$scope.edit = function (position, type) {
+		$scope.$root.$broadcast('editValue', type, function (name, icon, background) {
 			collectionHandler.updateCollection($scope.types, name, icon, background, position);
 		}, position);
 	}
@@ -129,9 +145,9 @@ function ActionTypes($scope, collectionHandler) {
 function Users($scope, collectionHandler) {
 	/* Open editor for this user */
 	$scope.add = function () {
-		$scope.$root.$broadcast('addValue', {user: true}, function (name, icon, background) {
+		$scope.$root.$broadcast('addValue', {email: true}, function (name, icon, background) {
 			collectionHandler.updateCollection($scope.users, name, icon, background);
-		}, position);
+		});
 	}
 
 	/* Open editor for this user */
@@ -146,7 +162,11 @@ function Users($scope, collectionHandler) {
 
 	// TODO: remove this debug insertion.
 	collectionHandler.updateCollection($scope.users, "Erik Anderberg", "\ue006", "rgb(255, 0, 0)");
+	$scope.users[0].email = "heyo@ey.moo";
+	$scope.users[0].pass = "pass";
 	collectionHandler.updateCollection($scope.users, "Camilla Bergvall", "\ue004", "rgb(0, 255, 0)");
+	$scope.users[1].email = "blarg@larva.now";
+	$scope.users[1].pass = "pass";
 }
 
 /**
@@ -272,13 +292,13 @@ function Editor($scope) {
 		$scope.g.value = colors[1];
 		$scope.b.value = colors[2];
 
-		setupEditor(saveFunc, position, type.user != null);
+		setupEditor(saveFunc, position, type.email != null);
 		$scope.setState($scope.states.MENU);
 	});
 	
 	/* Listen to add events */
 	$scope.$on('addValue', function(event, type, saveFunc) {
-		var isUser = type.user != null;
+		var isUser = type.email != null;
 		setupEditor(saveFunc, -1, isUser);
 		$scope.setState($scope.states.ICON, true);
 		
