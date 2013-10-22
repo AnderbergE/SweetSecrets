@@ -315,7 +315,7 @@ function Editor($scope) {
 		USER: "user-choice",
 		ICON: "icon-choice",
 		BACKGROUND: "background-choice",
-		DELETE: "delete-choice"
+		REMOVE: "remove-choice"
 	}
 	$scope.prevStates = [];
 	$scope.nextStates = [];

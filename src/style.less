@@ -209,22 +209,6 @@ input[type="checkbox"] {
 	}
 }
 
-
-#toggle-edit:checked ~ #main-affairs .hide ~ div {
-	& .action, .user {
-		animation: action-icon-pulse 1s infinite;
-		-webkit-animation: action-icon-pulse 1s infinite;
-	}
-}
-
-/* Since these inputs are not in the action-icons, we need to add them manually */
-#toggle-config:checked ~ #main-affairs .config-button .action-bg,
-#toggle-edit:checked ~ #main-affairs .edit-button .action-bg {
-	visibility: inherit;
-	opacity: 1;
-}
-
-
 /* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
 .editor-overlay {
 	background: black;
@@ -448,6 +432,25 @@ input[type="checkbox"] {
 		visibility: inherit;
 		opacity: 1;
 	}
+}
+
+/* Remove choice */
+.editor-choose-remove {
+	display: none;
+	text-align: center;
+}
+.remove-choice .editor-choose-remove {
+	display: block;
+}
+.editor-remove-choice {
+	display: inline-block;
+	font-size: 10rem;
+	width: 15rem;
+}
+.editor-logout-choice {
+	font-size: 20rem;
+	margin: 2rem auto 15rem;
+	width: 25rem;
 }
 
 /* ANIMATIONS   ANIMATIONS   ANIMATIONS  ANIMATIONS   ANIMATIONS   ANIMATIONS */

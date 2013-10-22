@@ -100,6 +100,13 @@
 }
 */
 
+/* Since these inputs are not in the action-icons, we need to add them manually */
+#toggle-config:checked ~ #main-affairs .config-button .action-bg,
+#toggle-edit:checked ~ #main-affairs .edit-button .action-bg {
+	visibility: inherit;
+	opacity: 1;
+}
+
 /* Config active */
 #toggle-config:checked ~ #main-affairs {
 	& #position-wrapper-config {
@@ -116,6 +123,13 @@
 
 /* Edit mode active */
 #toggle-edit:checked ~ #main-affairs {
+	& .hide ~ div {
+		& .action, .user {
+			animation: action-icon-pulse 1s infinite;
+			-webkit-animation: action-icon-pulse 1s infinite;
+		}
+	}
+	
 	& .add-action, .add-user {
 		display: block;
 	}
