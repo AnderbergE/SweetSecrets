@@ -1,35 +1,18 @@
 var app = angular.module('theApp', []);
 
+/**
+ * Handle collection functions of users and actions.
+ */
 app.service('collectionHandler', function () {
 	/* Update an existing collection (position -1 will add a user) */
-	this.updateCollection = function (collection, name, icon, background, position) {
+	this.updateCollection = function (collection, updateItems, position) {
 		// TODO: Error checking and server check.
-		/* Check if values exist. */
-		if (!name) {
-			if (position >= 0)
-				name = collection[position].name;
-			else
-				name = "generic";
-		}
-		if (!icon) {
-			if (position >= 0)
-				icon = collection[position].icon;
-			else
-				icon = "\ue001";
-		}
-		if (!background) {
-			if (position >= 0)
-				background = collection[position].background;
-			else
-				background = "rgb(012, 123, 234)";
-		}
-		
 		if (position == null || position < 0)
-			collection.push({name: name, icon: icon, background: background});
+			collection.push(updateItems);
 		else {
-			collection[position].name = name;
-			collection[position].icon = icon;
-			collection[position].background = background;
+			for (item in updateItems) {
+				collection[position][item] = updateItems[item];
+			}
 		}
 	}
 	
@@ -95,15 +78,15 @@ function DateActions($scope) {
 function ActionTypes($scope, collectionHandler) {
 	/* Open editor for this type */
 	$scope.add = function () {
-		$scope.$root.$broadcast('addValue', null, function (name, icon, background) {
-			collectionHandler.updateCollection($scope.types, name, icon, background);
+		$scope.$root.$broadcast('addValue', null, function (updateItems) {
+			collectionHandler.updateCollection($scope.types, updateItems);
 		});
 	}
 
 	/* Open editor for this type */
 	$scope.edit = function (position, type) {
-		$scope.$root.$broadcast('editValue', type, function (name, icon, background) {
-			collectionHandler.updateCollection($scope.types, name, icon, background, position);
+		$scope.$root.$broadcast('editValue', type, function (updateItems) {
+			collectionHandler.updateCollection($scope.types, updateItems, position);
 		}, position);
 	}
 	
@@ -132,10 +115,14 @@ function ActionTypes($scope, collectionHandler) {
 	$scope.icons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 	
 	// TODO: remove this debug insertion.
-	collectionHandler.updateCollection($scope.types, "candy", "\ue006", "rgb(144, 238, 144)");
-	collectionHandler.updateCollection($scope.types, "cake", "\ue002", "rgb(255, 165, 0)");
-	collectionHandler.updateCollection($scope.types, "drink", "\ue00a", "rgb(255, 105, 180)");
-	collectionHandler.updateCollection($scope.types, "icecream", "\ue009", "rgb(176, 224, 230)");
+	collectionHandler.updateCollection($scope.types,
+		{name: "candy", icon: "\ue006", background: "rgb(144, 238, 144)"});
+	collectionHandler.updateCollection($scope.types,
+		{name: "cake", icon: "\ue002", background: "rgb(255, 165, 0)"});
+	collectionHandler.updateCollection($scope.types,
+		{name: "drink", icon: "\ue00a", background: "rgb(255, 105, 180)"});
+	collectionHandler.updateCollection($scope.types,
+		{name: "icecream", icon: "\ue009", background: "rgb(176, 224, 230)"});
 }
 
 /**
@@ -145,15 +132,15 @@ function ActionTypes($scope, collectionHandler) {
 function Users($scope, collectionHandler) {
 	/* Open editor for this user */
 	$scope.add = function () {
-		$scope.$root.$broadcast('addValue', {email: true}, function (name, icon, background) {
-			collectionHandler.updateCollection($scope.users, name, icon, background);
+		$scope.$root.$broadcast('addValue', {email: true}, function (updateItems) {
+			collectionHandler.updateCollection($scope.users, updateItems);
 		});
 	}
 
 	/* Open editor for this user */
 	$scope.edit = function (position, user) {
-		$scope.$root.$broadcast('editValue', user, function (name, icon, background) {
-			collectionHandler.updateCollection($scope.users, name, icon, background, position);
+		$scope.$root.$broadcast('editValue', user, function (updateItems) {
+			collectionHandler.updateCollection($scope.users, updateItems, position);
 		}, position);
 	}
 
@@ -161,12 +148,10 @@ function Users($scope, collectionHandler) {
 	$scope.users = [];
 
 	// TODO: remove this debug insertion.
-	collectionHandler.updateCollection($scope.users, "Erik Anderberg", "\ue006", "rgb(255, 0, 0)");
-	$scope.users[0].email = "heyo@ey.moo";
-	$scope.users[0].pass = "pass";
-	collectionHandler.updateCollection($scope.users, "Camilla Bergvall", "\ue004", "rgb(0, 255, 0)");
-	$scope.users[1].email = "blarg@larva.now";
-	$scope.users[1].pass = "pass";
+	collectionHandler.updateCollection($scope.users,
+		{name: "Erik Anderberg", icon: "\ue006", background: "rgb(255, 0, 0)", email: "heyo@ey.moo", pass: "pass"});
+	collectionHandler.updateCollection($scope.users,
+		{name: "Camilla Bergvall", icon: "\ue004", background: "rgb(0, 255, 0)", email: "blarg@larva.now", pass: "pass"});
 }
 
 /**
@@ -192,11 +177,9 @@ function Editor($scope) {
 			$scope.nextStates.push($scope.currentState);
 		else
 			$scope.prevStates.push($scope.currentState);
-		if (!forward && !back)
+		if (!forward && !back ||
+			state == $scope.states.MENU)
 			$scope.nextStates = [];
-		if (state == $scope.states.MENU) {
-			$scope.nextStates = [];
-		}
 		
 		$scope.currentState = state;
 	}
@@ -265,9 +248,8 @@ function Editor($scope) {
 	}
 	
 	function save () {
-		$scope.save(null, $scope.icon,
-			"rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")",
-			$scope.editPosition);
+		$scope.save({icon: $scope.icon,
+			background: "rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")"});
 	}
 	
 	/* Setup the editor from input */
