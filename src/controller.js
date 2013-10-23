@@ -194,6 +194,9 @@ function Editor($scope) {
 			$scope.prevStates.push($scope.currentState);
 		if (!forward && !back)
 			$scope.nextStates = [];
+		if (state == $scope.states.MENU) {
+			$scope.nextStates = [];
+		}
 		
 		$scope.currentState = state;
 	}

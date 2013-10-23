@@ -20,12 +20,13 @@
 			<div class="editor">
 				<div class="editor-header">
 					<div class="editor-header-icons">
-						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-prev" ng-click="prevState()">
+						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-prev"
+							ng-click="prevState()" ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}">
 							<label class="action-button">
 								<div class="action-bgs">
 								</div>
 								<span class="action-text">
-									{{currentState == states.MENU || currentState == states.HIDING ? "|" : prevStates.length == 0 || isEditing ? "O" : "<"}}
+									{{prevStates.length == 0 || isEditing ? "O" : "<"}}
 								</span>
 							</label>
 						</div>
@@ -40,12 +41,12 @@
 							</label>
 						</div>
 						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-next"
-							ng-click="nextState()" ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}">
+							ng-click="nextState()">
 							<label class="action-button">
 								<div class="action-bgs">
 								</div>
 								<span class="action-text">
-									{{nextStates.length == 0 || isEditing ? "v" : ">"}}
+									{{currentState == states.MENU || currentState == states.HIDING ? "|" : nextStates.length == 0 || isEditing ? "v" : ">"}}
 								</span>
 							</label>
 						</div>
