@@ -54,7 +54,7 @@
 				</div>
 				<div class="editor-choices">
 					<div class="editor-choose-menu">
-						<div class="center">
+						<div class="center editor-menu-appearance">
 							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.ICON)">
 								<label class="action-button">
 									<div class="action-bgs">
@@ -70,7 +70,7 @@
 								</label>
 							</div>
 						</div>
-						<div class="center">
+						<div class="center editor-menu-info">
 							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.USER)" ng-class="{'hide': !isUser}">
 								<label class="action-button">
 									<div class="action-bgs">
@@ -126,8 +126,8 @@
 						</div>
 					</div>
 					<div class="editor-choose-user">
-						<div class="editor-choose-user-section">
-							<input type="email" class="editor-user-input" placeholder="info@secrets.com" autofocus>
+						<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-email').focus()">
+							<input type="email" id="editor-user-email" class="editor-user-input" placeholder="info@secrets.com" autofocus>
 							<div class="action-icon circle editor-icon editor-user-choice">
 								<label class="action-button">
 									<div class="action-bgs">
@@ -137,8 +137,8 @@
 								</label>
 							</div>
 						</div>
-						<div class="editor-choose-user-section">
-							<input type="email" class="editor-user-input" placeholder="********">
+						<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-password').focus()">
+							<input type="password" id="editor-user-password" class="editor-user-input" placeholder="********">
 							<div class="action-icon circle editor-icon editor-user-choice">
 								<label class="action-button">
 									<div class="action-bgs">
