@@ -23,18 +23,14 @@
 }
 
 #position-wrapper-config {
+	height: @config-size + 1;
 	left: 0;
+	overflow: hidden;
 	position: absolute;
 	top: 0;
+	width: @config-size + 1;
 	z-index: 100;
-
 	.transitions(width, .2s, linear);
-}
-.config-menu {
-	display: none;
-	opacity: 0;
-
-	.transitions(opacity, .2s, linear);
 }
 
 #position-wrapper-date {
@@ -107,17 +103,34 @@
 	opacity: 1;
 }
 
+#toggle-config:not(:checked) ~ #main-affairs .active {
+	& .config-button {
+		position: absolute;
+		z-index: 5;
+		color: transparent;
+		background: transparent;
+	}
+	& .user:not(.selected) {
+		display: none;
+		margin: 0;
+	}
+}
+
 /* Config active */
 #toggle-config:checked ~ #main-affairs {
 	& #position-wrapper-config {
 		width: 100%;
 	}
 	& .config {
-		background: rgba(0, 0, 0, 0.5) ;
+		background: rgba(0, 0, 0, 0.5);
+		opacity: 0.9;
 	}
-	& .config-menu {
-		display: inline;
-		opacity: 0.75;
+	.config-button {
+		background: palegreen;
+
+		& .action-text:before {
+			content: "\e001"
+		}
 	}
 }
 
@@ -131,6 +144,6 @@
 	}
 	
 	& .add-action, .add-user {
-		display: block;
+		display: inline-block;
 	}
 }

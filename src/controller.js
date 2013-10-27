@@ -27,20 +27,7 @@ app.service('collectionHandler', function () {
  * Dates and their actions.
  * @param {Object} $scope Angular.js scope.
  */
-function DateActions($scope) {
-	/* Fill the calendar for this month. */
-	$scope.fillMonth = function (timestamp) {
-		$scope.dates = {};
-		var end = (getLastDayInMonth(timestamp)).getDate();
-		var date = new Date(timestamp);
-		var temp;
-		for (var i = 1; i <= end; i++) {
-			date.setDate(i);
-			temp = date.setHours(0,0,0,0);
-			$scope.dates[temp] = retrieve(temp);
-		}
-	}
-	
+function DateActions($scope, $timeout) {
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
 		// TODO: This storing is not enough, we should store on all changes.
@@ -52,23 +39,71 @@ function DateActions($scope) {
 		// (Math.floor(Math.abs(amount) / 12)*12 +
 		if ((12 + month + amount) % 12 != temp.getMonth())
 			$scope.selected = temp.setDate(0);
-		$scope.fillMonth($scope.selected);
-	}
-	
-	/* Returns true if the date is within 3 days of the selected date. */
-	$scope.nearbyDate = function (day) {
-		var start = dateFromTimestamp($scope.selected);
-		start.setDate(start.getDate()-3);
-		var end = dateFromTimestamp($scope.selected);
-		end.setDate(end.getDate()+3);
-		return day >= start.setHours(0,0,0,0) &&
-			day <= end.setHours(0,0,0,0);
+		fillMonth($scope.selected);
 	}
 
+	/* Fill the calendar for this month. */
+	function fillMonth (timestamp) {
+		$scope.dates = {};
+		var end = (getLastDayInMonth(timestamp)).getDate();
+		var date = new Date(timestamp);
+		var temp;
+		for (var i = 1; i <= end; i++) {
+			date.setDate(i);
+			temp = date.setHours(0,0,0,0);
+			$scope.dates[temp] = retrieve(temp);
+		}
+	}
+
+	/* If today is in the month, make it show */
+	function setToday () {
+		var day = document.getElementById($scope.today);
+		if (day) {
+			day = day.parentNode;
+			day.className = day.className + " today";
+		}
+	}
+
+	function updateNearby () {
+    	// Remove old nearby dates.
+		var old = global_position_wrapper_date.querySelectorAll(".nearby");
+		for (var i = 0; old && i < old.length; i++) {
+			old[i].className = old[i].className.replace(" nearby", "");
+		}
+
+    	// Add new nearby dates.
+		var day = document.getElementById($scope.selected);
+		if (day) {
+			day = day.parentNode;
+			day.className = day.className + " nearby";
+			var prev = day.previousSibling;
+			var next = day.nextSibling;
+			for (var i = 1; i <= NEARBY_DATES; i++) {
+				if (prev) {
+					prev.className = prev.className + " nearby";
+					prev = prev.previousSibling;
+				}
+				if (next){
+					next.className = next.className + " nearby";
+					next = next.nextSibling;
+				}
+			}
+		}
+
+		setToday();
+	}
+
+	/* Update classes related to selected date. */
+	$scope.$watch('selected', function() {
+		// By using timeout we delay this function till after the DOM has updated.
+		$timeout(function() { updateNearby() });
+	});
+
 	/* Initialization */
+	var NEARBY_DATES = 3;
 	$scope.today = getStrippedTime();
 	$scope.selected = $scope.today;
-	$scope.fillMonth($scope.selected);
+	fillMonth($scope.selected);
 }
 
 /**
@@ -78,41 +113,43 @@ function DateActions($scope) {
 function ActionTypes($scope, collectionHandler) {
 	/* Open editor for this type */
 	$scope.add = function () {
-		$scope.$root.$broadcast('addValue', null, function (updateItems) {
+		$scope.$root.$broadcast('addValue', {}, function (updateItems) {
+			updateItems.name = $scope.types.length;
 			collectionHandler.updateCollection($scope.types, updateItems);
 		});
 	}
 
 	/* Open editor for this type */
 	$scope.edit = function (position, type) {
-		$scope.$root.$broadcast('editValue', type, function (updateItems) {
-			collectionHandler.updateCollection($scope.types, updateItems, position);
-		}, position);
-	}
-	
-	/* Calculate the style of a type among types */
-	$scope.calculateStyle = function (type, show) {
-		var amount = $scope.types.length;
-		var attr = {};
-		if (show) attr["background"] = type.background;
-			
-		if (amount < 6) {
-			attr["height"] = (100 / amount) + "%";
-			attr["width"] = "100%";
-		} else {
-			attr["height"] = (100 / Math.ceil(amount/2)) + "%";
-			if (this.$index == amount - 1 && amount % 2 > 0)
-				attr["width"] = "100%";
-			else attr["width"] = "50%";
+		if (document.getElementById("toggle-edit").checked) {
+			$scope.$root.$broadcast('editValue', type, function (updateItems) {
+				collectionHandler.updateCollection($scope.types, updateItems, position);
+			}, position);
 		}
-		return attr;
 	}
+
+	/* Update style related to actions. */
+	$scope.$watch('types', function() {
+		console.log("hej");
+		var amount = $scope.types.length;
+		var ruleValue = "";
+		if (amount < 6) {
+			ruleValue += "height:" + (100 / amount) + "%;";
+			ruleValue += "width:100%;";
+		} else {
+			ruleValue += "height:" + (100 / Math.ceil(amount/2)) + "%;";
+			ruleValue += "width:50%;";
+			if (amount % 2 > 0)
+				dynamicStyle.editRule('.day .action-bg:last-child', "width:100%;");
+			else
+				dynamicStyle.editRule('.day .action-bg:last-child', "width:50%;");
+		}
+		
+		dynamicStyle.editRule('.day .action-bg', ruleValue);
+	}, true);
 	
 	/* Initialization */
 	$scope.types = [];
-	
-	// TODO: This should have its own controller.
-	$scope.icons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 	
 	// TODO: remove this debug insertion.
 	collectionHandler.updateCollection($scope.types,
@@ -139,13 +176,16 @@ function Users($scope, collectionHandler) {
 
 	/* Open editor for this user */
 	$scope.edit = function (position, user) {
-		$scope.$root.$broadcast('editValue', user, function (updateItems) {
-			collectionHandler.updateCollection($scope.users, updateItems, position);
-		}, position);
+		if (document.getElementById("toggle-edit").checked) {
+			$scope.$root.$broadcast('editValue', user, function (updateItems) {
+				collectionHandler.updateCollection($scope.users, updateItems, position);
+			}, position);
+		}
 	}
 
 	/* Initialization */
 	$scope.users = [];
+	$scope.activeUser;
 
 	// TODO: remove this debug insertion.
 	collectionHandler.updateCollection($scope.users,
@@ -305,6 +345,7 @@ function Editor($scope) {
 	$scope.prevStates = [];
 	$scope.nextStates = [];
 	$scope.setState($scope.states.HIDE);
+	$scope.availableIcons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 
 	$scope.save = null;
 	$scope.isUser = false;

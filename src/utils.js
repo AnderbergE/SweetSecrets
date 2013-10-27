@@ -1,12 +1,3 @@
-/* Initialise storage, use local storage, otherwise associative array. */
-/** @global STORAGE - storage cache on client, localStorage or an object. */
-var STORAGE;
-if (typeof(Storage) !== "undefined")
-	STORAGE = localStorage;
-else
-	STORAGE = {};
-
-
 /**
  * Returns a Date object from a timestamp.
  * @param {Number|Date} timestamp Ms from epoch or Date object.

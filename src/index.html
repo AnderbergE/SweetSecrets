@@ -6,14 +6,14 @@
 	<title>Test</title>
 	<link href='http://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister' rel='stylesheet' type='text/css'>
 </head>
-<body ng-app="theApp" ng-controller="ActionTypes" ng-cloak>
+<body ng-app="theApp" ng-cloak>
 
 	<input type="checkbox" id="toggle-config" />
 	<input type="checkbox" id="toggle-edit" />
 	<input type="checkbox" id="toggle-date-expander" />
 	<input type="checkbox" id="toggle-editor" />
 
-	<div id="main-affairs" ng-controller="DateActions">
+	<div id="main-affairs">
 
 		<div id="position-wrapper-editor" ng-controller="Editor" ng-class="currentState">
 			<div class="editor-overlay" ng-click="setState(states.HIDE)"></div>
@@ -88,7 +88,7 @@
 						</div>
 					</div>
 					<div class="editor-choose-icon">
-						<div class="action-icon circle editor-icon editor-icon-choice" ng-repeat="icon in icons">
+						<div class="action-icon circle editor-icon editor-icon-choice" ng-repeat="icon in availableIcons">
 							<input type="radio" class="action-selected"
 								id="ac{{$index}}" name="choice" value="{{icon}}"
 								ng-model="$parent.icon">
@@ -176,21 +176,18 @@
 		</div>
 		
 		<div id="position-wrapper-config">
-			<div class="config">
+			<div class="config" ng-controller="Users" ng-class="{active: activeUser >= 0}">
 				<div class="action-icon circle config-icon config-button">
 					<!-- input is at the top. -->
-					<label for="toggle-config" class="action-button">
-						<div class="action-bgs">
-							<div class="action-bg" style="background: powderblue;"></div>
-						</div>
-						<span class="action-text">&#xe000</span>
+					<label for="toggle-config" class="action-button toggle-config-label">
+						<span class="action-text"></span>
 					</label>
 				</div>
-				<div class="config-menu" ng-controller="Users">
+				<div class="config-menu">
 					<div class="action-icon circle config-icon user"
-						ng-repeat="(key, user) in users">
+						ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}">
 						<input type="radio" class="action-selected"
-							id="user{{key}}" name="user" value="{{key}}">
+							id="user{{key}}" name="user" value="{{key}}" ng-model="$parent.activeUser">
 						<label for="user{{key}}" class="action-button" ng-click="edit(key, user)">
 							<div class="action-bgs">
 								<div class="action-bg" style="background: {{user.background}};"></div>
@@ -219,64 +216,67 @@
 			</div>
 		</div>
 
-		<div id="position-wrapper-date">
-			<nav class="date-nav">
-				<div class="date-overview">
-					<a href="" class="month-change prev" ng-click="changeMonth(-1)"><</a>
-					<label class="toggle-date-expander-label" for="toggle-date-expander">
-						<span class="year"
-							ng-class="{'this-year': (selected | date:'yyyy') == (today | date:'yyyy')}">
-							{{selected | date:'yyyy'}} - 
-						</span>
-						<span class="month"
-							ng-class="{'this-month': (selected | date:'M') == (today | date:'M')}">
-							{{selected | date:'MMM'}}
-						</span>
-					</label>
-					<a href="" class="month-change next" ng-click="changeMonth(1)">></a>
-				</div>
-				<div class="days">
-					<div class="action-icon circle inner-circle-selected always-bg day {{day | date:'EEEE' | lowercase}}"
-						ng-repeat="(day, actions) in dates"
-						ng-class="{today: day == today, nearby: nearbyDate(day)}">
-						<input type="radio" name="date" class="action-selected"
-							id="{{day}}" value="{{day}}" ng-model="$parent.selected">
-						<label for="{{day}}" class="action-button">
+		<div class="controller-wrapper" ng-controller="ActionTypes">
+		<div class="controller-wrapper" ng-controller="DateActions">
+			<div id="position-wrapper-date">
+				<nav class="date-nav">
+					<div class="date-overview">
+						<a href="" class="month-change prev" ng-click="changeMonth(-1)"><</a>
+						<label class="toggle-date-expander-label" for="toggle-date-expander">
+							<span class="year"
+								ng-class="{'this-year': (selected | date:'yyyy') == (today | date:'yyyy')}">
+								{{selected | date:'yyyy'}} - 
+							</span>
+							<span class="month"
+								ng-class="{'this-month': (selected | date:'M') == (today | date:'M')}">
+								{{selected | date:'MMM'}}
+							</span>
+						</label>
+						<a href="" class="month-change next" ng-click="changeMonth(1)">></a>
+					</div>
+					<div class="days">
+						<div class="action-icon circle inner-circle-selected always-bg day {{day | date:'EEEE' | lowercase}}"
+							ng-repeat="(day, actions) in dates">
+							<input type="radio" name="date" class="action-selected"
+								id="{{day}}" value="{{day}}" ng-model="$parent.selected">
+							<label for="{{day}}" class="action-button">
+								<div class="action-bgs">
+									<div class="action-bg"
+										ng-repeat="action in types"
+										ng-style="actions[action.name] ? {'background': action.background} : ''"></div>
+								</div>
+								<span class="action-text">{{day | date:'d'}}</span>
+							</label>
+						</div>
+					</div>
+				</nav>
+			</div>
+
+			<div id="position-wrapper-actions">
+				<div class="actions">
+					<div class="action-icon circle action"
+						ng-repeat="type in types">
+						<input type="checkbox" class="action-selected"
+							id="{{type.name}}" value="{{type.name}}"
+							ng-model="dates[selected][type.name]">
+						<label for="{{type.name}}" class="action-button">
 							<div class="action-bgs">
-								<div class="action-bg"
-									ng-repeat="action in types"
-									ng-style="calculateStyle(action, actions[action.name])"></div>
+								<div class="action-bg" style="background: {{type.background}};"></div>
 							</div>
-							<span class="action-text">{{day | date:'d'}}</span>
+							<span class="action-text">{{type.icon}}</span>
+						</label>
+					</div>
+					<div class="action-icon circle always-bg add-action action">
+						<label for="toggle-editor" class="action-button" ng-click="add()">
+							<div class="action-bgs">
+								<div class="action-bg"></div>
+							</div>
+							<span class="action-text">+</span>
 						</label>
 					</div>
 				</div>
-			</nav>
-		</div>
-
-		<div id="position-wrapper-actions">
-			<div class="actions">
-				<div class="action-icon circle action"
-					ng-repeat="type in types">
-					<input type="checkbox" class="action-selected"
-						id="{{type.name}}" value="{{type.name}}"
-						ng-model="dates[selected][type.name]">
-					<label for="{{type.name}}" class="action-button">
-						<div class="action-bgs">
-							<div class="action-bg" style="background: {{type.background}};"></div>
-						</div>
-						<span class="action-text">{{type.icon}}</span>
-					</label>
-				</div>
-				<div class="action-icon circle always-bg add-action action">
-					<label for="toggle-editor" class="action-button">
-						<div class="action-bgs">
-							<div class="action-bg"></div>
-						</div>
-						<span class="action-text">+</span>
-					</label>
-				</div>
 			</div>
+		</div>
 		</div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular.js"></script>
