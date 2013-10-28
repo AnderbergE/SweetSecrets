@@ -1,6 +1,7 @@
 var global_html = document.getElementsByTagName("html")[0];
 var global_position_wrapper_date = document.getElementById("position-wrapper-date");
 var global_position_wrapper_actions = document.getElementById('position-wrapper-actions');
+var global_toggle_edit = document.querySelector('#toggle-edit');
 
 /* Initialise storage, use local storage, otherwise associative array. */
 /** @global STORAGE - storage cache on client, localStorage or an object. */

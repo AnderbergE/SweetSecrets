@@ -18,14 +18,21 @@ function calculateGeneralStyle () {
 	}
 	global_html.style.fontSize = "1vmin";
 
+	calculateActionStyle();
+}
 
-	// Calculate the size of the action buttons.
+/**
+ * Calculates the size of the action types.
+ */
+global_toggle_edit.onclick = calculateActionStyle;
+function calculateActionStyle () {
 	var types = global_position_wrapper_actions.children[0].children;
 	var len = types.length;
-	if (getComputedStyle(types[len-1]).display == 'none') {
+	if (!global_toggle_edit.checked) {
 		len--;
 	}
 
+	var landscape = window.innerHeight < window.innerWidth;
 	var size;
 	if (landscape) {
 		size = calculateActionSize(global_position_wrapper_actions.clientWidth-global_position_wrapper_date.clientWidth-len,
@@ -34,11 +41,7 @@ function calculateGeneralStyle () {
 		size = calculateActionSize(window.innerWidth-len,
 			window.innerHeight-global_position_wrapper_date.clientHeight-len, len);
 	}
-	// TODO: Can this be done using css class instead?
-	// Such as: document.styleSheets[1].insertRule(".action { height: " + size + "; width: " + size + "; }");
-	for (var i = 0; i < len; i++) {
-		types[i].style.width = types[i].style.height = size;
-	}
+	dynamicStyle.editRule(".action", "width:" + size + ";");
 }
 
 /**

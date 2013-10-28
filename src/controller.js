@@ -130,6 +130,8 @@ function ActionTypes($scope, collectionHandler) {
 
 	/* Update style related to actions. */
 	$scope.$watch('types', function() {
+		calculateActionStyle();
+		
 		var amount = $scope.types.length;
 		var ruleValue = "";
 		if (amount < 6) {
