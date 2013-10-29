@@ -16,7 +16,7 @@ function calculateGeneralStyle () {
 		global_position_wrapper_actions.style.paddingLeft = "";
 		global_position_wrapper_actions.style.paddingTop = window.getComputedStyle(global_position_wrapper_date).height;
 	}
-	global_html.style.fontSize = "1vmin";
+	global_body.style.fontSize = "1vmin";
 
 	calculateActionStyle();
 }
@@ -25,12 +25,13 @@ function calculateGeneralStyle () {
  * Calculates the size of the action types.
  */
 global_toggle_edit.onclick = calculateActionStyle;
-function calculateActionStyle () {
-	var types = global_position_wrapper_actions.children[0].children;
-	var len = types.length;
-	if (!global_toggle_edit.checked) {
+function calculateActionStyle (amount) {
+	if (amount > 0)
+		var len = amount;
+	else
+		var len = global_position_wrapper_actions.children[0].children.length;
+	if (!global_toggle_edit.checked)
 		len--;
-	}
 
 	var landscape = window.innerHeight < window.innerWidth;
 	var size;

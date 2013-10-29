@@ -1,3 +1,4 @@
+/* Angular app baby yeah! */
 var app = angular.module('theApp', []);
 
 /**
@@ -16,7 +17,7 @@ app.service('collectionHandler', function () {
 		}
 	}
 	
-	/* Remove a user */
+	/* Remove something from a collection */
 	this.removeCollection = function (collection, position) {
 		// TODO: Error checking and server check.
 		collection.splice(position, 1);
@@ -64,6 +65,7 @@ function DateActions($scope, $timeout) {
 		}
 	}
 
+	/* Set the nearby class to day elements */
 	function updateNearby () {
     	// Remove old nearby dates.
 		var old = global_position_wrapper_date.querySelectorAll(".nearby");
@@ -130,7 +132,7 @@ function ActionTypes($scope, collectionHandler) {
 
 	/* Update style related to actions. */
 	$scope.$watch('types', function() {
-		calculateActionStyle();
+		calculateActionStyle($scope.types.length+1); // +1 Due to add-action element.
 		
 		var amount = $scope.types.length;
 		var ruleValue = "";
@@ -145,7 +147,6 @@ function ActionTypes($scope, collectionHandler) {
 			else
 				dynamicStyle.editRule('.day .action-bg:last-child', "width:50%;");
 		}
-		
 		dynamicStyle.editRule('.day .action-bg', ruleValue);
 	}, true);
 	
@@ -288,6 +289,7 @@ function Editor($scope) {
 		color.others = 255 - color.value;
 	}
 	
+	/* Call the save method (supplied to the setup) */
 	function save () {
 		$scope.save({icon: $scope.icon,
 			background: "rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")"});
@@ -353,6 +355,7 @@ function Editor($scope) {
 	$scope.editPosition = null;
 
 	$scope.icon = "\ue006";
+	/* For the color slider, note that the names correspond to the slider names! */
 	$scope.r = {name: "red", value: 200};
 	$scope.g = {name: "green", value: 200};
 	$scope.b = {name: "blue", value: 200};
