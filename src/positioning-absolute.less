@@ -1,6 +1,8 @@
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
 @import "mixins.less";
-
+@editor-top: 12%;
+@editor-height: 80%;
+@editor-inner-to-outer-ratio: 100%/@editor-height;
 
 /* POSITIONING  POSITIONING POSITIONING  POSITIONING POSITIONING  POSITIONING */
 #main-affairs {
@@ -8,29 +10,35 @@
 }
 
 #position-wrapper-editor {
-	height: 80%;
+	height: @editor-height;
 	left: 0;
 	position: absolute;
-	top: 12%;
-	.transforms(translateZ(1)); // Do I need this?
-	.transitions(top, .5s, linear);
+	top: @editor-top;
+	.transforms(translate3d(0,0,0));
+	// mixin .transitions doesn't work when attribute differ between prefix. Yet.
+	-webkit-transition: -webkit-transform 0.5s linear 0s;
+	transition: transform 0.5s linear 0s;
 	width: 100%;
 	z-index: 200;
 }
 #position-wrapper-editor.hide,
 #position-wrapper-editor.hiding {
-	top: -92%;
+	.transforms(translate3d(0,-(@editor-top*@editor-inner-to-outer-ratio+100%),0));
+}
+#position-wrapper-editor.hide {
+	z-index: -1;
 }
 
 #position-wrapper-config {
 	height: @config-size + 1;
 	left: 0;
 	overflow: hidden;
-	position: absolute;
+	position: fixed;
 	top: 0;
+	.transforms(translateZ(0));
+	.transitions(width, .2s, linear);
 	width: @config-size + 1;
 	z-index: 100;
-	.transitions(width, .2s, linear);
 }
 
 #position-wrapper-date {

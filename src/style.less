@@ -66,12 +66,6 @@ input[type="checkbox"] {
 	font-style: normal;
 }
 
-/* Display: none will disable transitions, use this instead */
-.hide {
-    height: 0 !important;
-    overflow: hidden !important;
-    z-index: -1 !important;
-}
 .center {
 	margin-left: auto;
 	margin-right: auto;
@@ -219,11 +213,11 @@ input[type="checkbox"] {
 /* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
 .editor-overlay {
 	background: black;
-	height: 100%;
+	height: 2*100%*@editor-inner-to-outer-ratio;
 	left: 0;
 	opacity: 0.5;
 	position: fixed;
-	top: 0;
+	top: -@editor-top*@editor-inner-to-outer-ratio;
 	.transitions(opacity, .5s, linear);
 	width: 100%;
 }
