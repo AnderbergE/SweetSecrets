@@ -4,13 +4,10 @@
  * @returns {Date} The timestamp as a Date object.
  */
 function dateFromTimestamp (timestamp) {
-	var date = timestamp;
-	if (! timestamp) {
-		date = new Date();
-	} else if (! (timestamp instanceof Date)) { 
-		date = new Date(parseInt(timestamp));
-	}
-	return date;
+	if (! timestamp)
+		return new Date();
+	else if (! (timestamp instanceof Date))
+		return new Date(parseInt(timestamp));
 }
 
 /**
@@ -41,10 +38,9 @@ function getStrippedTime (date) {
  */
 function store (key, value) {
 	// TODO: Server storing.
-	if (!key || !value) {
+	if (!key || !value)
 		throw "Incorrect usage of store(key, value)";
-	}
-	STORAGE[JSON.stringify(key)] = JSON.stringify(value);
+	storage[JSON.stringify(key)] = JSON.stringify(value);
 }
 
 /**
@@ -71,7 +67,7 @@ function retrieve (key, ifEmpty) {
 	// TODO: Server retrieving.
 	ifEmpty = ifEmpty || {};
 	key = JSON.parse(key);
-	if (STORAGE[key])
-		return JSON.parse(STORAGE[key]);
+	if (storage[key])
+		return JSON.parse(storage[key]);
 	return ifEmpty;
 }

@@ -2,7 +2,7 @@
 var app = angular.module('theApp', []);
 
 /**
- * Handle collection functions of users and actions.
+ * A service to handle collection functions of users and actions.
  */
 app.service('collectionHandler', function () {
 	/* Update an existing collection (position -1 will add a user) */
