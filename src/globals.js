@@ -12,6 +12,7 @@ if (typeof(Storage) !== "undefined")
 else
 	STORAGE = {};
 
+/* Dynamic style is the go to way when you want to edit css values in run-time. */
 var dynamicStyle = (function() {
 	var style = document.createElement("style");
 	// WebKit hack :(

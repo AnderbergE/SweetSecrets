@@ -23,6 +23,7 @@ function calculateGeneralStyle () {
 
 /**
  * Calculates the size of the action types.
+ * @param {Number} amount How many action types there is.
  */
 global_toggle_edit.onclick = calculateActionStyle;
 function calculateActionStyle (amount) {
@@ -65,15 +66,22 @@ function calculateActionSize (width, height, amount) {
 
 	for (i = 1; i <= amount; i++) {
 		temp = Math.min(big / Math.ceil(amount / i), small / i);
-		if (temp >= max) {
+		if (temp >= max)
 			max = temp;
-		} else {
+		else
 			break;
-		}
 	}
 	i--;
-	if (max*i < width) {
+	
+	if (max*i < width)
 		return Math.floor(max) + "px";
-	}
 	return (99-amount*0.25)/i + "%";
+}
+
+/* When closing config, disable edit mode. */
+document.querySelector('#toggle-config').onclick = function () {
+	if (global_toggle_edit.checked &&
+		!document.querySelector('#toggle-config').checked) {
+		global_toggle_edit.checked = false;
+	}
 }

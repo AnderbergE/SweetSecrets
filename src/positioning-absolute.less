@@ -1,5 +1,7 @@
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
 @import "mixins.less";
+
+@main-margin-top: 3rem;
 @editor-top: 12%;
 @editor-height: 80%;
 @editor-inner-to-outer-ratio: 100%/@editor-height;
@@ -26,6 +28,7 @@
 	.transforms(translate3d(0,-(@editor-top*@editor-inner-to-outer-ratio+100%),0));
 }
 #position-wrapper-editor.hide {
+	opacity: 0;
 	z-index: -1;
 }
 
@@ -44,8 +47,9 @@
 #position-wrapper-date {
 	.border-box();
 	//TODO: Can I change value for day-total variable?
-	height: 600/7vw;
+	height: 600/7vw+@main-margin-top;
 	left: 0;
+	margin-top: @main-margin-top;
 	position: absolute;
 	top: 0;
 }
