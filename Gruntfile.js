@@ -11,13 +11,13 @@ module.exports = function(grunt) {
       
     // Task configuration.
     concat: {
-      dist: { src: ['src/*.js'], dest: 'dist/script.js' }
+      dist: { src: ['src/js/*.js'], dest: 'dist/script.js' }
     },
     uglify: {
       dist: { files: { 'dist/script.min.js': '<%= concat.dist.dest %>' } }
     },
     less: {
-      dist: { files: { "dist/style.css": "src/style.less" } }
+      dist: { files: { "dist/style.css": "src/style/style.less" } }
     },
     copy: {
       dist: {
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      less: { files: ['src/*.less'], tasks: ['less'] },
+      less: { files: ['src/style/*.less'], tasks: ['less'] },
       livereload: {
         options: { livereload: true },
         files: ['src/*'], tasks: ['concat', 'uglify', 'copy']
