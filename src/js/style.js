@@ -85,3 +85,13 @@ document.querySelector('#toggle-config').onclick = function () {
 		global_toggle_edit.checked = false;
 	}
 }
+
+/* Remove the tap delays on touch interfaces. */
+window.addEventListener('load', function() {
+	Array.prototype.forEach.call(document.getElementsByTagName('label'), function(el) {
+		el.addEventListener('touchend', function (e) {
+		    e.preventDefault();
+		    this.click();
+		}, false)
+	});
+}, false);

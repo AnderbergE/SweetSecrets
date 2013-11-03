@@ -247,21 +247,24 @@ function Editor($scope) {
 
 	/* Activate a slider */
 	$scope.sliderActive = function (color, event) {
-		var body = document.querySelector("body");
 		if (color) {
 			event.preventDefault ? event.preventDefault() : event.returnValue = false;
 			$scope.active = color;
 			sliderChange(event);
-			body.onmousemove = function (e) {
+			global_body.onmousemove = function (e) {
 				$scope.$apply(sliderChange(e ? e : window.event));
 			};
-			body.onmouseup = function () {
+			global_body.onmouseup = function () {
 				$scope.$apply($scope.sliderActive());
 			};
+			global_body.touchmove = global_body.onmousemove;
+			global_body.touchend = global_body.onmouseup;
 		} else {
 			$scope.active = null;
-			body.onmousemove = null;
-			body.onmouseup = null;
+			global_body.onmousemove = null;
+			global_body.onmouseup = null;
+			global_body.touchmove = null;
+			global_body.touchend = null;
 		}
 	}
 

@@ -3,6 +3,9 @@ These are notes and ideas that has come up during development:
 /* NOTES  NOTES NOTES NOTES NOTES NOTES  NOTES NOTES NOTES NOTES NOTES  NOTES /*
 * Comments has been written according to JSDoc format. http://usejsdoc.org/
 
+/* DROPBOX URL */
+https://dl.dropboxusercontent.com/u/116813451/SweetSecrets/dist/index.html
+
 /* BROWSER QUIRKS, goal support: IE8+, Firefox, Chrome, Safari */
 IE8:
 	CSS: em does not work.
