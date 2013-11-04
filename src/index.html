@@ -6,7 +6,7 @@
 	<title>Test</title>
 	<link href='http://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister' rel='stylesheet' type='text/css'>
 </head>
-<body ng-app="theApp" ng-cloak>
+<body ng-app="theApp" class="ng-cloak">
 
 	<input type="checkbox" id="toggle-config" />
 	<input type="checkbox" id="toggle-edit" />
@@ -179,24 +179,25 @@
 			<div class="config" ng-controller="Users" ng-class="{active: activeUser >= 0}">
 				<div class="action-icon circle config-icon config-button">
 					<!-- input is at the top. -->
-					<label for="toggle-config" class="action-button toggle-config-label">
+					<label for="toggle-config" class="action-button">
 						<span class="action-text"></span>
 					</label>
 				</div>
 				<div class="config-menu">
 					<div class="action-icon circle config-icon user"
-						ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}">
+						ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}"
+						ng-click="edit(key, user)">
 						<input type="radio" class="action-selected"
 							id="user{{key}}" name="user" value="{{key}}" ng-model="$parent.activeUser">
-						<label for="user{{key}}" class="action-button" ng-click="edit(key, user)">
+						<label for="user{{key}}" class="action-button">
 							<div class="action-bgs">
 								<div class="action-bg" style="background: {{user.background}};"></div>
 							</div>
 							<span class="action-text">{{user.icon}}</span>
 						</label>
 					</div>
-					<div class="action-icon circle config-icon always-bg add-user user">
-						<label for="toggle-editor" class="action-button" ng-click="add()">
+					<div class="action-icon circle config-icon always-bg add-user user" ng-click="add()">
+						<label for="toggle-editor" class="action-button">
 							<div class="action-bgs">
 								<div class="action-bg" style="background: powderblue;"></div>
 							</div>
@@ -267,8 +268,8 @@
 						</label>
 					</div><!--
 					These are inline-blocks and need this quotes to remove white space between them.
-					--><div class="action-icon circle always-bg add-action action">
-						<label for="toggle-editor" class="action-button" ng-click="add()">
+					--><div class="action-icon circle always-bg add-action action" ng-click="add()">
+						<label for="toggle-editor" class="action-button">
 							<div class="action-bgs">
 								<div class="action-bg"></div>
 							</div>
