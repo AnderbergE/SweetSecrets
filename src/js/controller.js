@@ -251,20 +251,17 @@ function Editor($scope) {
 			event.preventDefault ? event.preventDefault() : event.returnValue = false;
 			$scope.active = color;
 			sliderChange(event);
+
 			global_body.onmousemove = function (e) {
 				$scope.$digest(sliderChange(e ? e : window.event));
 			};
 			global_body.onmouseup = function () {
-				$scope.$digest($scope.sliderActive());
+				$scope.sliderActive();
 			};
-			global_body.touchmove = global_body.onmousemove;
-			global_body.touchend = global_body.onmouseup;
 		} else {
 			$scope.active = null;
 			global_body.onmousemove = null;
 			global_body.onmouseup = null;
-			global_body.touchmove = null;
-			global_body.touchend = null;
 		}
 	}
 
@@ -367,4 +364,23 @@ function Editor($scope) {
 	$scope.$watch('g.value', function(value, old) { setColor($scope.g, value, old); });
 	$scope.$watch('b.value', function(value, old) { setColor($scope.b, value, old); });
 	$scope.active = null;
+
+	/* Add touch events */
+	// TODO: Only do this when necessary.
+	Array.prototype.forEach.call([$scope.r, $scope.g, $scope.b], function(color) {
+		var el = document.querySelector("." + color.name + " .slider");
+		el.addEventListener("touchstart", function(e) {
+			e.preventDefault();
+			$scope.active = color;
+			$scope.$digest(sliderChange(e.touches.item(0)));
+		}, false);
+		el.addEventListener("touchmove", function (e) {
+			e.preventDefault();
+			$scope.$digest(sliderChange(e.touches.item(0)));
+		}, false);
+		el.addEventListener("touchend", function (e) {
+			e.preventDefault();
+			$scope.active = null;
+		}, false);
+	});
 }
