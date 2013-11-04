@@ -67,13 +67,13 @@ function DateActions($scope, $timeout) {
 
 	/* Set the nearby class to day elements */
 	function updateNearby () {
-    	// Remove old nearby dates.
+		// Remove old nearby dates.
 		var old = global_position_wrapper_date.querySelectorAll(".nearby");
 		for (var i = 0; old && i < old.length; i++) {
 			old[i].className = old[i].className.replace(" nearby", "");
 		}
 
-    	// Add new nearby dates.
+		// Add new nearby dates.
 		var day = document.getElementById($scope.selected);
 		if (day) {
 			day = day.parentNode;
@@ -252,10 +252,10 @@ function Editor($scope) {
 			$scope.active = color;
 			sliderChange(event);
 			global_body.onmousemove = function (e) {
-				$scope.$apply(sliderChange(e ? e : window.event));
+				$scope.$digest(sliderChange(e ? e : window.event));
 			};
 			global_body.onmouseup = function () {
-				$scope.$apply($scope.sliderActive());
+				$scope.$digest($scope.sliderActive());
 			};
 			global_body.touchmove = global_body.onmousemove;
 			global_body.touchend = global_body.onmouseup;
