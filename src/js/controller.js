@@ -3,7 +3,8 @@ var app = angular.module('theApp', []);
 
 app.directive('actionIcon', function () {
 	return {
-		restrict: 'A', // attribute
+		restrict: 'EA', // attribute
+		replace: true,
 		scope: {
 			inputType: '@',
 			inputId: '@',
@@ -19,7 +20,7 @@ console.log("inne");
 			scope.forInput = scope.forInput || scope.inputId;
 			scope.inputValue = scope.inputValue || scope.inputId;
 			
-			element.addClass('action-icon circle');
+			element.parent().addClass('action-icon circle');
 			element.html(
 				(!scope.inputType ? '' : '<input type="' + scope.inputType + '"' +
 					(!scope.inputId ? '' : ' id="' + scope.inputId + '"') +

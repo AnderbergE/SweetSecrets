@@ -177,13 +177,14 @@
 		
 		<div id="position-wrapper-config">
 			<div class="config" ng-controller="Users" ng-class="{active: activeUser >= 0}">
-				<div action-icon class="config-icon config-button" for-input="toggle-config"></div>
+				<div class="config-icon config-button">
+					<action-icon for-input="toggle-config"></action-icon>
+				</div>
 				<div class="config-menu">
 <!--
-					<div action-icon class="config-icon user"
-						ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}" ng-click="edit(key, user)"
-						input-type="radio" input-id="user{{key}}" input-name="user" input-value="{{key}}"
-						input-model="$parent.activeUser" icon="{{user.icon}}" background="{{user.background}}"></div>
+					<div class="config-icon user" ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}" ng-click="edit(key, user)">
+						<action-icon input-type="radio" input-id="user{{key}}" input-name="user" input-value="{{key}}" input-model="$parent.activeUser" icon="{{user.icon}}" background="{{user.background}}"></action-icon>
+					</div>
 -->
 					<div class="action-icon circle config-icon user"
 						ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}"
