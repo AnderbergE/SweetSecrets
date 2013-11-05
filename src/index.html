@@ -177,12 +177,7 @@
 		
 		<div id="position-wrapper-config">
 			<div class="config" ng-controller="Users" ng-class="{active: activeUser >= 0}">
-				<div class="action-icon circle config-icon config-button">
-					<!-- input is at the top. -->
-					<label for="toggle-config" class="action-button">
-						<span class="action-text"></span>
-					</label>
-				</div>
+				<div action-icon class="config-icon config-button" for-input="toggle-config"></div>
 				<div class="config-menu">
 					<div class="action-icon circle config-icon user"
 						ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}"

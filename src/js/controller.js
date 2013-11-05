@@ -1,6 +1,32 @@
 /* Angular app baby yeah! */
 var app = angular.module('theApp', []);
 
+app.directive('actionIcon', function () {
+	return {
+		restrict: 'A', // attribute
+		scope: {
+			inputType: '@',
+			inputId: '@',
+			inputValue: '@',
+			inputModel: '=',
+			forInput: '@'
+		},
+		link: function (scope, element) {
+		console.log("inne");
+			scope.forInput = scope.forInput || scope.inputId;
+			scope.inputValue = scope.inputValue || scope.inputId;
+			
+			element.addClass('action-icon circle');
+			element.html(
+				'<label class="action-button"' +
+					(scope.forInput ? ' for="' + scope.forInput + '"' : '') + '> \
+					<span class="action-text"></span> \
+				</label>'
+			);
+		}
+	}
+});
+
 /**
  * A service to handle collection functions of users and actions.
  */
