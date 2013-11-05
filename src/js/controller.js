@@ -9,9 +9,10 @@ app.directive('actionIcon', function () {
 			inputId: '@',
 			inputName: '@',
 			inputValue: '@',
-			inputModel: '&',
+			inputModel: '@',
 			forInput: '@',
-			icon: '@'
+			icon: '@',
+			background: '@'
 		},
 		link: function (scope, element) {
 console.log("inne");
@@ -27,8 +28,10 @@ console.log("inne");
 					(!scope.inputModel ? '' : ' ng-model="' + scope.inputModel + '"') +
 				' class="action-selected" />') +
 				'<label class="action-button"' +
-					(scope.forInput ? ' for="' + scope.forInput + '"' : '') + '> \
-					<span class="action-text">' + (scope.icon ? scope.icon : '') + '</span> \
+					(!scope.forInput ? '' : ' for="' + scope.forInput + '"') + '>' +
+					(!scope.background ? '' : '<div class="action-bgs"><div class="action-bg" \
+						style="background: ' + scope.background + ';"></div></div>') +
+					'<span class="action-text">' + (scope.icon ? scope.icon : '') + '</span> \
 				</label>'
 			);
 		}
