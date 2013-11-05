@@ -7,20 +7,28 @@ app.directive('actionIcon', function () {
 		scope: {
 			inputType: '@',
 			inputId: '@',
+			inputName: '@',
 			inputValue: '@',
-			inputModel: '=',
-			forInput: '@'
+			inputModel: '&',
+			forInput: '@',
+			icon: '@'
 		},
 		link: function (scope, element) {
-		console.log("inne");
+console.log("inne");
 			scope.forInput = scope.forInput || scope.inputId;
 			scope.inputValue = scope.inputValue || scope.inputId;
 			
 			element.addClass('action-icon circle');
 			element.html(
+				(!scope.inputType ? '' : '<input type="' + scope.inputType + '"' +
+					(!scope.inputId ? '' : ' id="' + scope.inputId + '"') +
+					(!scope.inputName ? '' : ' name="' + scope.inputName + '"') +
+					(!scope.inputValue ? '' : ' value="' + scope.inputValue + '"') +
+					(!scope.inputModel ? '' : ' ng-model="' + scope.inputModel + '"') +
+				' class="action-selected" />') +
 				'<label class="action-button"' +
 					(scope.forInput ? ' for="' + scope.forInput + '"' : '') + '> \
-					<span class="action-text"></span> \
+					<span class="action-text">' + (scope.icon ? scope.icon : '') + '</span> \
 				</label>'
 			);
 		}

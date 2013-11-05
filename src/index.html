@@ -179,6 +179,12 @@
 			<div class="config" ng-controller="Users" ng-class="{active: activeUser >= 0}">
 				<div action-icon class="config-icon config-button" for-input="toggle-config"></div>
 				<div class="config-menu">
+<!--
+					<div action-icon class="config-icon user"
+						ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}" ng-click="edit(key, user)"
+						input-type="radio" input-id="user{{key}}" input-name="user" input-value="{{key}}"
+						input-model="$parent.activeUser" icon="{{user.icon}}"></div>
+-->
 					<div class="action-icon circle config-icon user"
 						ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}"
 						ng-click="edit(key, user)">
