@@ -3,38 +3,27 @@ var app = angular.module('theApp', []);
 
 app.directive('actionIcon', function () {
 	return {
-		restrict: 'EA', // attribute
-		replace: true,
-		scope: {
-			inputType: '@',
-			inputId: '@',
-			inputName: '@',
-			inputValue: '@',
-			inputModel: '@',
-			forInput: '@',
-			icon: '@',
-			background: '@'
-		},
-		link: function (scope, element) {
-console.log("inne");
-			scope.forInput = scope.forInput || scope.inputId;
-			scope.inputValue = scope.inputValue || scope.inputId;
+		restrict: 'E',	// use as element
+		replace: true,	// get rid of element that we start with.
+		scope: false,	// do not isolate scope
+		template: function (element, attrs) {
+			attrs.forInput = attrs.forInput || attrs.inputId;
+			attrs.inputValue = attrs.inputValue || attrs.inputId;
 			
-			element.parent().addClass('action-icon circle');
-			element.html(
-				(!scope.inputType ? '' : '<input type="' + scope.inputType + '"' +
-					(!scope.inputId ? '' : ' id="' + scope.inputId + '"') +
-					(!scope.inputName ? '' : ' name="' + scope.inputName + '"') +
-					(!scope.inputValue ? '' : ' value="' + scope.inputValue + '"') +
-					(!scope.inputModel ? '' : ' ng-model="' + scope.inputModel + '"') +
-				' class="action-selected" />') +
-				'<label class="action-button"' +
-					(!scope.forInput ? '' : ' for="' + scope.forInput + '"') + '>' +
-					(!scope.background ? '' : '<div class="action-bgs"><div class="action-bg" \
-						style="background: ' + scope.background + ';"></div></div>') +
-					'<span class="action-text">' + (scope.icon ? scope.icon : '') + '</span> \
-				</label>'
-			);
+			return '<div class="action-icon circle">' +
+					(!attrs.inputType ? '' : '<input type="' + attrs.inputType + '"' +
+					(!attrs.inputId ? '' : ' id="' + attrs.inputId + '"') +
+					(!attrs.inputName ? '' : ' name="' + attrs.inputName + '"') +
+					(!attrs.inputValue ? '' : ' value="' + attrs.inputValue + '"') +
+					(!attrs.inputModel ? '' : ' ng-model="' + attrs.inputModel + '"') +
+					' class="action-selected" />') +
+					'<label class="action-button"' +
+						(!attrs.forInput ? '' : ' for="' + attrs.forInput + '"') + '>' +
+						(!attrs.background ? '' : '<div class="action-bgs"><div class="action-bg" \
+							style="background: ' + attrs.background + ';"></div></div>') +
+						'<span class="action-text">' + (attrs.icon ? attrs.icon : '') + '</span> \
+					</label>' +
+				'</div>';
 		}
 	}
 });
