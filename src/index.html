@@ -111,7 +111,7 @@
 						icon="{{user.icon}}" background="{{user.background}}"></action-icon>
 
 					<action-icon class="config-icon user add-user" ng-click="add()" input-id="toggle-editor" icon="+"></action-icon>
-					<action-icon class="config-icon edit-button" input-id="toggle-edit" icon="&#xe008" background="powderblue"></action-icon>
+					<action-icon class="config-icon edit-button" input-id="toggle-edit" icon="&#xe008"></action-icon>
 				</div>
 			</div>
 		</div>
@@ -135,19 +135,12 @@
 						<a href="" class="month-change next" ng-click="changeMonth(1)">></a>
 					</div>
 					<div class="days">
-						<div class="action-icon circle inner-circle-selected always-bg day {{day | date:'EEEE' | lowercase}}"
-							ng-repeat="(day, actions) in dates">
-							<input type="radio" name="date" class="action-selected"
-								id="{{day}}" value="{{day}}" ng-model="$parent.selected">
-							<label for="{{day}}" class="action-button">
-								<div class="action-bgs">
-									<div class="action-bg"
-										ng-repeat="action in types"
-										ng-style="actions[action.name] ? {'background': action.background} : ''"></div>
-								</div>
-								<span class="action-text">{{day | date:'d'}}</span>
-							</label>
-						</div>
+					
+						<action-icon class="day {{day | date:'EEEE' | lowercase}} inner-circle-selected always-bg"
+							ng-repeat="(day, actions) in dates" icon="{{day | date:'d'}}"
+							input-type="radio" input-id="{{day}}" input-name="date" input-model="$parent.selected" exact-background="true"
+							background="ng-repeat='action in types' ng-style='actions[action.name] ? {&quot;background&quot;: action.background} : &quot;&quot;'">
+						</action-icon>
 					</div>
 				</nav>
 			</div>

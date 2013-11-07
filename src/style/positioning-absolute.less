@@ -108,13 +108,6 @@
 }
 */
 
-/* Since these inputs are not in the action-icons, we need to add them manually */
-#toggle-config:checked ~ #main-affairs .config-button .action-bg,
-#toggle-edit:checked ~ #main-affairs .edit-button .action-bg {
-	visibility: inherit;
-	opacity: 1;
-}
-
 #toggle-config:not(:checked) ~ #main-affairs .active {
 	& .config-button {
 		position: absolute;
@@ -148,6 +141,10 @@
 
 /* Edit mode active */
 #toggle-edit:checked ~ #main-affairs {
+	& .edit-button {
+		background: powderblue;
+	}
+	
 	& .hide ~ div {
 		& .action, .user {
 			animation: action-icon-pulse 1s infinite;

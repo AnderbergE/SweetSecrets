@@ -19,10 +19,11 @@ app.directive('actionIcon', function () {
 					' class="action-selected" />') +
 					'<label class="action-button"' +
 						(!attrs.forInput ? '' : ' for="' + attrs.forInput + '"') + '>' +
-						(!attrs.background ? '' : '<div class="action-bgs"><div class="action-bg" \
-							style="background: ' + attrs.background + ';"></div></div>') +
-						'<span class="action-text">' + (attrs.icon ? attrs.icon : '') + '</span> \
-					</label>' +
+						(!attrs.background ? '' : '<div class="action-bgs"><div class="action-bg" ' +
+							(!attrs.exactBackground ? 'style="background: ' + attrs.background + ';"' :
+							attrs.background) + '></div></div>') +
+						'<span class="action-text">' + (attrs.icon ? attrs.icon : '') + '</span>' +
+					'</label>' +
 				'</div>';
 		}
 	}
