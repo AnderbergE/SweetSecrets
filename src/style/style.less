@@ -105,6 +105,7 @@ input[type="checkbox"] {
 	float: right;
 }
 .add-user {
+	background: powderblue;
 	display: none;
 	font-size: @config-size + 8;
 }
@@ -203,12 +204,9 @@ input[type="checkbox"] {
 }
 
 .add-action {
+	background: LightSkyBlue;
 	color: black;
-	display: none;	
-
-	& .action-bg {
-		background: LightSkyBlue;
-	}
+	display: none;
 }
 
 /* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
@@ -262,6 +260,7 @@ input[type="checkbox"] {
 	width: 100%;
 }
 .editor-icon-header {
+	color: black;
 	display: inline-block;
 }
 .editor-nav-prev,
@@ -436,11 +435,7 @@ input[type="checkbox"] {
 }
 .editor-user-input:focus + .editor-user-choice {
 	color: black;
-	
-	& .action-bg {
-		visibility: inherit;
-		opacity: 1;
-	}
+	background: orange;
 }
 
 /* Remove choice */
@@ -452,11 +447,14 @@ input[type="checkbox"] {
 	display: block;
 }
 .editor-remove-choice {
+	background: red;
+	color: white;
 	display: inline-block;
 	font-size: 10rem;
 	width: 15rem;
 }
 .editor-logout-choice {
+	background: cornflowerblue;
 	font-size: 20rem;
 	margin: 2rem auto 10rem;
 	width: 30rem;

@@ -20,90 +20,40 @@
 			<div class="editor">
 				<div class="editor-header">
 					<div class="editor-header-icons">
-						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-prev"
-							ng-click="prevState()" ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}">
-							<label class="action-button">
-								<div class="action-bgs">
-								</div>
-								<span class="action-text">
-									{{prevStates.length == 0 || isEditing ? "O" : "<"}}
-								</span>
-							</label>
-						</div>
-						<div class="action-icon circle editor-icon editor-icon-header">
-							<input type="radio" class="action-selected" checked />
-							<label class="action-button">
-								<div class="action-bgs">
-									<div class="action-bg" ng-style="{'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}">
-									</div>
-								</div>
-								<span class="action-text">{{icon}}</span>
-							</label>
-						</div>
-						<div class="action-icon circle editor-icon editor-icon-header editor-nav editor-nav-next"
-							ng-click="nextState()">
-							<label class="action-button">
-								<div class="action-bgs">
-								</div>
-								<span class="action-text">
-									{{currentState == states.MENU || currentState == states.HIDING ? "|" : nextStates.length == 0 || isEditing ? "v" : ">"}}
-								</span>
-							</label>
-						</div>
+						<action-icon class="editor-icon editor-icon-header editor-nav editor-nav-prev" ng-click="prevState()"
+							ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}"
+							icon="{{prevStates.length == 0 || isEditing ? 'O' : '<'}}"></action-icon>
+						<action-icon class="editor-icon editor-icon-header always-bg"
+							ng-style="{'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}" icon="{{icon}}"></action-icon>
+						<action-icon class="editor-icon editor-icon-header editor-nav editor-nav-next" ng-click="nextState()"
+							ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}"
+							icon="{{currentState == states.MENU || currentState == states.HIDING ? '|' : nextStates.length == 0 || isEditing ? 'v' : '>'}}"></action-icon>
 					</div>
 				</div>
 				<div class="editor-choices">
 					<div class="editor-choose-menu">
 						<div class="center editor-menu-appearance">
-							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.ICON)">
-								<label class="action-button">
-									<div class="action-bgs">
-									</div>
-									<span class="action-text">&#xe008</span>
-								</label>
-							</div>
-							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.BACKGROUND)">
-								<label class="action-button">
-									<div class="action-bgs">
-									</div>
-									<span class="action-text">&#xe002</span>
-								</label>
-							</div>
+							<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.ICON)" icon="&#xe008"></action-icon>
+							<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.BACKGROUND)" icon="&#xe002"></action-icon>
 						</div>
 						<div class="center editor-menu-info">
-							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.USER)" ng-style="{'display': isUser ? 'inline-block' : 'none'}">
-								<label class="action-button">
-									<div class="action-bgs">
-									</div>
-									<span class="action-text">&#xe00a</span>
-								</label>
-							</div>
-							<div class="action-icon circle editor-icon editor-menu-choice" ng-click="setState(states.REMOVE)">
-								<label class="action-button">
-									<div class="action-bgs">
-									</div>
-									<span class="action-text">&#xe00c</span>
-								</label>
-							</div>
+							<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.USER)"
+								 ng-style="{'display': isUser ? 'inline-block' : 'none'}" icon="&#xe00a"></action-icon>
+							<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.REMOVE)" icon="&#xe00c"></action-icon>
 						</div>
 					</div>
 					<div class="editor-choose-icon">
-						<div class="action-icon circle editor-icon editor-icon-choice" ng-repeat="icon in availableIcons">
-							<input type="radio" class="action-selected"
-								id="ac{{$index}}" name="choice" value="{{icon}}"
-								ng-model="$parent.icon">
-							<label for="ac{{$index}}" class="action-button">
-								<div class="action-bgs">
-								</div>
-								<span class="action-text">{{icon}}</span>
-							</label>
-						</div>
+						<action-icon class="editor-icon editor-icon-choice" ng-repeat="icon in availableIcons"
+							input-type="radio" input-id="ac{{$index}}" input-name="choice" input-value="{{icon}}" input-model="$parent.icon"
+							icon="{{icon}}"></action-icon>
 					</div>
 					<div class="editor-choose-background">
 						<div class="color-slider red">
 							<div class="slider" ng-mousedown="sliderActive(r, $event)">
 								<div class="slider-line"></div>
-								<div class="slider-header" ng-style="{'background-color': 'rgb(255, ' + r.others + ', ' + r.others + ')', 'left': r.intensity * 100 + '%'}">
+								<div class="slider-header" ng-style="{
+									'background-color': 'rgb(255, ' + r.others + ', ' + r.others + ')',
+									'left': r.intensity * 100 + '%'}">
 								</div>
 							</div>
 							<input class="slider-number" ng-model="r.value" />
@@ -111,7 +61,9 @@
 						<div class="color-slider green">
 							<div class="slider" ng-mousedown="sliderActive(g, $event)">
 								<div class="slider-line"></div>
-								<div class="slider-header" ng-style="{'background-color': 'rgb(' + g.others + ', 255, ' + g.others + ')', 'left': g.intensity * 100 + '%'}">
+								<div class="slider-header" ng-style="{
+									'background-color': 'rgb(' + g.others + ', 255, ' + g.others + ')',
+									'left': g.intensity * 100 + '%'}">
 								</div>
 							</div>
 							<input class="slider-number" ng-model="g.value" />
@@ -119,7 +71,9 @@
 						<div class="color-slider blue">
 							<div class="slider" ng-mousedown="sliderActive(b, $event)">
 								<div class="slider-line"></div>
-								<div class="slider-header" ng-style="{'background-color': 'rgb(' + b.others + ', ' + b.others + ', 255)', 'left': b.intensity * 100 + '%'}">
+								<div class="slider-header" ng-style="{
+									'background-color': 'rgb(' + b.others + ', ' + b.others + ', 255)',
+									'left': b.intensity * 100 + '%'}">
 								</div>
 							</div>
 							<input class="slider-number" ng-model="b.value" />
@@ -128,47 +82,19 @@
 					<div class="editor-choose-user">
 						<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-email').focus()">
 							<input type="email" id="editor-user-email" class="editor-user-input" placeholder="info@secrets.com" autofocus>
-							<div class="action-icon circle editor-icon editor-user-choice">
-								<label class="action-button">
-									<div class="action-bgs">
-										<div class="action-bg" style="background: orange;"></div>
-									</div>
-									<span class="action-text">&#xe008</span>
-								</label>
-							</div>
+							<action-icon class="editor-icon editor-user-choice" icon="&#xe008"></action-icon>
 						</div>
 						<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-password').focus()">
 							<input type="password" id="editor-user-password" class="editor-user-input" placeholder="********">
-							<div class="action-icon circle editor-icon editor-user-choice">
-								<label class="action-button">
-									<div class="action-bgs">
-										<div class="action-bg" style="background: tomato;"></div>
-									</div>
-									<span class="action-text">&#xe00a</span>
-								</label>
-							</div>
+							<action-icon class="editor-icon editor-user-choice" icon="&#xe00a"></action-icon>
 						</div>
 					</div>
 					<div class="editor-choose-remove">
 						<div class="editor-choose-remove-section">
-							<div class="action-icon circle always-bg editor-icon editor-remove-choice editor-logout-choice">
-								<label class="action-button">
-									<div class="action-bgs">
-										<div class="action-bg" style="background: cornflowerblue;"></div>
-									</div>
-									<span class="action-text" style="color: white;">&#xe008</span>
-								</label>
-							</div>
+							<action-icon class="editor-icon editor-remove-choice editor-logout-choice" icon="&#xe008"></action-icon>
 						</div>
 						<div class="editor-choose-remove-section">
-							<div class="action-icon circle always-bg editor-icon editor-remove-choice editor-permanent-delete-choice">
-								<label class="action-button">
-									<div class="action-bgs">
-										<div class="action-bg" style="background: red;"></div>
-									</div>
-									<span class="action-text" style="color: white;">&#xe00a</span>
-								</label>
-							</div>
+							<action-icon class="editor-icon editor-remove-choice editor-permanent-delete-choice" icon="&#xe00a"></action-icon>
 						</div>
 					</div>
 				</div>
@@ -177,44 +103,15 @@
 		
 		<div id="position-wrapper-config">
 			<div class="config" ng-controller="Users" ng-class="{active: activeUser >= 0}">
-				<action-icon class="config-icon config-button" for-input="toggle-config"></action-icon>
+				<action-icon class="config-icon config-button" input-id="toggle-config"></action-icon>
 				<div class="config-menu">
 
 					<action-icon class="config-icon user" ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}" ng-click="edit(key, user)"
 						input-type="radio" input-id="user{{key}}" input-name="user" input-value="{{key}}" input-model="$parent.activeUser"
 						icon="{{user.icon}}" background="{{user.background}}"></action-icon>
 
-<!--
-					<div class="action-icon circle config-icon user"
-						ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}"
-						ng-click="edit(key, user)">
-						<input type="radio" class="action-selected"
-							id="user{{key}}" name="user" value="{{key}}" ng-model="$parent.activeUser">
-						<label for="user{{key}}" class="action-button">
-							<div class="action-bgs">
-								<div class="action-bg" style="background: {{user.background}};"></div>
-							</div>
-							<span class="action-text">{{user.icon}}</span>
-						</label>
-					</div>
--->
-					<div class="action-icon circle config-icon always-bg add-user user" ng-click="add()">
-						<label for="toggle-editor" class="action-button">
-							<div class="action-bgs">
-								<div class="action-bg" style="background: powderblue;"></div>
-							</div>
-							<span class="action-text">+</span>
-						</label>
-					</div>
-					<div class="action-icon circle config-icon edit-button">
-						<!-- input is at the top. -->
-						<label for="toggle-edit" class="action-button">
-							<div class="action-bgs">
-								<div class="action-bg" style="background: powderblue;"></div>
-							</div>
-							<span class="action-text">&#xe008</span>
-						</label>
-					</div>
+					<action-icon class="config-icon user add-user" ng-click="add()" input-id="toggle-editor" icon="+"></action-icon>
+					<action-icon class="config-icon edit-button" input-id="toggle-edit" icon="&#xe008" background="powderblue"></action-icon>
 				</div>
 			</div>
 		</div>
@@ -257,27 +154,11 @@
 
 			<div id="position-wrapper-actions">
 				<div class="actions">
-					<div class="action-icon circle action"
-						ng-repeat="type in types">
-						<input type="checkbox" class="action-selected"
-							id="{{type.name}}" value="{{type.name}}"
-							ng-model="dates[selected][type.name]">
-						<label for="{{type.name}}" class="action-button">
-							<div class="action-bgs">
-								<div class="action-bg" style="background: {{type.background}};"></div>
-							</div>
-							<span class="action-text">{{type.icon}}</span>
-						</label>
-					</div><!--
-					These are inline-blocks and need this quotes to remove white space between them.
-					--><div class="action-icon circle always-bg add-action action" ng-click="add()">
-						<label for="toggle-editor" class="action-button">
-							<div class="action-bgs">
-								<div class="action-bg"></div>
-							</div>
-							<span class="action-text">+</span>
-						</label>
-					</div>
+					<action-icon class="action" ng-repeat="type in types"
+						input-type="checkbox" input-id="{{type.name}}" input-model="dates[selected][type.name]"
+						icon="{{type.icon}}" background="{{type.background}}"></action-icon><!--
+					These are inline-blocks and need this comment to remove white space between them.
+					--><action-icon class="action add-action" ng-click="add()" input-id="toggle-editor" icon="+"></action-icon>
 				</div>
 			</div>
 		</div>
