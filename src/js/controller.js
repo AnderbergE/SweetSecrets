@@ -1,6 +1,17 @@
 /* Angular app baby yeah! */
 var app = angular.module('theApp', []);
 
+/**
+ * An angular directive that makes action-icon elements into sweet html.
+ * @attribute {string} inputType	What type the input should be, undefined means no input element.
+ * @attribute {string} inputId		Id of the input element
+ * @attribute {string} inputName	Name of the input element (for grouping)
+ * @attribute {string} inputValue	Value of the input element, if undefined inputId will be used
+ * @attribute {string} inputModel	Angular model of the input element
+ * @attribute {string} forInput		Which input to trigger on click, if undefined inputId will be used
+ * @attribute {string} background	Background of the action-icon (css values)
+ * @attribute {string} customBackground	Custom string for background items.
+ */
 app.directive('actionIcon', function () {
 	return {
 		restrict: 'E',	// use as element
@@ -19,9 +30,11 @@ app.directive('actionIcon', function () {
 					' class="action-selected" />') +
 					'<label class="action-button"' +
 						(!attrs.forInput ? '' : ' for="' + attrs.forInput + '"') + '>' +
-						(!attrs.background ? '' : '<div class="action-bgs"><div class="action-bg" ' +
-							(!attrs.exactBackground ? 'style="background: ' + attrs.background + ';"' :
-							attrs.background) + '></div></div>') +
+						(!attrs.background && !attrs.customBackground ? '' :
+						'<div class="action-bgs"><div class="action-bg" ' +
+							(!attrs.background ? '' : 'style="background: ' + attrs.background + ';"') +
+							(!attrs.customBackground ? '' : attrs.customBackground) +
+						'></div></div>') +
 						'<span class="action-text">' + (attrs.icon ? attrs.icon : '') + '</span>' +
 					'</label>' +
 				'</div>';

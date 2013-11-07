@@ -3,11 +3,13 @@
  * @global {Object} global_body
  * @global {Object} global_position_wrapper_date
  * @global {Object} global_position_wrapper_actions
+ * @global {Object} global_toggle_config
  * @global {Object} global_toggle_edit
  */
 var global_body = document.body;
 var global_position_wrapper_date = document.getElementById("position-wrapper-date");
 var global_position_wrapper_actions = document.getElementById('position-wrapper-actions');
+var global_toggle_config = document.querySelector('#toggle-config');
 var global_toggle_edit = document.querySelector('#toggle-edit');
 
 /**

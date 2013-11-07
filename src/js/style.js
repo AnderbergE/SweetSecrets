@@ -1,9 +1,30 @@
+window.onresize = calculateGeneralStyle;
+window.onload = calculateGeneralStyle;
+
+/* Edit mode adds an icon by the actions, we need to show it correctly. */
+global_toggle_edit.onclick = calculateActionStyle;
+/* When closing config, disable edit mode. */
+global_toggle_config.onclick = function () {
+	if (global_toggle_edit.checked && !global_toggle_config.checked) {
+		global_toggle_edit.click();
+	}
+}
+
+/* Remove the tap delays on touch interfaces. */
+window.addEventListener('load', function() {
+	Array.prototype.forEach.call(document.getElementsByTagName('label'), function(el) {
+		el.addEventListener('touchend', function (e) {
+		    e.preventDefault();
+		    this.click();
+		}, false)
+	});
+}, false);
+
+
 /**
  * Calculates the width of the position wrapper date.
  * This is needed because some browsers do not handle vh and vw correctly.
  */
-window.onresize = calculateGeneralStyle;
-window.onload = calculateGeneralStyle;
 function calculateGeneralStyle () {
 	// TODO: Only do stuff when it is needed (webkit, vmin, etc).
 	var landscape = window.innerHeight < window.innerWidth;
@@ -25,7 +46,6 @@ function calculateGeneralStyle () {
  * Calculates the size of the action types.
  * @param {Number} amount How many action types there is.
  */
-global_toggle_edit.onclick = calculateActionStyle;
 function calculateActionStyle (amount) {
 	if (amount > 0)
 		var len = amount;
@@ -77,21 +97,3 @@ function calculateActionSize (width, height, amount) {
 		return Math.floor(max) + "px";
 	return (99-amount*0.25)/i + "%";
 }
-
-/* When closing config, disable edit mode. */
-document.querySelector('#toggle-config').onclick = function () {
-	if (global_toggle_edit.checked &&
-		!document.querySelector('#toggle-config').checked) {
-		global_toggle_edit.checked = false;
-	}
-}
-
-/* Remove the tap delays on touch interfaces. */
-window.addEventListener('load', function() {
-	Array.prototype.forEach.call(document.getElementsByTagName('label'), function(el) {
-		el.addEventListener('touchend', function (e) {
-		    e.preventDefault();
-		    this.click();
-		}, false)
-	});
-}, false);
