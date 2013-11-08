@@ -71,3 +71,29 @@ function retrieve (key, ifEmpty) {
 		return JSON.parse(storage[key]);
 	return ifEmpty;
 }
+
+/**
+ * Friendly way to add an event listener.
+ * @param {Object} element The element to add listener to.
+ * @param {string} trigger The name of the trigger (such as 'click').
+ * @param {Object} runFunction What function to run when event is triggered.
+ */
+function addEvent(element, trigger, runFunction){
+	if (element.attachEvent)
+		return element.attachEvent('on'+trigger, runFunction);
+	else
+		return element.addEventListener(trigger, runFunction, false);
+}
+
+/**
+ * Friendly way to remove an event listener.
+ * @param {Object} element The element to remove a listener from.
+ * @param {string} trigger The name of the trigger (such as 'click').
+ * @param {Object} runFunction The function to remove from the listeners.
+ */
+function removeEvent(element, trigger, runFunction){
+	if (element.detachEvent)
+		return element.detachEvent('on'+trigger, runFunction);
+	else
+		return element.removeEventListener(trigger, runFunction);
+}

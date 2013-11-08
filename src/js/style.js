@@ -1,24 +1,24 @@
-window.onresize = calculateGeneralStyle;
-window.onload = calculateGeneralStyle;
+addEvent(window, 'resize', calculateGeneralStyle);
+addEvent(window, 'load', calculateGeneralStyle);
+
+/* Remove the tap delays on touch interfaces. */
+addEvent(window, 'load', function() {
+	Array.prototype.forEach.call(document.getElementsByTagName('label'), function(el) {
+		addEvent(el, 'touchend', function (e) {
+		    e.preventDefault();
+		    this.click();
+		});
+	});
+});
 
 /* Edit mode adds an icon by the actions, we need to show it correctly. */
-global_toggle_edit.onclick = calculateActionStyle;
+addEvent(global_toggle_edit, 'click', calculateActionStyle);
 /* When closing config, disable edit mode. */
-global_toggle_config.onclick = function () {
+addEvent(global_toggle_config, 'click', function () {
 	if (global_toggle_edit.checked && !global_toggle_config.checked) {
 		global_toggle_edit.click();
 	}
-}
-
-/* Remove the tap delays on touch interfaces. */
-window.addEventListener('load', function() {
-	Array.prototype.forEach.call(document.getElementsByTagName('label'), function(el) {
-		el.addEventListener('touchend', function (e) {
-		    e.preventDefault();
-		    this.click();
-		}, false)
-	});
-}, false);
+});
 
 
 /**

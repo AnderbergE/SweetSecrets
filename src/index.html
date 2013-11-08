@@ -49,7 +49,7 @@
 					</div>
 					<div class="editor-choose-background">
 						<div class="color-slider red">
-							<div class="slider" ng-mousedown="sliderActive(r, $event)">
+							<div class="slider">
 								<div class="slider-line"></div>
 								<div class="slider-header" ng-style="{
 									'background-color': 'rgb(255, ' + r.others + ', ' + r.others + ')',
@@ -59,7 +59,7 @@
 							<input class="slider-number" ng-model="r.value" />
 						</div>
 						<div class="color-slider green">
-							<div class="slider" ng-mousedown="sliderActive(g, $event)">
+							<div class="slider">
 								<div class="slider-line"></div>
 								<div class="slider-header" ng-style="{
 									'background-color': 'rgb(' + g.others + ', 255, ' + g.others + ')',
@@ -69,7 +69,7 @@
 							<input class="slider-number" ng-model="g.value" />
 						</div>
 						<div class="color-slider blue">
-							<div class="slider" ng-mousedown="sliderActive(b, $event)">
+							<div class="slider">
 								<div class="slider-line"></div>
 								<div class="slider-header" ng-style="{
 									'background-color': 'rgb(' + b.others + ', ' + b.others + ', 255)',
