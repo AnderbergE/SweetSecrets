@@ -288,8 +288,8 @@ function Editor($scope) {
 	
 	/* Update color values */
 	function setColor (color, value, old) {
-		value = value == "" ? 0 : parseInt(value);
-		color.value = isNaN(value) ? old : value < 0 ? 0 : value > 255 ? 255 : value;
+		value = (value == "" ? 0 : parseInt(value));
+		color.value = (isNaN(value) ? old : value < 0 ? 0 : value > 255 ? 255 : value);
 		color.intensity = value/255;
 		color.others = 255 - color.value;
 	}
@@ -308,10 +308,7 @@ function Editor($scope) {
 		$scope.save = saveFunc;
 		
 		$scope.editPosition = position;
-		if (isUser)
-			$scope.isUser = true;
-		else
-			$scope.isUser = false;
+		$scope.isUser = (isUser ? true : false);
 	}
 	
 	/* Listen to edit events */

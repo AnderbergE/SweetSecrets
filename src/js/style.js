@@ -47,10 +47,7 @@ function calculateGeneralStyle () {
  * @param {Number} amount How many action types there is.
  */
 function calculateActionStyle (amount) {
-	if (amount > 0)
-		var len = amount;
-	else
-		var len = global_position_wrapper_actions.children[0].children.length;
+	var len = (amount > 0 ? amount : global_position_wrapper_actions.children[0].children.length);
 	if (!global_toggle_edit.checked)
 		len--;
 
