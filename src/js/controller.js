@@ -27,6 +27,7 @@ app.directive('actionIcon', function () {
 					(!attrs.inputName ? '' : ' name="' + attrs.inputName + '"') +
 					(!attrs.inputValue ? '' : ' value="' + attrs.inputValue + '"') +
 					(!attrs.inputModel ? '' : ' ng-model="' + attrs.inputModel + '"') +
+					(!attrs.inputDirective ? '' : ' ' + attrs.inputDirective) +
 					' class="action-selected" />') +
 					'<label class="action-button"' +
 						(!attrs.forInput ? '' : ' for="' + attrs.forInput + '"') + '>' +
@@ -40,6 +41,18 @@ app.directive('actionIcon', function () {
 				'</div>';
 		}
 	}
+});
+
+/* Make sure that a model is an integer. */
+app.directive('integer', function(){
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attr, ctrl){
+            ctrl.$parsers.unshift(function(viewValue){
+                return parseInt(viewValue);
+            });
+        }
+    };
 });
 
 /**
@@ -72,8 +85,6 @@ app.service('collectionHandler', function () {
 function DateActions($scope, $timeout) {
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
-		// TODO: This storing is not enough, we should store on all changes.
-		storeArray($scope.dates);
 		var temp = dateFromTimestamp($scope.selected);
 		var month = temp.getMonth();
 		$scope.selected = temp.setMonth(temp.getMonth()+amount);
@@ -142,10 +153,18 @@ function DateActions($scope, $timeout) {
 		$timeout(function() { updateNearby() });
 	});
 
+	/* Save changes to date action values. */
+	$scope.$watch('dates[selected]', function(newValue, oldValue) {
+		// TODO: This stores every time selected changes between values that are not the same.
+		// Can we avoid that?
+		store($scope.selected, newValue);
+	}, true);
+
 	/* Initialization */
 	var NEARBY_DATES = 3;
 	$scope.today = getStrippedTime();
 	$scope.selected = $scope.today;
+	$scope.dates = {};
 	fillMonth($scope.selected);
 }
 

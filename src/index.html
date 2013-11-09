@@ -138,7 +138,7 @@
 					
 						<action-icon class="day {{day | date:'EEEE' | lowercase}} inner-circle-selected always-bg"
 							ng-repeat="(day, actions) in dates" icon="{{day | date:'d'}}"
-							input-type="radio" input-id="{{day}}" input-name="date" input-model="$parent.selected"
+							input-type="radio" input-id="{{day}}" input-name="date" input-model="$parent.selected" input-directive="integer"
 							custom-background="ng-repeat='action in types' ng-style='actions[action.name] ? {&quot;background&quot;: action.background} : &quot;&quot;'">
 						</action-icon>
 					</div>
