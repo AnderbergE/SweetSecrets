@@ -286,27 +286,6 @@ function Editor($scope) {
 			$scope.setState($scope.nextStates.pop(), false, true);
 	}
 	
-	/* Function to run when slider should move. */
-	function sliderDoMove (e) {
-		$scope.$digest(sliderChange(e ? e : window.event));
-	}
-
-	/* Change a slider when applicable */
-	function sliderChange (event) {
-		if ($scope.active) {
-			var head = document.querySelector("." + $scope.active.name + " .slider-header");
-			var pos = document.querySelector("." + $scope.active.name + " .slider-line").getBoundingClientRect();
-			var mouseX = event.clientX;
-
-			if (mouseX < pos.left)
-				$scope.active.value = 0;
-			else if (mouseX > pos.right)
-				$scope.active.value = 255;
-			else
-				$scope.active.value = Math.round((mouseX - pos.left) / (pos.right - pos.left)*255);
-		}
-	}
-	
 	/* Update color values */
 	function setColor (color, value, old) {
 		value = value == "" ? 0 : parseInt(value);
@@ -389,37 +368,43 @@ function Editor($scope) {
 	$scope.$watch('r.value', function(value, old) { setColor($scope.r, value, old); });
 	$scope.$watch('g.value', function(value, old) { setColor($scope.g, value, old); });
 	$scope.$watch('b.value', function(value, old) { setColor($scope.b, value, old); });
-	$scope.active = null;
 	
 	/* Add input events */
 	Array.prototype.forEach.call([$scope.r, $scope.g, $scope.b], function(color) {
 		var el = document.querySelector("." + color.name + " .slider");
+		var line = document.querySelector("." + color.name + " .slider-line");
+
+		/* Function to run when slider should move. */
+		function sliderChange (e) {
+			e = e || window.event;
+			$scope.$digest((function () {
+				var pos = line.getBoundingClientRect();
+				var xPos = e.clientX;
+
+				color.value = xPos < pos.left ? 0 :
+					xPos > pos.right ? 255 :
+					Math.round((xPos - pos.left) / (pos.right - pos.left)*255);
+			})());
+		}
+
 		addEvent(el, "mousedown", function(e) {
 			e.preventDefault();
-			$scope.active = color;
-			sliderDoMove(e);
-			addEvent(global_body, 'mousemove', sliderDoMove);
+			sliderChange(e);
+			addEvent(global_body, 'mousemove', sliderChange);
 			addEvent(global_body, 'mouseup', function () {
-				$scope.active = null;
-				
 				/* We don't want to keep the body event handlers running :) */
-				removeEvent(global_body, 'mousemove', sliderDoMove);
+				removeEvent(global_body, 'mousemove', sliderChange);
 				removeEvent(global_body, 'mouseup', arguments.callee);
 			});
 		});
 		// TODO: Only add touch when necessary?
 		addEvent(el, "touchstart", function(e) {
 			e.preventDefault();
-			$scope.active = color;
-			sliderDoMove(e.touches.item(0));
+			sliderChange(e.touches.item(0));
 		});
 		addEvent(el, "touchmove", function (e) {
 			e.preventDefault();
-			sliderDoMove(e.touches.item(0));
-		});
-		addEvent(el, "touchend", function (e) {
-			e.preventDefault();
-			$scope.active = null;
+			sliderChange(e.touches.item(0));
 		});
 	});
 }
