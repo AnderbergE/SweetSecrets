@@ -1,3 +1,6 @@
+/* Angular app baby yeah! */
+var app = angular.module('theApp', []);
+
 /**
  * Cached dom elements:
  * @global {Object} global_body
