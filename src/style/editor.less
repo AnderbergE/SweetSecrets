@@ -1,0 +1,252 @@
+/* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
+@import "mixins.less";
+
+.editor-overlay {
+	background: black;
+	height: 2*100%*@editor-inner-to-outer-ratio;
+	left: 0;
+	opacity: 0.5;
+	position: fixed;
+	top: -@editor-top*@editor-inner-to-outer-ratio;
+	.transitions(opacity, .5s, linear);
+	width: 100%;
+}
+.hide .editor-overlay,
+.hiding .editor-overlay {
+	opacity: 0;
+}
+.editor {
+	background: white;
+	.border-box();
+	height: 100%;
+	margin: 0 auto;
+	max-width: 134rem;
+	padding: 16rem 1rem 1rem;
+	position: relative;
+	width: 95%;
+}
+.editor-icon {
+	background: @standard-background;
+	color: gray;
+	.font-icons();
+	font-size: 9rem;
+	width: 13rem;
+
+	& .action-selected:checked + .action-button  {
+		color: black;
+	}
+}
+.editor-header {
+	.box-shadows(0 3px 4px -2px lightgray);
+	height: 13rem;
+	left: 0;
+	margin: 0 1rem;
+	padding: 1rem 0;
+	position: absolute;
+	top: 0;
+	width: 98%;
+}
+.editor-header-icons {
+	text-align: center;
+	width: 100%;
+}
+.editor-icon-header {
+	color: black;
+	display: inline-block;
+}
+.editor-nav-prev,
+.editor-nav-next {
+	font-size: 15rem;
+
+	& .action-text {
+		margin-top: -0.65em;
+	}
+}
+.editor-nav-prev {
+	margin-right: 13rem;
+
+	& .action-text {
+		color: firebrick !important;
+	}
+}
+.editor-nav-next {
+	margin-left: 13rem;
+
+	& .action-text {
+		color: limegreen !important;
+	}
+}
+.editor-choices {
+	height: 100%;
+	overflow: auto;
+}
+
+
+/* Menu choice */
+.editor-choose-menu {
+	display: none;
+	text-align: center;
+}
+.menu-choice .editor-choose-menu {
+	display: block;
+}
+.editor-menu-choice {
+	display: inline-block;
+	font-size: 20rem;
+	margin: 2rem 2rem 0;
+	width: 30rem;
+}
+.editor-menu-info .editor-menu-choice {
+	font-size: 15rem;
+	margin: 5rem 5rem 0;
+	width: 20rem;
+}
+
+/* Icon choice */
+.editor-choose-icon {
+	display: none;
+	text-align: center;
+}
+.icon-choice .editor-choose-icon {
+	display: block;
+}
+.editor-icon-choice {
+	display: inline-block;
+	margin: 0 1px 1px 0;
+}
+
+/* Background choice */
+@slider-size: 10rem;
+.editor-choose-background {
+	margin: 0 auto;
+	width: 88%;
+	display: none;
+}
+.background-choice .editor-choose-background {
+	display: block;
+}
+.color-slider {
+	.border-box();
+	padding-right: @slider-size*1.33;
+	position: relative;
+	width: 100%;
+	
+	-webkit-touch-callout: none;
+    -webkit-user-drag: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.slider {
+	margin: 2% auto;
+	height: @slider-size;
+	position: relative;
+	width: 100%;
+}
+.slider-line {
+	background: ghostwhite;
+	box-shadow: 0 1px 2px 0 gray inset, 0 -1px 2px 0 snow inset;
+	border-radius: 1rem;
+	height: 2rem;
+	left: 0;
+	position: absolute;
+	top: @slider-size/2 - 1;
+	width: 100%;
+}
+.slider-header {
+	cursor: move;
+	left: 0;
+	position: absolute;
+	top: 0;
+
+	&:after {
+		background: inherit;
+		border-radius: 50%;
+		content: "";
+		height: @slider-size;
+		left: @slider-size/-2;
+		position: absolute;
+		top: 0;
+		width: @slider-size;
+	}
+}
+.red .slider-header:after {
+	box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red, 2px 2px 6px 1px gray;
+}
+.green .slider-header:after {
+	box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime, 2px 2px 6px 1px gray;
+}
+.blue .slider-header:after {
+	box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue, 2px 2px 6px 1px gray;
+}
+.slider-number {
+	border: none;
+	background: transparent;
+	border-radius: 50%;
+	box-shadow: 0 1px 2px 0 gray inset, 0 -1px 2px 0 snow inset;
+	font-size: 4rem;
+	.font-standard();
+	height: @slider-size;
+	position: absolute;
+	right: -4rem;
+	text-align: center;
+	top: 0;
+	width: @slider-size;
+}
+
+/* User choice */
+.editor-choose-user {
+	display: none;
+	text-align: center;
+}
+.user-choice .editor-choose-user {
+	display: block;
+}
+.editor-choose-user-section {
+	display: inline-block;
+	margin: 2rem auto;
+	width: 70rem;
+}
+.editor-user-choice {
+	float: left;
+	font-size: 10rem;
+	width: 15rem;
+}
+.editor-user-input {
+	border: transparent;
+	box-shadow: 0 4px 5px -4px grey;
+	font-size: 3rem;
+	.font-standard();
+	height: 5rem;
+	margin-top: 5rem;
+	vertical-align: top;
+	width: 50rem;
+}
+.editor-user-input:focus + .editor-user-choice {
+	color: black;
+	background: orange;
+}
+
+/* Remove choice */
+.editor-choose-remove {
+	display: none;
+	text-align: center;
+}
+.remove-choice .editor-choose-remove {
+	display: block;
+}
+.editor-remove-choice {
+	background: red;
+	color: white;
+	display: inline-block;
+	font-size: 10rem;
+	width: 15rem;
+}
+.editor-logout-choice {
+	background: cornflowerblue;
+	font-size: 20rem;
+	margin: 2rem auto 10rem;
+	width: 30rem;
+}

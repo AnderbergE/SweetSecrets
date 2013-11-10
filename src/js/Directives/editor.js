@@ -1,4 +1,3 @@
-
 /**
  * Editor for the actions and users.
  * @param {Object} $scope Angular.js scope.
