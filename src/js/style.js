@@ -26,19 +26,7 @@ addEvent(global_toggle_config, 'click', function () {
  * This is needed because some browsers do not handle vh and vw correctly.
  */
 function calculateGeneralStyle () {
-	// TODO: Only do stuff when it is needed (webkit, vmin, etc).
-	var landscape = window.innerHeight < window.innerWidth;
-	if (landscape) {
-		global_position_wrapper_date.style.width = window.innerHeight + "px";
-		global_position_wrapper_actions.style.paddingLeft = window.innerHeight + "px";
-		global_position_wrapper_actions.style.paddingTop = "";
-	} else {
-		global_position_wrapper_date.style.width = "";
-		global_position_wrapper_actions.style.paddingLeft = "";
-		global_position_wrapper_actions.style.paddingTop = window.getComputedStyle(global_position_wrapper_date).height;
-	}
 	global_body.style.fontSize = "1vmin";
-
 	calculateActionStyle();
 }
 
@@ -51,15 +39,8 @@ function calculateActionStyle (amount) {
 	if (!global_toggle_edit.checked)
 		len--;
 
-	var landscape = window.innerHeight < window.innerWidth;
-	var size;
-	if (landscape) {
-		size = calculateActionSize(global_position_wrapper_actions.clientWidth-global_position_wrapper_date.clientWidth-len,
-			window.innerHeight-len, len);
-	} else {
-		size = calculateActionSize(window.innerWidth-len,
-			window.innerHeight-global_position_wrapper_date.clientHeight-len, len);
-	}
+	var size = calculateActionSize(global_position_wrapper_actions.clientWidth-len,
+		global_position_wrapper_actions.clientHeight-len, len);
 	dynamicStyle.editRule(".action", "width:" + size + ";");
 }
 

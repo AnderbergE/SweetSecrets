@@ -6,12 +6,7 @@ These are notes and ideas that has come up during development:
 /* DROPBOX URL */
 https://dl.dropboxusercontent.com/u/116813451/SweetSecrets/dist/index.html
 
-/* BROWSER QUIRKS, goal support: IE8+, Firefox, Chrome, Safari */
-IE8:
-	CSS: em does not work.
-	javascript: event does not always work.
-	javascript: .getBoundingClientRect() does not return width.
-	
+/* BROWSER QUIRKS, goal support: IE10+, Firefox, Chrome, Safari */
 Chrome:
 	CSS: Border radius and transform scale is weird.
 	javascript: has x,y on mouseevent, no other browser does.

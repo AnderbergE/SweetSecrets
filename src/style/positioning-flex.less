@@ -1,0 +1,162 @@
+/* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
+@import "mixins.less";
+
+@main-margin-top: 3rem;
+@editor-top: 12%;
+@editor-height: 80%;
+@editor-inner-to-outer-ratio: 100%/@editor-height;
+
+/* POSITIONING  POSITIONING POSITIONING  POSITIONING POSITIONING  POSITIONING */
+#main-affairs {
+	position: relative;
+}
+
+#position-wrapper-editor {
+	height: @editor-height;
+	left: 0;
+	position: absolute;
+	top: @editor-top;
+	.transforms(translate3d(0,0,0));
+	// mixin .transitions doesn't work when attribute differ between prefix. Yet.
+	-webkit-transition: -webkit-transform 0.5s linear 0s;
+	transition: transform 0.5s linear 0s;
+	width: 100%;
+	z-index: 200;
+}
+#position-wrapper-editor.hide,
+#position-wrapper-editor.hiding {
+	.transforms(translate3d(0,-(@editor-top*@editor-inner-to-outer-ratio+100%),0));
+}
+#position-wrapper-editor.hide {
+	opacity: 0;
+	z-index: -1;
+}
+
+#position-wrapper-config {
+	height: @config-size + 1;
+	left: 0;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	.transforms(translateZ(0));
+	.transitions(width, .2s, linear);
+	width: @config-size + 1;
+	z-index: 100;
+}
+
+.controller-wrapper {
+	height: 100%;
+}
+
+#position-wrapper-date-actions {
+	.flex-display();
+}
+
+#position-wrapper-date {
+	.flex(1 0 auto);
+	margin-top: @main-margin-top;
+}
+
+#position-wrapper-actions {
+	height: 100%;
+	text-align: center;
+	width: 100%;
+}
+
+/* Portrait */
+@media all and (orientation: portrait) {
+	#position-wrapper-date-actions {
+		.flex-flow(column);
+	}
+
+	#position-wrapper-date {
+		//TODO: Can I change value for day-total variable?
+		height: 600/7vw+@main-margin-top;
+		width: 100%;
+	}
+	
+	.date-nav {
+		width: 90%;
+	}
+}
+
+/* Landscape */
+@media all and (orientation: landscape) {
+	#position-wrapper-date {
+		width: 100vh;
+	}
+	
+	.date-nav {
+		width: 98%;
+	}
+}
+
+
+/* TOGGLES TOGGLES  TOGGLES TOGGLES TOGGLES  TOGGLES TOGGLES  TOGGLES TOGGLES */
+/* Expanded date active */
+/*
+#toggle-date-expander:checked ~ #main-affairs {
+	& .prev, .next {
+		display: none;
+	}
+	& .date-nav {
+		width: @day-total;
+	}
+	& .day {
+		margin-left: @day-margin !important;
+		padding: 100% 100% 0 0;
+	}
+	& .day:not(.nearby) {
+		display: none;
+	}
+}
+*/
+
+#toggle-config:not(:checked) ~ #main-affairs .active {
+	& .config-button {
+		position: absolute;
+		z-index: 5;
+		color: transparent;
+		background: transparent;
+	}
+	& .user:not(.selected) {
+		display: none;
+		margin: 0;
+	}
+}
+
+/* Config active */
+#toggle-config:checked ~ #main-affairs {
+	& #position-wrapper-config {
+		width: 100%;
+	}
+	& .config {
+		background: rgba(0, 0, 0, 0.5);
+		opacity: 0.9;
+	}
+	.config-button {
+		background: palegreen;
+
+		& .action-text:before {
+			content: "\e001"
+		}
+	}
+}
+
+/* Edit mode active */
+#toggle-edit:checked ~ #main-affairs {
+	& .edit-button {
+		background: powderblue;
+	}
+	
+	& .hide ~ div {
+		& .action, .user {
+			animation: action-icon-pulse 1s infinite;
+			-webkit-animation: action-icon-pulse 1s infinite;
+		}
+	}
+	
+	& .add-action, .add-user {
+		display: inline-block;
+	}
+}

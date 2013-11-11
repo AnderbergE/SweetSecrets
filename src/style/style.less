@@ -1,7 +1,7 @@
 /* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
 @import "mixins.less";
 @import "action-icon.less";
-@import "positioning-absolute.less";
+@import "positioning-flex.less";
 @import "editor.less";
 
 @config-size: 10rem;
@@ -104,7 +104,7 @@ input[type="checkbox"] {
 	margin: 0 auto;
 	position: relative;
 	text-shadow: 1px 1px 3px lightgrey;
-	width: 90%;
+	.transitions(width, .2s, linear);
 	z-index: 5;
 }
 .date-overview {
