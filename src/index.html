@@ -75,5 +75,94 @@
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.js"></script>
 	<script src="script.js" type="text/javascript"></script>
+<!-- TODO: Remove livereload and ng-templates, they are for localhost testing only. -->
+	<script src="http://localhost:35729/livereload.js"></script>
+	<script type="text/ng-template" id="templates/editor.html">
+<div id="position-wrapper-editor" ng-class="currentState">
+	<div class="editor-overlay" ng-click="setState(states.HIDE)"></div>
+	<div class="editor">
+		<div class="editor-header">
+			<div class="editor-header-icons">
+				<action-icon class="editor-icon editor-icon-header editor-nav editor-nav-prev" ng-click="prevState()"
+					ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}"
+					icon="{{prevStates.length == 0 || isEditing ? 'O' : '<'}}"></action-icon>
+				<action-icon class="editor-icon editor-icon-header always-bg"
+					ng-style="{'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}" icon="{{icon}}"></action-icon>
+				<action-icon class="editor-icon editor-icon-header editor-nav editor-nav-next" ng-click="nextState()"
+					ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}"
+					icon="{{currentState == states.MENU || currentState == states.HIDING ? '|' : nextStates.length == 0 || isEditing ? 'v' : '>'}}"></action-icon>
+			</div>
+		</div>
+		<div class="editor-choices">
+			<div class="editor-choose-menu">
+				<div class="center editor-menu-appearance">
+					<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.ICON)" icon="&#xe008"></action-icon>
+					<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.BACKGROUND)" icon="&#xe002"></action-icon>
+				</div>
+				<div class="center editor-menu-info">
+					<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.USER)"
+						 ng-style="{'display': isUser ? 'inline-block' : 'none'}" icon="&#xe00a"></action-icon>
+					<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.REMOVE)" icon="&#xe00c"></action-icon>
+				</div>
+			</div>
+			<div class="editor-choose-icon">
+				<action-icon class="editor-icon editor-icon-choice" ng-repeat="icon in availableIcons"
+					input-type="radio" input-id="ac{{$index}}" input-name="choice" input-value="{{icon}}" input-model="$parent.icon"
+					icon="{{icon}}"></action-icon>
+			</div>
+			<div class="editor-choose-background">
+				<div class="color-slider red">
+					<div class="slider">
+						<div class="slider-line"></div>
+						<div class="slider-header" ng-style="{
+							'background-color': 'rgb(255, ' + r.others + ', ' + r.others + ')',
+							'left': r.intensity * 100 + '%'}">
+						</div>
+					</div>
+					<input class="slider-number" ng-model="r.value" />
+				</div>
+				<div class="color-slider green">
+					<div class="slider">
+						<div class="slider-line"></div>
+						<div class="slider-header" ng-style="{
+							'background-color': 'rgb(' + g.others + ', 255, ' + g.others + ')',
+							'left': g.intensity * 100 + '%'}">
+						</div>
+					</div>
+					<input class="slider-number" ng-model="g.value" />
+				</div>
+				<div class="color-slider blue">
+					<div class="slider">
+						<div class="slider-line"></div>
+						<div class="slider-header" ng-style="{
+							'background-color': 'rgb(' + b.others + ', ' + b.others + ', 255)',
+							'left': b.intensity * 100 + '%'}">
+						</div>
+					</div>
+					<input class="slider-number" ng-model="b.value" />
+				</div>
+			</div>
+			<div class="editor-choose-user">
+				<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-email').focus()">
+					<input type="email" id="editor-user-email" class="editor-user-input" placeholder="info@secrets.com" autofocus>
+					<action-icon class="editor-icon editor-user-choice" icon="&#xe008"></action-icon>
+				</div>
+				<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-password').focus()">
+					<input type="password" id="editor-user-password" class="editor-user-input" placeholder="********">
+					<action-icon class="editor-icon editor-user-choice" icon="&#xe00a"></action-icon>
+				</div>
+			</div>
+			<div class="editor-choose-remove">
+				<div class="editor-choose-remove-section">
+					<action-icon class="editor-icon editor-remove-choice editor-logout-choice" icon="&#xe008"></action-icon>
+				</div>
+				<div class="editor-choose-remove-section">
+					<action-icon class="editor-icon editor-remove-choice editor-permanent-delete-choice" icon="&#xe00a"></action-icon>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	</script>
 </body>
 </html>
