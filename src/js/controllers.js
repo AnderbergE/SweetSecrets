@@ -89,7 +89,6 @@ app.controller('DateActionCtrl', ['$scope', '$timeout', function ($scope, $timeo
 
 /**
  * Action types available for a date.
- * @param {Object} $scope Angular.js scope.
  */
 app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', function ($scope, collectionHandler) {
 	/* Open editor for this type */
@@ -146,7 +145,6 @@ app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', function ($scop
 
 /**
  * Users for the app.
- * @param {Object} $scope Angular.js scope.
  */
 app.controller('UserCtrl', ['$scope', 'collectionHandler', function ($scope, collectionHandler) {
 	/* Open editor for this user */

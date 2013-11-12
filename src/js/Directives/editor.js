@@ -135,10 +135,10 @@ app.directive('editor', function () {
 			
 			/* Add input events */
 			Array.prototype.forEach.call([$scope.r, $scope.g, $scope.b], function(color) {
-				var el = document.querySelector("." + color.name + " .slider");
-				var line = document.querySelector("." + color.name + " .slider-line");
+				var sl = document.querySelector("." + color.name);
+				var el = sl.querySelector(".slider");
+				var line = sl.querySelector(".slider-line");
 
-				/* Function to run when slider should move. */
 				function sliderChange (e) {
 					e = e || window.event;
 					$scope.$digest((function () {
@@ -169,6 +169,11 @@ app.directive('editor', function () {
 				addEvent(el, "touchmove", function (e) {
 					e.preventDefault();
 					sliderChange(e.touches.item(0));
+				});
+				addEvent(sl, "mousewheel", function (e) {
+					$scope.$digest((function () {
+						color.value += (e.wheelDelta || -e.detail) > 0 ? 1 : -1;
+					})());
 				});
 			});
 		}
