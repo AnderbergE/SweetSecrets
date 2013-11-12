@@ -1,8 +1,16 @@
-/* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
 @import "mixins.less";
 
+/* VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS VARS */
+@fadeout-color: black;
+@slider-line-color: ghostwhite;
+@shadow-color: gray;
+@highlight-color: snow;
+@logout-color: cornflowerblue;
+@remove-color: red;
+
+/* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
 .editor-overlay {
-	background: black;
+	background: @fadeout-color;
 	height: 2*100%*@editor-inner-to-outer-ratio;
 	left: 0;
 	opacity: 0.5;
@@ -16,7 +24,7 @@
 	opacity: 0;
 }
 .editor {
-	background: white;
+	background: @modal-background;
 	.border-box();
 	height: 100%;
 	margin: 0 auto;
@@ -26,14 +34,14 @@
 	width: 95%;
 }
 .editor-icon {
-	background: @standard-background;
-	color: gray;
+	background: @action-background;
+	color: @action-inactive-color;
 	.font-icons();
 	font-size: 9rem;
 	width: 13rem;
 
 	& .action-selected:checked + .action-button  {
-		color: black;
+		color: @action-active-color;
 	}
 }
 .editor-header {
@@ -51,7 +59,7 @@
 	width: 100%;
 }
 .editor-icon-header {
-	color: black;
+	color: @action-active-color;
 	display: inline-block;
 }
 .editor-nav-prev,
@@ -66,14 +74,14 @@
 	margin-right: 13rem;
 
 	& .action-text {
-		color: firebrick !important;
+		color: @no-color !important;
 	}
 }
 .editor-nav-next {
 	margin-left: 13rem;
 
 	& .action-text {
-		color: limegreen !important;
+		color: @yes-color !important;
 	}
 }
 .editor-choices {
@@ -146,8 +154,8 @@
 	width: 100%;
 }
 .slider-line {
-	background: ghostwhite;
-	box-shadow: 0 1px 2px 0 gray inset, 0 -1px 2px 0 snow inset;
+	background: @slider-line-color;
+	box-shadow: 0 1px 2px 0 @shadow-color inset, 0 -1px 2px 0 @highlight-color inset;
 	border-radius: 1rem;
 	height: 2rem;
 	left: 0;
@@ -173,19 +181,20 @@
 	}
 }
 .red .slider-header:after {
-	box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red, 2px 2px 6px 1px gray;
+	box-shadow: 0 0 2px 1px red inset, 0 0 2px 1px red, 2px 2px 6px 1px @shadow-color;
 }
 .green .slider-header:after {
-	box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime, 2px 2px 6px 1px gray;
+	box-shadow: 0 0 2px 1px lime inset, 0 0 2px 1px lime, 2px 2px 6px 1px @shadow-color;
 }
 .blue .slider-header:after {
-	box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue, 2px 2px 6px 1px gray;
+	box-shadow: 0 0 2px 1px blue inset, 0 0 2px 1px blue, 2px 2px 6px 1px @shadow-color;
 }
 .slider-number {
 	border: none;
 	background: transparent;
 	border-radius: 50%;
-	box-shadow: 0 1px 2px 0 gray inset, 0 -1px 2px 0 snow inset;
+	box-shadow: 0 1px 2px 0 @shadow-color inset, 0 -1px 2px 0 @highlight-color inset;
+	color: @action-inactive-color;
 	font-size: 4rem;
 	.font-standard();
 	height: @slider-size;
@@ -216,7 +225,7 @@
 }
 .editor-user-input {
 	border: transparent;
-	box-shadow: 0 4px 5px -4px grey;
+	box-shadow: 0 4px 5px -4px @shadow-color;
 	font-size: 3rem;
 	.font-standard();
 	height: 5rem;
@@ -225,8 +234,8 @@
 	width: 50rem;
 }
 .editor-user-input:focus + .editor-user-choice {
-	color: black;
-	background: orange;
+	color: @action-active-color;
+	background: @notify-color;
 }
 
 /* Remove choice */
@@ -238,14 +247,14 @@
 	display: block;
 }
 .editor-remove-choice {
-	background: red;
-	color: white;
+	background: @remove-color;
+	color: @action-invert-active-color;
 	display: inline-block;
 	font-size: 10rem;
 	width: 15rem;
 }
 .editor-logout-choice {
-	background: cornflowerblue;
+	background: @logout-color;
 	font-size: 20rem;
 	margin: 2rem auto 10rem;
 	width: 30rem;
