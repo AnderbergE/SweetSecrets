@@ -159,7 +159,12 @@ app.controller('UserCtrl', ['$scope', 'collectionHandler', function ($scope, col
 
 	/* Open editor for this user */
 	$scope.edit = function (position, user) {
-		if (document.getElementById("toggle-edit").checked) {
+		/* A current user has been clicked */
+		// If not logged in
+			// Check if log in is remembered, then activate user.
+			// If not, open login editor to log in.
+		// If logged in already, open edit mode.
+		if (position == $scope.activeUser) {
 			$scope.$root.$broadcast('editValue', user, function (updateItems) {
 				if (updateItems)
 					collectionHandler.updateCollection($scope.users, updateItems, position);
