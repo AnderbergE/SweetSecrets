@@ -36,7 +36,7 @@ function calculateGeneralStyle () {
  */
 function calculateActionStyle (amount) {
 	var len = (amount > 0 ? amount : global_position_wrapper_actions.children[0].children.length);
-	if (!global_toggle_edit.checked)
+	if (len > 1 && !global_toggle_edit.checked)
 		len--;
 
 	var size = calculateActionSize(global_position_wrapper_actions.clientWidth-len,

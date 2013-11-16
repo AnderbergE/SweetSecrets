@@ -127,9 +127,8 @@ input[type="checkbox"] {
 	float: right;
 }
 .add-user {
-	background: @config-color;
-	display: none;
 	font-size: @config-size + 8;
+	// More add-user in add-action.
 }
 
 
@@ -228,10 +227,15 @@ input[type="checkbox"] {
 	}
 }
 
-.add-action {
+.add-action, .add-user {
 	background: @config-color;
 	color: @action-active-color;
 	display: none;
+
+}
+.showAdd {
+	background: @notify-color;
+	display: inline-block;
 }
 
 
