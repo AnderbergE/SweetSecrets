@@ -28,6 +28,7 @@ app.directive('actionIcon', function () {
 					(!attrs.inputDirective ? '' : ' ' + attrs.inputDirective) +
 					' class="action-selected" />') +
 					'<label class="action-button"' +
+						(!attrs.click ? '' : ' ng-click="' + attrs.click + '"') +
 						(!attrs.forInput ? '' : ' for="' + attrs.forInput + '"') + '>' +
 						(!attrs.background && !attrs.customBackground ? '' :
 						'<div class="action-bgs"><div class="action-bg" ' +

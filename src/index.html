@@ -22,7 +22,7 @@
 				<action-icon class="config-icon config-button" input-id="toggle-config"></action-icon>
 				<div class="config-menu">
 
-					<action-icon class="config-icon user" ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}" ng-click="edit(key, user)"
+					<action-icon class="config-icon user" ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}" click="edit(key, user)"
 						input-type="radio" input-id="user{{key}}" input-name="user" input-value="{{key}}" input-model="$parent.activeUser"
 						icon="{{user.icon}}" background="{{user.background}}"></action-icon>
 
@@ -63,7 +63,7 @@
 
 			<div id="position-wrapper-actions">
 				<div class="actions">
-					<action-icon class="action" ng-repeat="type in types" ng-click="edit($index, type)"
+					<action-icon class="action" ng-repeat="type in types" click="edit($index, type)"
 						input-type="checkbox" input-id="{{type.name}}" input-model="dates[selected][type.name]"
 						icon="{{type.icon}}" background="{{type.background}}"></action-icon><!--
 					These are inline-blocks and need this comment to remove white space between them.
@@ -92,7 +92,6 @@
 				<action-icon class="editor-icon editor-icon-header always-bg"
 					ng-style="{'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}" icon="{{icon}}"></action-icon>
 				<action-icon class="editor-icon editor-icon-header editor-nav editor-nav-next" ng-click="nextState()"
-					ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}"
 					icon="{{currentState == states.MENU || currentState == states.HIDING ? '|' : nextStates.length == 0 || isEditing ? 'v' : '>'}}"></action-icon>
 			</div>
 		</div>
