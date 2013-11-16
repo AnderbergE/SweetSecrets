@@ -52,6 +52,12 @@ app.directive('editor', function () {
 				} else
 					$scope.setState($scope.nextStates.pop(), false, true);
 			}
+
+			/* Delete the current item */
+			$scope.delete = function () {
+				$scope.save(/* No updateItems will remove the item */);
+				$scope.setState($scope.states.HIDE);
+			}
 			
 			/* Update color values */
 			function setColor (color, value, old) {

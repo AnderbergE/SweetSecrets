@@ -104,7 +104,10 @@ app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', function ($scop
 		if (document.getElementById("toggle-edit").checked) {
 			window.event.preventDefault();
 			$scope.$root.$broadcast('editValue', type, function (updateItems) {
-				collectionHandler.updateCollection($scope.types, updateItems, position);
+				if (updateItems)
+					collectionHandler.updateCollection($scope.types, updateItems, position);
+				else
+					collectionHandler.removeCollection($scope.types, position);
 			}, position);
 		}
 	}
@@ -158,10 +161,19 @@ app.controller('UserCtrl', ['$scope', 'collectionHandler', function ($scope, col
 	$scope.edit = function (position, user) {
 		if (document.getElementById("toggle-edit").checked) {
 			$scope.$root.$broadcast('editValue', user, function (updateItems) {
-				collectionHandler.updateCollection($scope.users, updateItems, position);
+				if (updateItems)
+					collectionHandler.updateCollection($scope.users, updateItems, position);
+				else
+					collectionHandler.removeCollection($scope.users, position);
 			}, position);
 		}
 	}
+
+	/* Update style related to actions. */
+	$scope.$watch('users', function(newValue, oldValue) {
+		if (newValue.length < oldValue.length)
+			$scope.activeUser = -1;
+	}, true);
 
 	/* Initialization */
 	$scope.users = [];
