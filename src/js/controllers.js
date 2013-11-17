@@ -101,7 +101,7 @@ app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', function ($scop
 
 	/* Open editor for this type */
 	$scope.edit = function (position, type) {
-		if (document.getElementById("toggle-edit").checked) {
+		if (global_toggle_edit.checked) {
 			window.event.preventDefault();
 			$scope.$root.$broadcast('editValue', type, function (updateItems) {
 				if (updateItems)

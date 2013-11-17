@@ -12,8 +12,8 @@ var app = angular.module('theApp', []);
 var global_body = document.body;
 var global_position_wrapper_date = document.getElementById("position-wrapper-date");
 var global_position_wrapper_actions = document.getElementById('position-wrapper-actions');
-var global_toggle_config = document.querySelector('#toggle-config');
-var global_toggle_edit = document.querySelector('#toggle-edit');
+var global_toggle_config = document.getElementById('toggle-config');
+var global_toggle_edit = document.getElementById('toggle-edit');
 
 /**
  * Cache for client storage, either localStorage or associative array.
