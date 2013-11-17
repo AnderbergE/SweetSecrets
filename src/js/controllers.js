@@ -1,7 +1,9 @@
 /**
  * Dates and their actions.
  */
-app.controller('DateActionCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
+app.controller('DateActionCtrl',
+	['$scope', '$timeout', 'dateService', function ($scope, $timeout, dateService) {
+
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
 		var temp = dateFromTimestamp($scope.selected);
@@ -11,65 +13,13 @@ app.controller('DateActionCtrl', ['$scope', '$timeout', function ($scope, $timeo
 		// (Math.floor(Math.abs(amount) / 12)*12 +
 		if ((12 + month + amount) % 12 != temp.getMonth())
 			$scope.selected = temp.setDate(0);
-		fillMonth($scope.selected);
-	}
-
-	/* Fill the calendar for this month. */
-	function fillMonth (timestamp) {
-		$scope.dates = {};
-		var end = (getLastDayInMonth(timestamp)).getDate();
-		var date = new Date(timestamp);
-		var temp;
-		for (var i = 1; i <= end; i++) {
-			date.setDate(i);
-			temp = date.setHours(0,0,0,0);
-			$scope.dates[temp] = retrieve(temp);
-		}
-	}
-
-	/* If today is in the month, make it show */
-	function setToday () {
-		var day = document.getElementById($scope.today);
-		if (day) {
-			day = day.parentNode;
-			day.className = day.className + " today";
-		}
-	}
-
-	/* Set the nearby class to day elements */
-	function updateNearby () {
-		// Remove old nearby dates.
-		var old = global_position_wrapper_date.querySelectorAll(".nearby");
-		for (var i = 0; old && i < old.length; i++) {
-			old[i].className = old[i].className.replace(" nearby", "");
-		}
-
-		// Add new nearby dates.
-		var day = document.getElementById($scope.selected);
-		if (day) {
-			day = day.parentNode;
-			day.className = day.className + " nearby";
-			var prev = day.previousSibling;
-			var next = day.nextSibling;
-			for (var i = 1; i <= NEARBY_DATES; i++) {
-				if (prev) {
-					prev.className = prev.className + " nearby";
-					prev = prev.previousSibling;
-				}
-				if (next){
-					next.className = next.className + " nearby";
-					next = next.nextSibling;
-				}
-			}
-		}
-
-		setToday();
+		$scope.dates = dateService.fillMonth($scope.selected);
 	}
 
 	/* Update classes related to selected date. */
 	$scope.$watch('selected', function() {
 		// By using timeout we delay this function till after the DOM has updated.
-		$timeout(function() { updateNearby() });
+		$timeout(function() { dateService.updateNearbyStyle($scope.selected) });
 	});
 
 	/* Save changes to date action values. */
@@ -79,12 +29,15 @@ app.controller('DateActionCtrl', ['$scope', '$timeout', function ($scope, $timeo
 		store($scope.selected, newValue);
 	}, true);
 
+	$scope.$watch(dateService.getToday(), function () {
+		$scope.today = dateService.getToday();
+	});
+
 	/* Initialization */
-	var NEARBY_DATES = 3;
-	$scope.today = getStrippedTime();
+	$scope.today = dateService.getToday();
 	$scope.selected = $scope.today;
 	$scope.dates = {};
-	fillMonth($scope.selected);
+	$scope.dates = dateService.fillMonth($scope.selected);
 }]);
 
 /**
