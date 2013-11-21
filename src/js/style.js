@@ -26,8 +26,13 @@ addEvent(global_toggle_config, 'click', function () {
  * This is needed because some browsers do not handle vh and vw correctly.
  */
 function calculateGeneralStyle () {
-	global_body.style.fontSize = "1vmin";
-	calculateActionStyle();
+	if (global_timeout)
+		clearTimeout(global_timeout);
+
+	global_timeout = setTimeout(function () {
+		global_body.style.fontSize = "1vmin";
+		calculateActionStyle();
+	}, 100);
 }
 
 /**
@@ -39,19 +44,8 @@ function calculateActionStyle (amount) {
 	if (len > 1 && !global_toggle_edit.checked)
 		len--;
 
-	var size = calculateActionSize(global_position_wrapper_actions.clientWidth-len,
-		global_position_wrapper_actions.clientHeight-len, len);
-	dynamicStyle.editRule(".action", "width:" + size + ";");
-}
-
-/**
- * Calculates the size of the actions icons.
- * @param {Number} width Width of the container.
- * @param {Number} height Height of the container.
- * @param {Number} amount Amount of action icons.
- * @returns {String} The suggested size, either percentage or pixel.
- */
-function calculateActionSize (width, height, amount) {
+	var width = global_position_wrapper_actions.clientWidth-len;
+	var height = global_position_wrapper_actions.clientHeight-len;
 	var max = 0;
 	var big, small, temp, i;
 	if (width > height) {
@@ -62,8 +56,8 @@ function calculateActionSize (width, height, amount) {
 		small = width;
 	}
 
-	for (i = 1; i <= amount; i++) {
-		temp = Math.min(big / Math.ceil(amount / i), small / i);
+	for (i = 1; i <= len; i++) {
+		temp = Math.min(big / Math.ceil(len / i), small / i);
 		if (temp >= max)
 			max = temp;
 		else
@@ -71,7 +65,9 @@ function calculateActionSize (width, height, amount) {
 	}
 	i--;
 	
-	if (max*i < width)
-		return Math.floor(max) + "px";
-	return (99-amount*0.25)/i + "%";
+	var size = (max*i < width) ?
+		Math.floor(max) :
+		width/i - len*0.25;
+
+	dynamicStyle.editRule(".action", "width:" + size + "px; font-size:" + size * 0.7 + "px;");
 }

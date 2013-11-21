@@ -62,3 +62,6 @@ var dynamicStyle = (function() {
 
 	return style.sheet;
 })();
+
+/** This is used to not trigger all resizes that are sent. */
+var global_timeout;
