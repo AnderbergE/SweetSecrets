@@ -54,7 +54,11 @@
 
 #position-wrapper-date {
 	.flex(1 0 auto);
-	margin-top: @main-margin-top;
+	margin: @main-margin-top auto 0;
+	width: 100vh;
+}
+.date-nav {
+	width: 98%;
 }
 
 #position-wrapper-actions {
@@ -64,33 +68,23 @@
 }
 
 /* Portrait */
-@media all and (orientation: portrait) {
-	#position-wrapper-date-actions {
-		.flex-flow(column);
-	}
-
-	#position-wrapper-date {
+.portrait {
+	& #position-wrapper-date {
 		//TODO: Can I change value for day-total variable?
 		height: 600/7vw+@main-margin-top;
+		max-height: 75vh;
+		max-width: 85vh;
 		width: 100%;
 	}
+
+	& #position-wrapper-date-actions {
+		.flex-flow(column);
+	}
 	
-	.date-nav {
+	& .date-nav {
 		width: 90%;
 	}
 }
-
-/* Landscape */
-@media all and (orientation: landscape) {
-	#position-wrapper-date {
-		width: 100vh;
-	}
-	
-	.date-nav {
-		width: 98%;
-	}
-}
-
 
 /* TOGGLES TOGGLES  TOGGLES TOGGLES TOGGLES  TOGGLES TOGGLES  TOGGLES TOGGLES */
 #toggle-config:checked ~ #main-affairs #position-wrapper-config {

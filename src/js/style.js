@@ -30,6 +30,10 @@ function calculateGeneralStyle () {
 		clearTimeout(global_timeout);
 
 	global_timeout = setTimeout(function () {
+		if (global_body.clientWidth * 0.86 > global_body.clientHeight)
+			angular.element(global_body).removeClass('portrait');
+		else
+			angular.element(global_body).addClass('portrait');
 		global_body.style.fontSize = "1vmin";
 		calculateActionStyle();
 	}, 100);
@@ -65,9 +69,6 @@ function calculateActionStyle (amount) {
 	}
 	i--;
 	
-	var size = (max*i < width) ?
-		Math.floor(max) :
-		width/i - len*0.25;
-
+	var size = (max*i < width) ? Math.floor(max) : width/i - len*0.25;
 	dynamicStyle.editRule(".action", "width:" + size + "px; font-size:" + size * 0.7 + "px;");
 }
