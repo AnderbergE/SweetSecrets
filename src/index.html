@@ -62,7 +62,7 @@
 
 			<div id="position-wrapper-actions">
 				<div class="actions">
-					<action-icon class="action" ng-repeat="type in types" click="edit($index, type)"
+					<action-icon class="action" ng-repeat="type in types" click="edit($index, type, $event)"
 						input-type="checkbox" input-id="{{type.name}}" input-model="dates[selected][type.name]"
 						icon="{{type.icon}}" background="{{type.background}}"></action-icon><!--
 					These are inline-blocks and need this comment to remove white space between them.
