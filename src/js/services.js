@@ -107,8 +107,10 @@ app.service('dateService', ['$timeout', 'storageService', function ($timeout, st
  *
  * NOTE: Since we might use associative array we can not use getItem or setItem
  * from the localStorage API.
+ *
+ * Inspired by: https://github.com/agrublev/angularLocalStorage
  */
-app.service('storageService', function () {
+app.service('storageService', ['$parse', function ($parse) {
 	/**
 	 * Store a key in local storage (or browser cache) with a specific value.
 	 * @param {number|string|Object} key
@@ -122,7 +124,7 @@ app.service('storageService', function () {
 		// TODO: Server storing.
 		
 		if (!key || !value)
-			throw "Incorrect usage of save(key, value, toServer)";
+			throw "Incorrect usage of save";
 		storage[angular.toJson(key)] = angular.toJson(value);
 	}
 
@@ -156,5 +158,33 @@ app.service('storageService', function () {
 		!storage.clear ? storage = {} : storage.clear();
 	}
 	
+	this.bind = function ($scope, key, opts) {
+		if (!key)
+			throw "Incorrect usage of bind";
+		var defaultOpts = {
+			defaultValue: ''
+		}
+		opts = angular.isUndefined(opts) ?
+			defaultOpts : angular.extend(defaultOpts, opts);
+			
+		if (!this.load(key))
+			this.save(key, opts.defaultValue);
+		
+		$parse(key).assign($scope, this.load(key));
+
+		$scope.$watch(key, function (val) {
+			if (angular.isDefined(val)) {
+				storageService.save(key, val);
+			}
+		}, true);
+	}
+	
+	this.unbind = function () {
+		$parse(key).assign($scope, null);
+		$scope.$watch(key, function () { });
+		this.clear(key);
+	}
+	
 	var storage = (typeof(Storage) !== "undefined") ? localStorage : {};
-});
+	var storageService = this;
+}]);

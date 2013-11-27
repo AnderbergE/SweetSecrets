@@ -43,7 +43,7 @@ app.controller('DateActionCtrl',
 /**
  * Action types available for a date.
  */
-app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', function ($scope, collectionHandler) {
+app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', 'storageService', function ($scope, collectionHandler, storage) {
 	/* Open editor for this type */
 	$scope.add = function () {
 		$scope.$root.$broadcast('addValue', {}, function (updateItems) {
@@ -86,23 +86,25 @@ app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', function ($scop
 	}, true);
 	
 	/* Initialization */
-	$scope.types = [];
+	storage.bind($scope, 'types', { defaultValue: [] });
 	
 	// TODO: remove this debug insertion.
-	collectionHandler.updateCollection($scope.types,
-		{name: "candy", icon: "\ue006", background: "rgb(144, 238, 144)"});
-	collectionHandler.updateCollection($scope.types,
-		{name: "cake", icon: "\ue002", background: "rgb(255, 165, 0)"});
-	collectionHandler.updateCollection($scope.types,
-		{name: "drink", icon: "\ue00a", background: "rgb(255, 105, 180)"});
-	collectionHandler.updateCollection($scope.types,
-		{name: "icecream", icon: "\ue009", background: "rgb(176, 224, 230)"});
+	if ($scope.types.length <= 0) {
+		collectionHandler.updateCollection($scope.types,
+			{name: "candy", icon: "\ue006", background: "rgb(144, 238, 144)"});
+		collectionHandler.updateCollection($scope.types,
+			{name: "cake", icon: "\ue002", background: "rgb(255, 165, 0)"});
+		collectionHandler.updateCollection($scope.types,
+			{name: "drink", icon: "\ue00a", background: "rgb(255, 105, 180)"});
+		collectionHandler.updateCollection($scope.types,
+			{name: "icecream", icon: "\ue009", background: "rgb(176, 224, 230)"});
+	}
 }]);
 
 /**
  * Users for the app.
  */
-app.controller('UserCtrl', ['$scope', 'collectionHandler', function ($scope, collectionHandler) {
+app.controller('UserCtrl', ['$scope', 'collectionHandler', 'storageService', function ($scope, collectionHandler, storage) {
 	/* Open editor for this user */
 	$scope.add = function () {
 		$scope.$root.$broadcast('addValue', {email: true}, function (updateItems) {
@@ -127,19 +129,23 @@ app.controller('UserCtrl', ['$scope', 'collectionHandler', function ($scope, col
 		}
 	}
 
-	/* Update style related to actions. */
+	/* Update style related to users. */
 	$scope.$watch('users', function(newValue, oldValue) {
 		if (newValue.length < oldValue.length)
 			$scope.activeUser = -1;
 	}, true);
 
 	/* Initialization */
-	$scope.users = [];
-	$scope.activeUser;
+	storage.bind($scope, 'users', { defaultValue: [] });
+	storage.bind($scope, 'activeUser', { defaultValue: -1 });
 
 	// TODO: remove this debug insertion.
-	collectionHandler.updateCollection($scope.users,
-		{name: "Erik Anderberg", icon: "\ue006", background: "rgb(255, 0, 0)", email: "heyo@ey.moo", pass: "pass"});
-	collectionHandler.updateCollection($scope.users,
-		{name: "Camilla Bergvall", icon: "\ue004", background: "rgb(0, 255, 0)", email: "blarg@larva.now", pass: "pass"});
+	if ($scope.users.length <= 0) {
+		collectionHandler.updateCollection($scope.users,
+			{name: "Erik Anderberg", icon: "\ue006",
+			 background: "rgb(255, 0, 0)", email: "heyo@ey.moo", pass: "pass"});
+		collectionHandler.updateCollection($scope.users,
+			{name: "Camilla Bergvall", icon: "\ue004",
+			 background: "rgb(0, 255, 0)", email: "blarg@larva.now", pass: "pass"});
+	}
 }]);
