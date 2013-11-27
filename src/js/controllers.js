@@ -2,7 +2,7 @@
  * Dates and their actions.
  */
 app.controller('DateActionCtrl',
-	['$scope', '$timeout', 'dateService', function ($scope, $timeout, dateService) {
+	['$scope', '$timeout', 'dateService', 'storageService', function ($scope, $timeout, dateService, storage) {
 
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
@@ -26,7 +26,7 @@ app.controller('DateActionCtrl',
 	$scope.$watch('dates[selected]', function(newValue, oldValue) {
 		// TODO: This stores every time selected changes between values that are not the same.
 		// Can we avoid that?
-		store($scope.selected, newValue);
+		storage.save($scope.selected, newValue);
 	}, true);
 
 	$scope.$watch(dateService.getToday(), function () {

@@ -24,7 +24,7 @@ app.service('collectionHandler', function () {
 /**
  * A service to handle date functionality.
  */
-app.service('dateService', function ($timeout) {
+app.service('dateService', ['$timeout', 'storageService', function ($timeout, storage) {
 	this.getToday = function () {
 		return today;
 	}
@@ -38,7 +38,9 @@ app.service('dateService', function ($timeout) {
 		for (var i = 1; i <= end; i++) {
 			date.setDate(i);
 			temp = date.setHours(0,0,0,0);
-			dates[temp] = retrieve(temp);
+			dates[temp] = storage.load(temp);
+			if (!dates[temp])
+				dates[temp] = {};
 		}
 		return dates;
 	}
@@ -97,4 +99,62 @@ app.service('dateService', function ($timeout) {
 	var NEARBY_DATES = 3;
 	var today;
 	updateTodayTimer();
+}]);
+
+/**
+ * A service to handle storage functionality.
+ * Cache for client storage is either localStorage or associative array.
+ *
+ * NOTE: Since we might use associative array we can not use getItem or setItem
+ * from the localStorage API.
+ */
+app.service('storageService', function () {
+	/**
+	 * Store a key in local storage (or browser cache) with a specific value.
+	 * @param {number|string|Object} key
+	 * @param {number|string|Object} value
+	 * @param {bool} toServer If an asynchronous call to set server values
+	 *	should be made. Default value true.
+	 * @throws Error if key or value is not specified.
+	 */
+	this.save = function (key, value, toServer) {
+		toServer = toServer || true;
+		// TODO: Server storing.
+		
+		if (!key || !value)
+			throw "Incorrect usage of save(key, value, toServer)";
+		storage[angular.toJson(key)] = angular.toJson(value);
+	}
+
+	/**
+	 * Retrieve a value of a specific key from local storage (or browser cache).
+	 * @param {number|string|Object} key
+	 * @param {bool} fromServer If an asynchronous call to get server values
+	 *	should be made. Default value false.
+	 * @returns {null|number|string|Object} The value in storage,
+	 *	or undefined if non-existing.
+	 */
+	this.load = function (key, fromServer) {
+		fromServer = fromServer || false;
+		// TODO: Server retrieving.
+		
+		return angular.fromJson(storage[angular.toJson(key)]);
+	}
+	
+	/**
+	 * Remove a specific key from local storage (or browser cache).
+	 * @param {number|string|Object} key
+	 */
+	this.clear = function (key) {
+		delete storage[angular.toJson(key)];
+	}
+	
+	/**
+	 * Remove all values from local storage (or browser cache).
+	 */
+	this.clearAll = function () {
+		!storage.clear ? storage = {} : storage.clear();
+	}
+	
+	var storage = (typeof(Storage) !== "undefined") ? localStorage : {};
 });

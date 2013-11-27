@@ -16,12 +16,6 @@ var global_toggle_config = document.getElementById('toggle-config');
 var global_toggle_edit = document.getElementById('toggle-edit');
 
 /**
- * Cache for client storage, either localStorage or associative array.
- * @global {Object} storage Storage cache on client.
- */
-var storage = (typeof(Storage) !== "undefined") ? localStorage : {};
-
-/**
  * Dynamic style is the go to way when you want to edit css values in run-time.
  * @global {Object} dynamicStyle A stylesheet object for manipulating css rules.
  * 	This object has two added functions: insert and editRule.
