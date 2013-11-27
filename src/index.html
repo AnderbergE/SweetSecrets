@@ -22,7 +22,7 @@
 				<div class="config-menu">
 
 					<action-icon class="config-icon user" ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}" click="edit(key, user)"
-						input-type="radio" input-id="user{{key}}" input-name="user" input-value="{{key}}" input-model="$parent.activeUser"
+						input-type="radio" input-id="user{{key}}" input-name="user" input-value="{{key}}" input-model="$parent.activeUser" input-directive="integer"
 						icon="{{user.icon}}" background="{{user.background}}"></action-icon>
 
 					<action-icon class="config-icon user add-user" ng-class="{'showAdd': !users.length}" ng-click="add()" input-id="toggle-editor" icon="+"></action-icon>

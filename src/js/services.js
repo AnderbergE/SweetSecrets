@@ -111,6 +111,12 @@ app.service('dateService', ['$timeout', 'storageService', function ($timeout, st
  * Inspired by: https://github.com/agrublev/angularLocalStorage
  */
 app.service('storageService', ['$parse', function ($parse) {
+	function parseValue (val) {
+		if (angular.isNumber(val) || angular.isString(val))
+			return val;
+		return angular.toJson(val);
+	}
+
 	/**
 	 * Store a key in local storage (or browser cache) with a specific value.
 	 * @param {number|string|Object} key
@@ -123,9 +129,9 @@ app.service('storageService', ['$parse', function ($parse) {
 		toServer = toServer || true;
 		// TODO: Server storing.
 		
-		if (!key || !value)
+		if (key == null || value == null)
 			throw "Incorrect usage of storageService.save";
-		storage[angular.toJson(key)] = angular.toJson(value);
+		storage[parseValue(key)] = parseValue(value);
 	}
 
 	/**
@@ -140,7 +146,7 @@ app.service('storageService', ['$parse', function ($parse) {
 		fromServer = fromServer || false;
 		// TODO: Server retrieving.
 		
-		return angular.fromJson(storage[angular.toJson(key)]);
+		return angular.fromJson(storage[parseValue(key)]);
 	}
 
 	/**
@@ -148,14 +154,14 @@ app.service('storageService', ['$parse', function ($parse) {
 	 * @param {number|string|Object} key
 	 */
 	this.clear = function (key) {
-		delete storage[angular.toJson(key)];
+		delete storage[parseValue(key)];
 	}
 
 	/**
 	 * Remove all values from local storage (or browser cache).
 	 */
 	this.clearAll = function () {
-		!storage.clear ? storage = {} : storage.clear();
+		angular.isFunction(storage.clear) ? storage = {} : storage.clear();
 	}
 
 	/**
@@ -167,7 +173,7 @@ app.service('storageService', ['$parse', function ($parse) {
 	 * @throws Error if $scope or key is not specified.
 	 */
 	this.bind = function ($scope, key, opts) {
-		if (!$scope || !key)
+		if ($scope == null || key == null)
 			throw "Incorrect usage of storageService.bind";
 
 		var defaultOpts = {
@@ -176,7 +182,7 @@ app.service('storageService', ['$parse', function ($parse) {
 		opts = angular.isUndefined(opts) ?
 			defaultOpts : angular.extend(defaultOpts, opts);
 
-		if (!this.load(key))
+		if (this.load(key) == null)
 			this.save(key, opts.defaultValue);
 
 		$parse(key).assign($scope, this.load(key));
@@ -195,7 +201,7 @@ app.service('storageService', ['$parse', function ($parse) {
 	 * @throws Error if $scope or key is not specified.
 	 */
 	this.unbind = function ($scope, key) {
-		if (!$scope || !key)
+		if ($scope == null || key == null)
 			throw "Incorrect usage of storageService.unbind";
 
 		$parse(key).assign($scope, null);
