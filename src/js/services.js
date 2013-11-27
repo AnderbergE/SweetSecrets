@@ -124,7 +124,7 @@ app.service('storageService', ['$parse', function ($parse) {
 		// TODO: Server storing.
 		
 		if (!key || !value)
-			throw "Incorrect usage of save";
+			throw "Incorrect usage of storageService.save";
 		storage[angular.toJson(key)] = angular.toJson(value);
 	}
 
@@ -142,7 +142,7 @@ app.service('storageService', ['$parse', function ($parse) {
 		
 		return angular.fromJson(storage[angular.toJson(key)]);
 	}
-	
+
 	/**
 	 * Remove a specific key from local storage (or browser cache).
 	 * @param {number|string|Object} key
@@ -150,26 +150,35 @@ app.service('storageService', ['$parse', function ($parse) {
 	this.clear = function (key) {
 		delete storage[angular.toJson(key)];
 	}
-	
+
 	/**
 	 * Remove all values from local storage (or browser cache).
 	 */
 	this.clearAll = function () {
 		!storage.clear ? storage = {} : storage.clear();
 	}
-	
+
+	/**
+	 * Bind a scope variable to local storage (or browser cache).
+	 * @param {Object} $scope The scope to add the variable to.
+	 * @param {number|string|Object} key The name of the variable.
+	 * @param {Object} opts List of possible options:
+	 *	- defaultValue Value to store if key does not exist.
+	 * @throws Error if $scope or key is not specified.
+	 */
 	this.bind = function ($scope, key, opts) {
-		if (!key)
-			throw "Incorrect usage of bind";
+		if (!$scope || !key)
+			throw "Incorrect usage of storageService.bind";
+
 		var defaultOpts = {
 			defaultValue: ''
 		}
 		opts = angular.isUndefined(opts) ?
 			defaultOpts : angular.extend(defaultOpts, opts);
-			
+
 		if (!this.load(key))
 			this.save(key, opts.defaultValue);
-		
+
 		$parse(key).assign($scope, this.load(key));
 
 		$scope.$watch(key, function (val) {
@@ -178,8 +187,17 @@ app.service('storageService', ['$parse', function ($parse) {
 			}
 		}, true);
 	}
-	
-	this.unbind = function () {
+
+	/**
+	 * Bind a scope variable to local storage (or browser cache).
+	 * @param {Object} $scope The scope to add the variable to.
+	 * @param {number|string|Object} key The name of the variable.
+	 * @throws Error if $scope or key is not specified.
+	 */
+	this.unbind = function ($scope, key) {
+		if (!$scope || !key)
+			throw "Incorrect usage of storageService.unbind";
+
 		$parse(key).assign($scope, null);
 		$scope.$watch(key, function () { });
 		this.clear(key);

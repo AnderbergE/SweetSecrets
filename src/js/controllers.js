@@ -84,10 +84,10 @@ app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', 'storageService
 		}
 		dynamicStyle.editRule('.day .action-bg', ruleValue);
 	}, true);
-	
+
 	/* Initialization */
 	storage.bind($scope, 'types', { defaultValue: [] });
-	
+
 	// TODO: remove this debug insertion.
 	if ($scope.types.length <= 0) {
 		collectionHandler.updateCollection($scope.types,
