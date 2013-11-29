@@ -53,6 +53,12 @@ app.directive('editor', function () {
 					$scope.setState($scope.nextStates.pop(), false, true);
 			}
 
+			/* Log out the current item */
+			$scope.logout = function () {
+				$scope.$root.$broadcast('logout', $scope.editPosition);
+				$scope.setState($scope.states.HIDE);
+			}
+
 			/* Delete the current item */
 			$scope.delete = function () {
 				$scope.save(/* No updateItems will remove the item */);

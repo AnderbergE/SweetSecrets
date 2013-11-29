@@ -119,7 +119,7 @@ app.controller('UserCtrl', ['$scope', 'collectionHandler', 'storageService', fun
 			// Check if log in is remembered, then activate user.
 			// If not, open login editor to log in.
 		// If logged in already, open edit mode.
-		if (position == $scope.activeUser) {
+		if (position == $scope.activeUser || global_toggle_edit.checked) {
 			$scope.$root.$broadcast('editValue', user, function (updateItems) {
 				if (updateItems)
 					collectionHandler.updateCollection($scope.users, updateItems, position);
@@ -134,6 +134,11 @@ app.controller('UserCtrl', ['$scope', 'collectionHandler', 'storageService', fun
 		if (newValue.length < oldValue.length)
 			$scope.activeUser = -1;
 	}, true);
+
+	/* Log out the current user when signal is received */
+	$scope.$on('logout', function(position) {
+		$scope.activeUser = -1;
+	});
 
 	/* Initialization */
 	storage.bind($scope, 'users', { defaultValue: [] });
