@@ -11,7 +11,7 @@ module.exports = function(grunt) {
       
     // Task configuration.
     concat: {
-      dist: { src: ['src/js/*.js', 'src/js/Directives/*.js'], dest: 'dist/script.js' }
+      dist: { src: ['src/js/*.js', 'src/js/*/*.js'], dest: 'dist/script.js' }
     },
     uglify: {
       dist: { files: { 'dist/script.min.js': '<%= concat.dist.dest %>' } }
