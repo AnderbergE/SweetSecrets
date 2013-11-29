@@ -1,5 +1,4 @@
 addEvent(window, 'resize', calculateGeneralStyle);
-addEvent(window, 'load', calculateGeneralStyle);
 
 /* Remove the tap delays on touch interfaces. */
 addEvent(window, 'load', function() {
@@ -38,6 +37,7 @@ function calculateGeneralStyle () {
 		calculateActionStyle();
 	}, 100);
 }
+calculateGeneralStyle();
 
 /**
  * Calculates the size of the action types.

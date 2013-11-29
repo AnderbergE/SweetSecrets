@@ -25,10 +25,7 @@ app.service('dateService', ['$timeout', 'storageService', function ($timeout, st
 	/* Set the nearby class to day elements */
 	this.updateNearbyStyle = function (selected) {
 		// Remove old nearby dates.
-		var old = global_position_wrapper_date.querySelectorAll(".nearby");
-		for (var i = 0; old && i < old.length; i++) {
-			old[i].className = old[i].className.replace(" nearby", "");
-		}
+		angular.element(global_position_wrapper_date.querySelectorAll(".nearby")).removeClass('nearby');
 
 		// Add new nearby dates.
 		var day = document.getElementById(selected);
@@ -54,16 +51,9 @@ app.service('dateService', ['$timeout', 'storageService', function ($timeout, st
 
 	/* If today is in the month, make it show */
 	function setTodayStyle () {
-		var old = global_position_wrapper_date.querySelectorAll(".today");
-		for (var i = 0; old && i < old.length; i++) {
-			old[i].className = old[i].className.replace(" today", "");
-		}
+		angular.element(global_position_wrapper_date.querySelectorAll(".today")).removeClass('today');
 
-		var day = document.getElementById(today);
-		if (day) {
-			day = day.parentNode;
-			day.className = day.className + " today";
-		}
+		angular.element(document.getElementById(today)).parent().addClass('today');
 	}
 
 	/* Make sure that "today" is actually today */
