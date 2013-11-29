@@ -69,19 +69,22 @@ app.directive('editor', function () {
 			
 			/* Call the save method (supplied to the setup) */
 			function save () {
-				$scope.save({icon: $scope.icon,
-					background: "rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")"});
+				var prop = {icon: $scope.icon,
+					background: "rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")"}
+				if ($scope.type.email !== undefined)
+					angular.extend(prop, {email: $scope.type.email, pass: $scope.type.pass});
+				$scope.save(prop);
 			}
 			
 			/* Setup the editor from input */
-			function setupEditor (saveFunc, position, isUser) {
+			function setupEditor (saveFunc, position, type) {
 				if (isNaN(position) || !saveFunc) {
 					throw "Strange editor setup values, check them out";
 				}
 				$scope.save = saveFunc;
 				
 				$scope.editPosition = position;
-				$scope.isUser = (isUser ? true : false);
+				$scope.type = type;
 			}
 			
 			/* Listen to edit events */
@@ -95,17 +98,16 @@ app.directive('editor', function () {
 				$scope.g.value = colors[1];
 				$scope.b.value = colors[2];
 
-				setupEditor(saveFunc, position, type.email != null);
+				setupEditor(saveFunc, position, type);
 				$scope.setState($scope.states.MENU);
 			});
 			
 			/* Listen to add events */
 			$scope.$on('addValue', function(event, type, saveFunc) {
-				var isUser = type.email != null;
-				setupEditor(saveFunc, -1, isUser);
+				setupEditor(saveFunc, -1, type);
 				$scope.setState($scope.states.ICON, true);
 				
-				if (isUser)
+				if (type.email != null)
 					$scope.nextStates.push($scope.states.USER);
 				$scope.nextStates.push($scope.states.BACKGROUND);
 			});
@@ -125,7 +127,7 @@ app.directive('editor', function () {
 			$scope.setState($scope.states.HIDE);
 
 			$scope.save = null;
-			$scope.isUser = false;
+			$scope.type = null;
 			$scope.editPosition = null;
 
 			$scope.availableIcons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];

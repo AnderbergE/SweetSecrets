@@ -102,7 +102,7 @@
 				</div>
 				<div class="center editor-menu-info">
 					<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.USER)"
-						 ng-style="{'display': isUser ? 'inline-block' : 'none'}" icon="&#xe00a"></action-icon>
+						ng-style="{'display': type.email !== undefined ? 'inline-block' : 'none'}" icon="&#xe00a"></action-icon>
 					<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.REMOVE)" icon="&#xe00c"></action-icon>
 				</div>
 			</div>
@@ -145,11 +145,11 @@
 			</div>
 			<div class="editor-choose-user">
 				<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-email').focus()">
-					<input type="email" id="editor-user-email" class="editor-user-input" placeholder="info@secrets.com" autofocus>
+					<input type="email" id="editor-user-email" class="editor-user-input" placeholder="info@secrets.com" autofocus ng-model="type.email">
 					<action-icon class="editor-icon editor-user-choice" icon="&#xe008"></action-icon>
 				</div>
 				<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-password').focus()">
-					<input type="password" id="editor-user-password" class="editor-user-input" placeholder="********">
+					<input type="password" id="editor-user-password" class="editor-user-input" placeholder="********" ng-model="type.pass">
 					<action-icon class="editor-icon editor-user-choice" icon="&#xe00a"></action-icon>
 				</div>
 			</div>
