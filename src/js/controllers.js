@@ -71,15 +71,14 @@ app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', 'storageService
 		
 		var amount = $scope.types.length;
 		var ruleValue = "";
+		dynamicStyle.editRule('.day .action-bg:last-child', null);
 		if (amount < 6) {
 			ruleValue += "height:" + (100 / amount) + "%;";
 			ruleValue += "width:100%;";
 		} else {
 			ruleValue += "height:" + (100 / Math.ceil(amount/2)) + "%;";
 			ruleValue += "width:50%;";
-			if (amount % 2 > 0)
-				dynamicStyle.editRule('.day .action-bg:last-child', "width:100%;");
-			else
+			if (amount % 2 == 0)
 				dynamicStyle.editRule('.day .action-bg:last-child', "width:50%;");
 		}
 		dynamicStyle.editRule('.day .action-bg', ruleValue);

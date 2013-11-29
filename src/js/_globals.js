@@ -42,15 +42,12 @@ var dynamicStyle = (function() {
 	/* ruleName is the css identifier, ruleValue is it's css rules.
 	   Note that old rules will be overwritten. */
 	style.sheet.editRule = function (ruleName, ruleValue) {
-		var ruleExist = false;
 		for (var i = 0; i < style.sheet.cssRules.length; i++) {
 			if (style.sheet.cssRules[i].selectorText == ruleName) {
 				style.sheet.deleteRule(i);
-				style.sheet.insert(ruleName, ruleValue);
-				ruleExist = true;
 			}
 		}
-		if (!ruleExist)
+		if (ruleValue !== undefined && ruleValue != null)
 			style.sheet.insert(ruleName, ruleValue);
 	}
 
