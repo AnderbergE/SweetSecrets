@@ -1,6 +1,22 @@
 @import "mixins.less";
 
 /* ACTION-ICON  ACTION-ICON ACTION-ICON  ACTION-ICON ACTION-ICON  ACTION-ICON */
+/* 
+ * You can use action-icon to set width (=height), background, color and font.
+ *
+ * You can also set a couple of different classes on it for various effects:
+ * always-bg: Always show the background components (action-bg).
+ * circle: The icon will be circle shaped.
+ */
+.action-icon {
+	width: 100%;
+	.transitions(background, .2s);
+	
+	&.circle {
+		.circle-shape();
+	}
+}
+
 .action-selected {
 	display: none;
 }
@@ -12,7 +28,6 @@
 	overflow: inherit;
 	padding: 50% 0;
 	position: relative;
-	.transitions(background, .2s);
 	width: 100%;
 	
 	/* Disable selectable text, it looks odd. */
@@ -65,21 +80,6 @@
 	width: 100%;
 	
 	.transitions(all, .2s);
-}
-
-/* 
- * You can use action-icon to set width (=height), background, color and font.
- *
- * You can also set a couple of different classes on it for various effects:
- * always-bg: Always show the background components (action-bg).
- * circle: The icon will be circle shaped.
- */
-.action-icon {
-	width: 100%;
-	
-	&.circle {
-		.circle-shape();
-	}
 }
 
 /* By default when an item is selected its background is shown, or use */
