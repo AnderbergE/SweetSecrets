@@ -123,12 +123,12 @@ app.directive('editor', function () {
 			$scope.prevStates = [];
 			$scope.nextStates = [];
 			$scope.setState($scope.states.HIDE);
-			$scope.availableIcons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 
 			$scope.save = null;
 			$scope.isUser = false;
 			$scope.editPosition = null;
 
+			$scope.availableIcons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 			$scope.icon = "\ue006";
 			/* For the color slider, note that the names correspond to the slider names! */
 			$scope.r = {name: "red", value: 200};
@@ -140,7 +140,7 @@ app.directive('editor', function () {
 			$scope.$watch('b.value', function(value, old) { setColor($scope.b, value, old); });
 			
 			/* Add input events */
-			Array.prototype.forEach.call([$scope.r, $scope.g, $scope.b], function(color) {
+			angular.forEach([$scope.r, $scope.g, $scope.b], function(color) {
 				var sl = document.querySelector("." + color.name);
 				var el = sl.querySelector(".slider");
 				var line = sl.querySelector(".slider-line");
@@ -168,14 +168,12 @@ app.directive('editor', function () {
 					});
 				});
 				// TODO: Only add touch when necessary?
-				addEvent(el, "touchstart", function(e) {
+				var touchFunc = function(e) {
 					e.preventDefault();
 					sliderChange(e.touches.item(0));
-				});
-				addEvent(el, "touchmove", function (e) {
-					e.preventDefault();
-					sliderChange(e.touches.item(0));
-				});
+				}
+				addEvent(el, "touchstart", touchFunc);
+				addEvent(el, "touchmove", touchFunc);
 				addEvent(sl, "mousewheel", function (e) {
 					$scope.$digest((function () {
 						color.value += (e.wheelDelta || -e.detail) > 0 ? 1 : -1;

@@ -8,9 +8,7 @@ app.service('collectionHandler', function () {
 		if (position == null || position < 0)
 			collection.push(updateItems);
 		else {
-			for (item in updateItems) {
-				collection[position][item] = updateItems[item];
-			}
+			angular.extend(collection[position], updateItems);
 		}
 	}
 	
