@@ -120,7 +120,6 @@ input[type="checkbox"] {
 .config-button {
 	background: @notify-color;
 	margin-right: 2%;
-	.transitions(background, .2s);
 
 	& .action-text:before {
 		content: "\e000"
@@ -197,11 +196,6 @@ input[type="checkbox"] {
 	&:first-child.sunday {
 		margin-left: (@day-total * 6) + @day-margin;
 	}
-	
-	& .show {
-		opacity: 1;
-		visibility: visible;
-	}
 }
 .today .action-button .action-text {
 	color: @today-color !important;
@@ -221,13 +215,10 @@ input[type="checkbox"] {
 	margin-right: 1px;
 	margin-bottom: 1px;
 	width: 21rem;
+	.transitions(width, .2s);
 
 	& .action-selected:checked + .action-button  {
 		color: @action-active-color;
-	}
-
-	& .action-bg {
-		.transitions(opacity, .3s, linear);
 	}
 }
 

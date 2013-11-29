@@ -12,6 +12,7 @@
 	overflow: inherit;
 	padding: 50% 0;
 	position: relative;
+	.transitions(background, .2s);
 	width: 100%;
 	
 	/* Disable selectable text, it looks odd. */
@@ -61,10 +62,9 @@
 	float: left;
 	height: 100%;
 	opacity: 0;
-	visibility: hidden;
 	width: 100%;
 	
-	.transitions(opacity, .2s);
+	.transitions(all, .2s);
 }
 
 /* 
@@ -86,7 +86,6 @@
 /* always-bg: Always display custom background if item is selected. */
 .action-selected:checked + .action-button .action-bg,
 .action-icon.always-bg .action-bg {
-	visibility: inherit;
 	opacity: 1;
 }
  
