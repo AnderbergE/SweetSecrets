@@ -43,12 +43,12 @@ app.controller('DateActionCtrl',
 /**
  * Action types available for a date.
  */
-app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', 'storageService', function ($scope, collectionHandler, storage) {
+app.controller('ActionTypeCtrl', ['$scope', 'storageService', function ($scope, storage) {
 	/* Open editor for this type */
 	$scope.add = function () {
-		$scope.$root.$broadcast('addValue', {}, function (updateItems) {
-			updateItems.name = $scope.types.length;
-			collectionHandler.updateCollection($scope.types, updateItems);
+		$scope.$root.$broadcast('addValue', {}, function (updatedItem) {
+			updatedItem.name = $scope.types.length;
+			updateType(updatedItem);
 		});
 	}
 
@@ -56,11 +56,11 @@ app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', 'storageService
 	$scope.edit = function (position, type, $event) {
 		if (global_toggle_edit.checked) {
 			$event.preventDefault();
-			$scope.$root.$broadcast('editValue', type, function (updateItems) {
-				if (updateItems)
-					collectionHandler.updateCollection($scope.types, updateItems, position);
+			$scope.$root.$broadcast('editValue', type, function (updatedItem) {
+				if (updatedItem)
+					updateType(updatedItem);
 				else
-					collectionHandler.removeCollection($scope.types, position);
+					removeType(type);
 			}, position);
 		}
 	}
@@ -83,20 +83,32 @@ app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', 'storageService
 		}
 		dynamicStyle.editRule('.day .action-bg', ruleValue);
 	}, true);
+	
+	/* */
+	function updateType (item) {
+		var index = $scope.types.indexOf(item);
+		if (index < 0)
+			$scope.types.push(item);
+		else
+			angular.extend($scope.types[index], item);
+	}
+	
+	/* */
+	function removeType (item) {
+		var index = $scope.types.indexOf(item);
+		if (index >= 0)
+			$scope.types.splice(index, 1);
+	}
 
 	/* Initialization */
 	storage.bind($scope, 'types', { defaultValue: [] });
 
 	// TODO: remove this debug insertion.
 	if ($scope.types.length <= 0) {
-		collectionHandler.updateCollection($scope.types,
-			{name: "candy", icon: "\ue006", background: "rgb(144, 238, 144)"});
-		collectionHandler.updateCollection($scope.types,
-			{name: "cake", icon: "\ue002", background: "rgb(255, 165, 0)"});
-		collectionHandler.updateCollection($scope.types,
-			{name: "drink", icon: "\ue00a", background: "rgb(255, 105, 180)"});
-		collectionHandler.updateCollection($scope.types,
-			{name: "icecream", icon: "\ue009", background: "rgb(176, 224, 230)"});
+		updateType({name: "candy", icon: "\ue006", background: "rgb(144, 238, 144)"});
+		updateType({name: "cake", icon: "\ue002", background: "rgb(255, 165, 0)"});
+		updateType({name: "drink", icon: "\ue00a", background: "rgb(255, 105, 180)"});
+		updateType({name: "icecream", icon: "\ue009", background: "rgb(176, 224, 230)"});
 	}
 }]);
 
