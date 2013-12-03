@@ -215,7 +215,7 @@ input[type="checkbox"] {
 	margin-right: 1px;
 	margin-bottom: 1px;
 	width: 21rem;
-	.transitions(width, .2s);
+	.transitions(all, .2s);
 
 	& .action-selected:checked + .action-button  {
 		color: @action-active-color;
@@ -225,33 +225,33 @@ input[type="checkbox"] {
 .add-action, .add-user {
 	background: @config-color;
 	color: @action-active-color;
-	display: none;
+	display: inline-block;
+	opacity: 0;
+	.transitions(all, .2s, linear, .2s);
 
 }
 .showAdd {
 	background: @notify-color;
-	display: inline-block;
+	opacity: 1;
 }
 
 
 /* TOGGLES TOGGLES  TOGGLES TOGGLES TOGGLES  TOGGLES TOGGLES  TOGGLES TOGGLES */
-#toggle-config:checked ~ #main-affairs #position-wrapper-config {
-	width: 100%;
-}
-#toggle-config:not(:checked) ~ #main-affairs .active {
-	& .config-button {
-		position: absolute;
-		z-index: 5;
-		color: transparent;
-		background: transparent;
+/* Config button related */
+#toggle-config:not(:checked) ~ #main-affairs {
+	&  .active {
+		& .config-button {
+			position: absolute;
+			z-index: 5;
+			color: transparent;
+			background: transparent;
+		}
+		& .user:not(.selected) {
+			display: none;
+			margin: 0;
+		}
 	}
-	& .user:not(.selected) {
-		display: none;
-		margin: 0;
-	}
 }
-
-/* Config active */
 #toggle-config:checked ~ #main-affairs {
 	& #position-wrapper-config {
 		width: 100%;
@@ -269,7 +269,15 @@ input[type="checkbox"] {
 	}
 }
 
-/* Edit mode active */
+/* Edit mode related */
+#toggle-edit:not(:checked) ~ #main-affairs {
+	& .action {
+		.transitions(all, .2s, linear, .2s);
+	}
+	& .add-action, .add-user {
+		width: 0 !important;
+	}
+}
 #toggle-edit:checked ~ #main-affairs {
 	& .edit-button {
 		background: @notify-color;
@@ -280,9 +288,8 @@ input[type="checkbox"] {
 			.animations(action-icon-pulse 1s infinite);
 		}
 	}
-	
 	& .add-action, .add-user {
-		display: inline-block;
+		opacity: 1;
 	}
 }
 
