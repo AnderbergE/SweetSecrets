@@ -84,7 +84,7 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', function ($scope, 
 		dynamicStyle.editRule('.day .action-bg', ruleValue);
 	}, true);
 	
-	/* */
+	/* Update a type, if it does not exist it is added. */
 	function updateType (item) {
 		var index = $scope.types.indexOf(item);
 		if (index < 0)
@@ -93,9 +93,9 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', function ($scope, 
 			angular.extend($scope.types[index], item);
 	}
 	
-	/* */
-	function removeType (item) {
-		var index = $scope.types.indexOf(item);
+	/* Remove a type. */
+	function removeType (type) {
+		var index = $scope.types.indexOf(type);
 		if (index >= 0)
 			$scope.types.splice(index, 1);
 	}
