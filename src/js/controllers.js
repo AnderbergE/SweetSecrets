@@ -103,11 +103,11 @@ app.controller('ActionTypeCtrl', ['$scope', 'collectionHandler', 'storageService
 /**
  * Users for the app.
  */
-app.controller('UserCtrl', ['$scope', 'collectionHandler', 'storageService', function ($scope, collectionHandler, storage) {
+app.controller('UserCtrl', ['$scope', 'userService', function ($scope, userService) {
 	/* Open editor for this user */
 	$scope.add = function () {
 		$scope.$root.$broadcast('addValue', {email: true}, function (updateItems) {
-			collectionHandler.updateCollection($scope.users, updateItems);
+			userService.updateUser(updateItems);
 		});
 	}
 
@@ -119,37 +119,29 @@ app.controller('UserCtrl', ['$scope', 'collectionHandler', 'storageService', fun
 			// If not, open login editor to log in.
 		// If logged in already, open edit mode.
 		if (position == $scope.activeUser || global_toggle_edit.checked) {
-			$scope.$root.$broadcast('editValue', user, function (updateItems) {
-				if (updateItems)
-					collectionHandler.updateCollection($scope.users, updateItems, position);
+			$scope.$root.$broadcast('editValue', user, function (updatedUser) {
+				if (updatedUser)
+					userService.updateUser(updatedUser);
 				else
-					collectionHandler.removeCollection($scope.users, position);
+					userService.removeUser(user);
 			}, position);
 		}
 	}
 
-	/* Update style related to users. */
-	$scope.$watch('users', function(newValue, oldValue) {
-		if (newValue.length < oldValue.length)
-			$scope.activeUser = -1;
-	}, true);
-
 	/* Log out the current user when signal is received */
 	$scope.$on('logout', function(position) {
-		$scope.activeUser = -1;
+		userService.logout();
 	});
 
 	/* Initialization */
-	storage.bind($scope, 'users', { defaultValue: [] });
-	storage.bind($scope, 'activeUser', { defaultValue: -1 });
+	$scope.users = userService.getUsers();
+	$scope.activeUser = userService.getActiveUser();
 
 	// TODO: remove this debug insertion.
 	if ($scope.users.length <= 0) {
-		collectionHandler.updateCollection($scope.users,
-			{name: "Erik Anderberg", icon: "\ue006",
+		userService.updateUser({name: "Erik Anderberg", icon: "\ue006",
 			 background: "rgb(255, 0, 0)", email: "heyo@ey.moo", pass: "pass"});
-		collectionHandler.updateCollection($scope.users,
-			{name: "Camilla Bergvall", icon: "\ue004",
+		userService.updateUser({name: "Camilla Bergvall", icon: "\ue004",
 			 background: "rgb(0, 255, 0)", email: "blarg@larva.now", pass: "pass"});
 	}
 }]);

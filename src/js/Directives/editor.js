@@ -75,45 +75,45 @@ app.directive('editor', function () {
 			
 			/* Call the save method (supplied to the setup) */
 			function save () {
-				var prop = {icon: $scope.icon,
-					background: "rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")"}
-				if ($scope.type.email !== undefined)
-					angular.extend(prop, {email: $scope.type.email, pass: $scope.type.pass});
-				$scope.save(prop);
+				angular.extend($scope.item, {icon: $scope.icon,
+					background: "rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")"});
+				if ($scope.item.email !== undefined)
+					angular.extend($scope.item, {email: $scope.item.email, pass: $scope.item.pass});
+				$scope.save($scope.item);
 			}
 			
 			/* Setup the editor from input */
-			function setupEditor (saveFunc, position, type) {
+			function setupEditor (saveFunc, position, item) {
 				if (isNaN(position) || !saveFunc) {
 					throw "Strange editor setup values, check them out";
 				}
 				$scope.save = saveFunc;
 				
 				$scope.editPosition = position;
-				$scope.type = type;
+				$scope.item = item;
 			}
 			
 			/* Listen to edit events */
-			$scope.$on('editValue', function(event, type, saveFunc, position) {
-				var colors = type.background.match(/\d+/g);
+			$scope.$on('editValue', function(event, item, saveFunc, position) {
+				var colors = item.background.match(/\d+/g);
 				if (colors.length != 3) {
 					throw "Strange editor setup values, check them out";
 				}
-				$scope.icon = type.icon;
+				$scope.icon = item.icon;
 				$scope.r.value = colors[0];
 				$scope.g.value = colors[1];
 				$scope.b.value = colors[2];
 
-				setupEditor(saveFunc, position, type);
+				setupEditor(saveFunc, position, item);
 				$scope.setState($scope.states.MENU);
 			});
 			
 			/* Listen to add events */
-			$scope.$on('addValue', function(event, type, saveFunc) {
-				setupEditor(saveFunc, -1, type);
+			$scope.$on('addValue', function(event, item, saveFunc) {
+				setupEditor(saveFunc, -1, item);
 				$scope.setState($scope.states.ICON, true);
 				
-				if (type.email != null)
+				if (item.email != null)
 					$scope.nextStates.push($scope.states.USER);
 				$scope.nextStates.push($scope.states.BACKGROUND);
 			});
@@ -133,7 +133,7 @@ app.directive('editor', function () {
 			$scope.setState($scope.states.HIDE);
 
 			$scope.save = null;
-			$scope.type = null;
+			$scope.item = null;
 			$scope.editPosition = null;
 
 			$scope.availableIcons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
