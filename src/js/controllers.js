@@ -29,7 +29,7 @@ app.controller('DateActionCtrl',
 		storage.save($scope.selected, newValue);
 	}, true);
 
-	$scope.$watch(dateService.getToday(), function () {
+	$scope.$watch(dateService.getToday, function () {
 		$scope.today = dateService.getToday();
 	});
 
@@ -146,21 +146,10 @@ app.controller('UserCtrl', ['$scope', 'userService', function ($scope, userServi
 	$scope.$on('logout', function() {
 		userService.logout();
 	});
-	
+
 	/* Set the index of the active user when it changes. */
-	$scope.$watch(userService.getActiveUser(), function () {
-		var active = userService.getActiveUser();
-		var index = $scope.users.indexOf(active);
-		/* Storage does not save index in array, try to find it manually */
-		if (index < 0) {
-			for (var i = 0; i < $scope.users.length; i++) {
-				if ($scope.users[i].email == active.email) {
-					index = i;
-					break;
-				}	
-			}
-		}
-		$scope.activeUserIndex = index;
+	$scope.$watch(userService.getActiveUser, function () {
+		$scope.activeUserIndex = $scope.users.indexOf(userService.getActiveUser());
 	});
 
 	/* Initialization */

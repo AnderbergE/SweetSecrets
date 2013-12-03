@@ -26,7 +26,7 @@ app.service('storageService', ['$parse', function ($parse) {
 		toServer = toServer || true;
 		// TODO: Server storing.
 		
-		if (key == null || value == null)
+		if (key == null)
 			throw "Incorrect usage of storageService.save";
 		storage[parseValue(key)] = parseValue(value);
 	}

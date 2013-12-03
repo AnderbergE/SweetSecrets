@@ -46,4 +46,17 @@ app.service('userService', ['$rootScope', '$http', 'storageService', function ($
 	var $scope = $rootScope.$new();
 	storage.bind($scope, 'users', { defaultValue: [] });
 	storage.bind($scope, 'activeUser', { defaultValue: null });
+
+	/* Storage does not save array index, try to find it manually */
+	if (!!$scope.activeUser) {
+		var index = $scope.users.indexOf($scope.activeUser);
+		if (index < 0) {
+			for (var i = 0; i < $scope.users.length; i++) {
+				if ($scope.users[i].email == $scope.activeUser.email) {
+					$scope.activeUser = $scope.users[i];
+					break;
+				}
+			}
+		}
+	}
 }]);

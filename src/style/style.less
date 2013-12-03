@@ -274,7 +274,7 @@ input[type="checkbox"] {
 	& .action {
 		.transitions(all, .2s, linear, .2s);
 	}
-	& .add-action, .add-user {
+	& .add-action:not(.showAdd), .add-user:not(.showAdd) {
 		width: 0 !important;
 	}
 }
