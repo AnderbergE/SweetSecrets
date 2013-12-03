@@ -17,12 +17,12 @@
 		<editor></editor>
 		
 		<div id="position-wrapper-config">
-			<div class="config" ng-controller="UserCtrl" ng-class="{active: activeUser >= 0}">
+			<div class="config" ng-controller="UserCtrl" ng-class="{active: activeUserIndex >= 0}">
 				<action-icon class="config-icon config-button" input-id="toggle-config"></action-icon>
 				<div class="config-menu">
 
-					<action-icon class="config-icon user" ng-repeat="(key, user) in users" ng-class="{selected: activeUser == key}" click="edit(key, user)"
-						input-type="radio" input-id="user{{key}}" input-name="user" input-value="{{key}}" input-model="$parent.activeUser" input-directive="integer"
+					<action-icon class="config-icon user" ng-repeat="user in users"  ng-class="{selected: activeUserIndex == $index}" click="edit($event, user)"
+						input-type="radio" input-id="user{{$index}}" input-name="user" input-value="{{$index}}" input-model="$parent.activeUserIndex" input-directive="integer"
 						icon="{{user.icon}}" background="{{user.background}}"></action-icon>
 
 					<action-icon class="config-icon user add-user" ng-class="{'showAdd': !users.length}" ng-click="add()" input-id="toggle-editor" icon="+"></action-icon>
@@ -62,7 +62,7 @@
 
 			<div id="position-wrapper-actions">
 				<div class="actions">
-					<action-icon class="action" ng-repeat="type in types" click="edit($index, type, $event)"
+					<action-icon class="action" ng-repeat="type in types" click="edit($event, type)"
 						input-type="checkbox" input-id="{{type.name}}" input-model="dates[selected][type.name]"
 						icon="{{type.icon}}" background="{{type.background}}"></action-icon><!--
 					These are inline-blocks and need this comment to remove white space between them.

@@ -53,7 +53,7 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', function ($scope, 
 	}
 
 	/* Open editor for this type */
-	$scope.edit = function (position, type, $event) {
+	$scope.edit = function ($event, type) {
 		if (global_toggle_edit.checked) {
 			$event.preventDefault();
 			$scope.$root.$broadcast('editValue', type, function (updatedItem) {
@@ -61,7 +61,7 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', function ($scope, 
 					updateType(updatedItem);
 				else
 					removeType(type);
-			}, position);
+			});
 		}
 	}
 
@@ -124,30 +124,48 @@ app.controller('UserCtrl', ['$scope', 'userService', function ($scope, userServi
 	}
 
 	/* Open editor for this user */
-	$scope.edit = function (position, user) {
-		/* A current user has been clicked */
-		// If not logged in
+	$scope.edit = function ($event, user) {
+		var active = userService.getActiveUser();
+		if (user != active) {
 			// Check if log in is remembered, then activate user.
 			// If not, open login editor to log in.
-		// If logged in already, open edit mode.
-		if (position == $scope.activeUser || global_toggle_edit.checked) {
+			if (!userService.login(user))
+				$event.preventDefault();
+		}
+		if (user == active || global_toggle_edit.checked) {
 			$scope.$root.$broadcast('editValue', user, function (updatedUser) {
 				if (updatedUser)
 					userService.updateUser(updatedUser);
 				else
 					userService.removeUser(user);
-			}, position);
+			});
 		}
 	}
 
 	/* Log out the current user when signal is received */
-	$scope.$on('logout', function(position) {
+	$scope.$on('logout', function() {
 		userService.logout();
+	});
+	
+	/* Set the index of the active user when it changes. */
+	$scope.$watch(userService.getActiveUser(), function () {
+		var active = userService.getActiveUser();
+		var index = $scope.users.indexOf(active);
+		/* Storage does not save index in array, try to find it manually */
+		if (index < 0) {
+			for (var i = 0; i < $scope.users.length; i++) {
+				if ($scope.users[i].email == active.email) {
+					index = i;
+					break;
+				}	
+			}
+		}
+		$scope.activeUserIndex = index;
 	});
 
 	/* Initialization */
 	$scope.users = userService.getUsers();
-	$scope.activeUser = userService.getActiveUser();
+	$scope.activeUserIndex = -1;
 
 	// TODO: remove this debug insertion.
 	if ($scope.users.length <= 0) {

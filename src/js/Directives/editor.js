@@ -55,7 +55,7 @@ app.directive('editor', function () {
 
 			/* Log out the current item */
 			$scope.logout = function () {
-				$scope.$root.$broadcast('logout', $scope.editPosition);
+				$scope.$root.$broadcast('logout');
 				$scope.setState($scope.states.HIDE);
 			}
 
@@ -83,18 +83,17 @@ app.directive('editor', function () {
 			}
 			
 			/* Setup the editor from input */
-			function setupEditor (saveFunc, position, item) {
-				if (isNaN(position) || !saveFunc) {
+			function setupEditor (item, saveFunc) {
+				if (!saveFunc) {
 					throw "Strange editor setup values, check them out";
 				}
 				$scope.save = saveFunc;
 				
-				$scope.editPosition = position;
 				$scope.item = item;
 			}
 			
 			/* Listen to edit events */
-			$scope.$on('editValue', function(event, item, saveFunc, position) {
+			$scope.$on('editValue', function(event, item, saveFunc) {
 				var colors = item.background.match(/\d+/g);
 				if (colors.length != 3) {
 					throw "Strange editor setup values, check them out";
@@ -104,13 +103,13 @@ app.directive('editor', function () {
 				$scope.g.value = colors[1];
 				$scope.b.value = colors[2];
 
-				setupEditor(saveFunc, position, item);
+				setupEditor(item, saveFunc);
 				$scope.setState($scope.states.MENU);
 			});
 			
 			/* Listen to add events */
 			$scope.$on('addValue', function(event, item, saveFunc) {
-				setupEditor(saveFunc, -1, item);
+				setupEditor(item, saveFunc);
 				$scope.setState($scope.states.ICON, true);
 				
 				if (item.email != null)
@@ -134,7 +133,6 @@ app.directive('editor', function () {
 
 			$scope.save = null;
 			$scope.item = null;
-			$scope.editPosition = null;
 
 			$scope.availableIcons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 			$scope.icon = "\ue006";

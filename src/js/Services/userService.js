@@ -34,6 +34,7 @@ app.service('userService', ['$rootScope', '$http', 'storageService', function ($
 	/* */
 	this.login = function (user) {
 		$scope.activeUser = user;
+		return true;
 	}
 
 	/* */
@@ -43,5 +44,5 @@ app.service('userService', ['$rootScope', '$http', 'storageService', function ($
 
 	var $scope = $rootScope.$new();
 	storage.bind($scope, 'users', { defaultValue: [] });
-	storage.bind($scope, 'activeUser', { defaultValue: -1 });
+	storage.bind($scope, 'activeUser', { defaultValue: null });
 }]);
