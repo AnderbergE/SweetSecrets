@@ -7,8 +7,8 @@
  * @attribute {string} inputModel	Angular model of the input element
  * @attribute {string} inputDirective	Angular directive for the model
  * @attribute {string} forInput		Which input to trigger on click, if undefined inputId will be used
- * @attribute {string} background	Background of the action-icon (css values)
- * @attribute {string} customBackground	Custom string for background items.
+ * @attribute {string} bg		Background of the action-icon (css values)
+ * @attribute {string} customBg		Custom string for background items.
  */
 app.directive('actionIcon', function () {
 	return {
@@ -30,26 +30,14 @@ app.directive('actionIcon', function () {
 					'<label class="action-button"' +
 						(!attrs.click ? '' : ' ng-click="' + attrs.click + '"') +
 						(!attrs.forInput ? '' : ' for="' + attrs.forInput + '"') + '>' +
-						(!attrs.background && !attrs.customBackground ? '' :
+						(!attrs.bg && !attrs.customBg ? '' :
 						'<div class="action-bgs"><div class="action-bg" ' +
-							(!attrs.background ? '' : 'style="background: ' + attrs.background + ';"') +
-							(!attrs.customBackground ? '' : attrs.customBackground) +
+							(!attrs.bg ? '' : 'style="background: ' + attrs.bg + ';"') +
+							(!attrs.customBg ? '' : attrs.customBg) +
 						'></div></div>') +
 						'<span class="action-text">' + (attrs.icon ? attrs.icon : '') + '</span>' +
 					'</label>' +
 				'</div>';
 		}
 	}
-});
-
-/* Make sure that a model is an integer. */
-app.directive('integer', function() {
-    return {
-        require: 'ngModel',
-        link: function(scope, ele, attr, ctrl){
-            ctrl.$parsers.unshift(function(viewValue){
-                return parseInt(viewValue);
-            });
-        }
-    };
 });
