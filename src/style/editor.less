@@ -8,6 +8,8 @@
 @logout-color: cornflowerblue;
 @remove-color: red;
 
+@slider-size: 10rem;
+
 /* EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR EDITOR  EDITOR */
 .editor-overlay {
 	background: @fadeout-color;
@@ -124,7 +126,6 @@
 }
 
 /* Background choice */
-@slider-size: 10rem;
 .editor-choose-background {
 	margin: 0 auto;
 	width: 88%;
@@ -219,6 +220,7 @@
 	width: 70rem;
 }
 .editor-user-choice {
+	background: @modal-background;
 	float: left;
 	font-size: 10rem;
 	width: 15rem;
@@ -230,12 +232,23 @@
 	.font-standard();
 	height: 5rem;
 	margin-top: 5rem;
+	.transitions(box-shadow, .2s);
 	vertical-align: top;
 	width: 50rem;
-}
-.editor-user-input:focus + .editor-user-choice {
-	color: @action-active-color;
-	background: @notify-color;
+
+	&.ng-dirty.ng-invalid {
+		box-shadow: 0 4px 5px -4px @no-color;
+
+		& + .editor-user-choice {
+			color: @no-color;
+		}
+	}
+	&.ng-valid + .editor-user-choice {
+		color: @yes-color;
+	}
+	&:focus + .editor-user-choice {
+		background: @action-background;
+	}
 }
 
 /* Remove choice */
