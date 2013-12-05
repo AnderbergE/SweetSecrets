@@ -6,19 +6,30 @@
  *
  * You can also set a couple of different classes on it for various effects:
  * always-bg: Always show the background components (action-bg).
- * circle: The icon will be circle shaped.
+ * inner-circle: Create an inner circle in the icon (see action-button:after).
+ * inner-circle-selected: Change colors of the inner circle when selected.
+ * inner-circle-border: Creates a border around the circle.
  */
 .action-icon {
+	background: @action-background;
+	color: @action-inactive-color;
 	width: 100%;
 	.transitions(background, .2s);
 	
-	&.circle {
-		.circle-shape();
-	}
+	.circle-shape();
 }
 
 .action-selected {
 	display: none;
+	
+	&:checked + .action-button {
+		color: @action-active-color;
+		
+		/* By default when an item is selected its background is shown */
+		& .action-bg {
+			opacity: 1;
+		}
+	}
 }
 
 .action-button {
@@ -82,14 +93,12 @@
 	.transitions(all, .2s);
 }
 
-/* By default when an item is selected its background is shown, or use */
-/* always-bg: Always display custom background if item is selected. */
-.action-selected:checked + .action-button .action-bg,
+
+/* CLASS EFFECTS CLASS EFFECTS CLASS EFFECTS CLASS EFFECTS CLASS EFFECTS */
 .action-icon.always-bg .action-bg {
 	opacity: 1;
 }
  
-/* inner-circle: Create an inner circle in the icon (see action-button:after) */
 .action-icon.inner-circle .action-button:after,
 .action-icon.inner-circle-selected .action-button:after {
 	background: white;
@@ -97,7 +106,7 @@
 	.box-shadows(0 0 1px 0.8em white);
 	.transitions(all, .1s, linear);
 }
-/* inner-circle-selected: Change colors of the inner circle when selected. */
+
 .action-icon.inner-circle-selected .action-selected:checked + .action-button:after {
 	background: black;
 	
@@ -107,7 +116,6 @@
 	color: white;
 }
 
-/* inner-circle-border: Creates a border around the circle. */
 .action-icon.inner-circle-border .action-button:after {
 	background: white;
 	

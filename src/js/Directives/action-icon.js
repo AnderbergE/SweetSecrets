@@ -19,7 +19,7 @@ app.directive('actionIcon', function () {
 			attrs.forInput = attrs.forInput || attrs.inputId;
 			attrs.inputValue = attrs.inputValue || attrs.inputId;
 			
-			return '<div class="action-icon circle">' +
+			return '<div class="action-icon">' +
 					(!attrs.inputType ? '' : '<input type="' + attrs.inputType + '"' +
 					(!attrs.inputId ? '' : ' id="' + attrs.inputId + '"') +
 					(!attrs.inputName ? '' : ' name="' + attrs.inputName + '"') +

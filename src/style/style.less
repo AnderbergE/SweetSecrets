@@ -27,7 +27,7 @@
 @date-shadow: lightgrey;
 @action-background: gainsboro;
 @action-inactive-color: gray;
-@action-active-color: black;
+@action-active-color: #151515;
 @action-invert-active-color: white;
 
 /* Fonts */
@@ -97,7 +97,6 @@ input[type="checkbox"] {
 	display: none;
 }
 
-
 /* CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG CONFIG  CONFIG */
 .config {
 	opacity: 0.9;
@@ -110,7 +109,6 @@ input[type="checkbox"] {
 	display: inline;
 }
 .config-icon {
-	background: @action-background;
 	display: inline-block;
 	.font-icons();
 	font-size: @config-size - 3;
@@ -119,6 +117,7 @@ input[type="checkbox"] {
 }
 .config-button {
 	background: @notify-color;
+	color: @action-active-color;
 	margin-right: 2%;
 
 	& .action-text:before {
@@ -172,6 +171,7 @@ input[type="checkbox"] {
 }
 
 .day {
+	background: transparent;
 	color: @date-color;
 	display: inline-block;
 	font-size: 3.5rem;
@@ -207,8 +207,6 @@ input[type="checkbox"] {
 
 /* ACTIONS ACTIONS ACTIONS ACTIONS  ACTIONS  ACTIONS ACTIONS  ACTIONS ACTIONS */
 .action {
-	background: @action-background;
-	color: @action-inactive-color;
 	display: inline-block;
 	.font-icons();
 	font-size: 16rem;
@@ -216,10 +214,6 @@ input[type="checkbox"] {
 	margin-bottom: 1px;
 	width: 21rem;
 	.transitions(all, .2s);
-
-	& .action-selected:checked + .action-button  {
-		color: @action-active-color;
-	}
 }
 
 .add-action, .add-user {
@@ -281,6 +275,7 @@ input[type="checkbox"] {
 #toggle-edit:checked ~ #main-affairs {
 	& .edit-button {
 		background: @notify-color;
+		color: @action-active-color;
 	}
 	
 	& .hide ~ div {

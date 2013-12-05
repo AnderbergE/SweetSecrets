@@ -36,14 +36,12 @@
 	width: 95%;
 }
 .editor-icon {
-	background: @action-background;
-	color: @action-inactive-color;
 	.font-icons();
 	font-size: 9rem;
 	width: 13rem;
-
-	& .action-selected:checked + .action-button  {
-		color: @action-active-color;
+	
+	& .action-text {
+		.transitions(color, .2s);
 	}
 }
 .editor-header {
@@ -74,16 +72,14 @@
 }
 .editor-nav-prev {
 	margin-right: 13rem;
-
-	& .action-text {
-		color: @no-color !important;
-	}
+	color: @no-color;
 }
 .editor-nav-next {
 	margin-left: 13rem;
-
-	& .action-text {
-		color: @yes-color !important;
+	color: @yes-color;
+	
+	&.disabled {
+		color: @action-inactive-color;
 	}
 }
 .editor-choices {
