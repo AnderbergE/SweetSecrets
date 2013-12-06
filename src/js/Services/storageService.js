@@ -18,12 +18,17 @@ app.service('storageService', ['$parse', function ($parse) {
 	 * Store a key in local storage (or browser cache) with a specific value.
 	 * @param {number|string|Object} key
 	 * @param {number|string|Object} value
-	 * @param {bool} toServer If an asynchronous call to set server values
+	 * @param {Object} opts List of possible options:
+	 *	- {bool} toServer If an asynchronous call to set server values
 	 *	should be made. Default value true.
 	 * @throws Error if key or value is not specified.
 	 */
-	this.save = function (key, value, toServer) {
-		toServer = toServer || true;
+	this.save = function (key, value, opts) {
+		var defaultOpts = {
+			toServer: true
+		}
+		opts = angular.isUndefined(opts) ?
+			defaultOpts : angular.extend(defaultOpts, opts);
 		// TODO: Server storing.
 		
 		if (key == null)
@@ -34,13 +39,18 @@ app.service('storageService', ['$parse', function ($parse) {
 	/**
 	 * Retrieve a value of a specific key from local storage (or browser cache).
 	 * @param {number|string|Object} key
-	 * @param {bool} fromServer If an asynchronous call to get server values
+	 * @param {Object} opts List of possible options:
+	 *	- {bool} fromServer If an asynchronous call to get server values
 	 *	should be made. Default value false.
 	 * @returns {null|number|string|Object} The value in storage,
 	 *	or undefined if non-existing.
 	 */
-	this.load = function (key, fromServer) {
-		fromServer = fromServer || false;
+	this.load = function (key, opts) {
+		var defaultOpts = {
+			fromServer: false
+		}
+		opts = angular.isUndefined(opts) ?
+			defaultOpts : angular.extend(defaultOpts, opts);
 		// TODO: Server retrieving.
 		
 		return angular.fromJson(storage[parseValue(key)]);
