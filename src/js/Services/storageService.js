@@ -77,6 +77,7 @@ app.service('storageService', ['$parse', function ($parse) {
 	 * @param {number|string|Object} key The name of the variable.
 	 * @param {Object} opts List of possible options:
 	 *	- defaultValue Value to store if key does not exist.
+	 
 	 * @throws Error if $scope or key is not specified.
 	 */
 	this.bind = function ($scope, key, opts) {
@@ -84,19 +85,21 @@ app.service('storageService', ['$parse', function ($parse) {
 			throw "Incorrect usage of storageService.bind";
 
 		var defaultOpts = {
-			defaultValue: ''
+			defaultValue: '',
+			prefix: ''
 		}
 		opts = angular.isUndefined(opts) ?
 			defaultOpts : angular.extend(defaultOpts, opts);
 
-		if (this.load(key) == null)
-			this.save(key, opts.defaultValue);
+		var prefixKey = opts.prefix + key;
+		if (this.load(prefixKey) == null)
+			this.save(prefixKey, opts.defaultValue);
 
-		$parse(key).assign($scope, this.load(key));
+		$parse(key).assign($scope, this.load(prefixKey));
 
 		$scope.$watch(key, function (val) {
 			if (angular.isDefined(val)) {
-				storageService.save(key, val);
+				storageService.save(prefixKey, val);
 			}
 		}, true);
 	}

@@ -68,7 +68,7 @@ app.controller('DateActionCtrl',
 /**
  * Action types available for a date.
  */
-app.controller('ActionTypeCtrl', ['$scope', 'storageService', function ($scope, storage) {
+app.controller('ActionTypeCtrl', ['$scope', 'storageService', 'userService', function ($scope, storage, userService) {
 	/* Open editor for this type */
 	$scope.add = function () {
 		$scope.$root.$broadcast('addValue', {}, function (updatedItem) {
@@ -90,6 +90,32 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', function ($scope, 
 		}
 	}
 
+	/* Update a type, if it does not exist it is added. */
+	function updateType (item) {
+		var index = $scope.types.indexOf(item);
+		if (index < 0)
+			$scope.types.push(item);
+		else
+			angular.extend($scope.types[index], item);
+	}
+
+	/* Remove a type. */
+	function removeType (type) {
+		var index = $scope.types.indexOf(type);
+		if (index >= 0)
+			$scope.types.splice(index, 1);
+	}
+
+	/* */
+	function bindTypes (active) {
+		storage.bind($scope, 'types',
+			{ defaultValue: [], prefix: active ? active.id : '' });
+	}
+
+	$scope.$watch(userService.getActiveUser, function (newValue) {
+		bindTypes(newValue);
+	});
+
 	/* Update style related to actions. */
 	$scope.$watch('types', function() {
 		calculateActionStyle($scope.types.length+1); // +1 Due to add-action element.
@@ -108,33 +134,16 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', function ($scope, 
 		}
 		dynamicStyle.editRule('.day .action-bg', ruleValue);
 	}, true);
-	
-	/* Update a type, if it does not exist it is added. */
-	function updateType (item) {
-		var index = $scope.types.indexOf(item);
-		if (index < 0)
-			$scope.types.push(item);
-		else
-			angular.extend($scope.types[index], item);
-	}
-	
-	/* Remove a type. */
-	function removeType (type) {
-		var index = $scope.types.indexOf(type);
-		if (index >= 0)
-			$scope.types.splice(index, 1);
-	}
-
-	/* Initialization */
-	storage.bind($scope, 'types', { defaultValue: [] });
 
 	// TODO: remove this debug insertion.
+	/*
 	if ($scope.types.length <= 0) {
 		updateType({name: "candy", icon: "\ue006", background: "rgb(144, 238, 144)"});
 		updateType({name: "cake", icon: "\ue002", background: "rgb(255, 165, 0)"});
 		updateType({name: "drink", icon: "\ue00a", background: "rgb(255, 105, 180)"});
 		updateType({name: "icecream", icon: "\ue009", background: "rgb(176, 224, 230)"});
 	}
+	*/
 }]);
 
 /**
