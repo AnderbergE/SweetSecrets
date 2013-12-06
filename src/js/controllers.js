@@ -2,7 +2,7 @@
  * Dates and their actions.
  */
 app.controller('DateActionCtrl',
-	['$scope', '$timeout', 'dateService', 'storageService', function ($scope, $timeout, dateService, storage) {
+	['$scope', '$timeout', 'dateService', 'storageService', 'userService', function ($scope, $timeout, dateService, storage, userService) {
 
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
@@ -13,7 +13,26 @@ app.controller('DateActionCtrl',
 		// (Math.floor(Math.abs(amount) / 12)*12 +
 		if ((12 + month + amount) % 12 != temp.getMonth())
 			$scope.selected = temp.setDate(0);
-		$scope.dates = dateService.fillMonth($scope.selected);
+		$scope.dates = fillMonth($scope.selected);
+	}
+
+	/* Fill the calendar for this month. */
+	function fillMonth (timestamp) {
+		var dates = {};
+		var end = (getLastDayInMonth(timestamp)).getDate();
+		var date = new Date(timestamp);
+		var temp;
+		var active = userService.getActiveUser();
+		for (var i = 1; i <= end; i++) {
+			date.setDate(i);
+			temp = date.setHours(0,0,0,0);
+			dates[temp] = storage.load(
+				(active != null ? active.id.toString() : '') +
+				temp);
+			if (!dates[temp])
+				dates[temp] = {};
+		}
+		return dates;
 	}
 
 	/* Update classes related to selected date. */
@@ -26,18 +45,24 @@ app.controller('DateActionCtrl',
 	$scope.$watch('dates[selected]', function(newValue, oldValue) {
 		// TODO: This stores every time selected changes between values that are not the same.
 		// Can we avoid that?
-		storage.save($scope.selected, newValue);
+		var active = userService.getActiveUser();
+		storage.save((active != null ? active.id.toString() : '') + 
+			$scope.selected, newValue);
 	}, true);
 
 	$scope.$watch(dateService.getToday, function () {
 		$scope.today = dateService.getToday();
 	});
 
+	$scope.$watch(userService.getActiveUser, function () {
+		$scope.changeMonth(0);
+	});
+
 	/* Initialization */
 	$scope.today = dateService.getToday();
 	$scope.selected = $scope.today;
 	$scope.dates = {};
-	$scope.dates = dateService.fillMonth($scope.selected);
+	$scope.dates = fillMonth($scope.selected);
 }]);
 
 /**
@@ -143,7 +168,7 @@ app.controller('UserCtrl', ['$scope', 'userService', function ($scope, userServi
 	}
 
 	/* Log out the current user when signal is received */
-	$scope.$on('logout', function() {
+	$scope.$on('logoutTrigger', function() {
 		userService.logout();
 	});
 

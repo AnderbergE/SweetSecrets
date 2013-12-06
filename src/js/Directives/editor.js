@@ -55,7 +55,7 @@ app.directive('editor', function () {
 
 			/* Log out the current item */
 			$scope.logout = function () {
-				$scope.$root.$broadcast('logout');
+				$scope.$root.$broadcast('logoutTrigger');
 				$scope.setState($scope.states.HIDE);
 			}
 

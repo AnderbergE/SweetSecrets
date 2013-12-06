@@ -15,9 +15,11 @@ app.service('userService', ['$rootScope', '$http', 'storageService', function ($
 	/* Update a user. */
 	this.updateUser = function (user) {
 		var index = $scope.users.indexOf(user);
-		if (index < 0)
+		if (index < 0) {
+			// TODO: This id should be set by server.
+			user.id = Math.floor((Math.random()*10000000)+1);
 			$scope.users.push(user);
-		else
+		} else
 			angular.extend($scope.users[index], user);
 	}
 
@@ -34,12 +36,14 @@ app.service('userService', ['$rootScope', '$http', 'storageService', function ($
 	/* Log in a user. */
 	this.login = function (user) {
 		$scope.activeUser = user;
+		$rootScope.$broadcast('login');
 		return true;
 	}
 
 	/* Log out a user. */
 	this.logout = function () {
 		$scope.activeUser = null;
+		$rootScope.$broadcast('logout');
 	}
 
 	/* We need to create a scope for the service so that we can bind to it. */

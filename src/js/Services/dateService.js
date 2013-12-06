@@ -1,25 +1,9 @@
 /**
  * A service to handle date functionality.
  */
-app.service('dateService', ['$timeout', 'storageService', function ($timeout, storage) {
+app.service('dateService', ['$timeout', function ($timeout) {
 	this.getToday = function () {
 		return today;
-	}
-
-	/* Fill the calendar for this month. */
-	this.fillMonth = function (timestamp) {
-		var dates = {};
-		var end = (getLastDayInMonth(timestamp)).getDate();
-		var date = new Date(timestamp);
-		var temp;
-		for (var i = 1; i <= end; i++) {
-			date.setDate(i);
-			temp = date.setHours(0,0,0,0);
-			dates[temp] = storage.load(temp);
-			if (!dates[temp])
-				dates[temp] = {};
-		}
-		return dates;
 	}
 
 	/* Set the nearby class to day elements */
