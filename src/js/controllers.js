@@ -108,6 +108,7 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', 'userService', fun
 
 	/* */
 	function bindTypes (active) {
+		storage.unbind($scope, 'types');
 		storage.bind($scope, 'types',
 			{ defaultValue: [], prefix: active ? active.id : '' });
 	}

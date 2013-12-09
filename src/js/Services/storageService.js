@@ -97,7 +97,7 @@ app.service('storageService', ['$parse', function ($parse) {
 
 		$parse(key).assign($scope, this.load(prefixKey));
 
-		$scope.$watch(key, function (val) {
+		bindings[key] = $scope.$watch(key, function (val) {
 			if (angular.isDefined(val)) {
 				storageService.save(prefixKey, val);
 			}
@@ -114,11 +114,14 @@ app.service('storageService', ['$parse', function ($parse) {
 		if ($scope == null || key == null)
 			throw "Incorrect usage of storageService.unbind";
 
-		$parse(key).assign($scope, null);
-		$scope.$watch(key, function () { });
-		this.clear(key);
+		delete $scope.key;
+		if (key in bindings) {
+			bindings[key]();
+			delete bindings[key];
+		}
 	}
 	
 	var storage = (typeof(Storage) !== "undefined") ? localStorage : {};
 	var storageService = this;
+	var bindings = {};
 }]);
