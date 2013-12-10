@@ -41,6 +41,7 @@ app.directive('editor', function () {
 
 			/* State machine, go to previous */
 			$scope.prevState = function () {
+				angular.extend($scope.editItem, $scope.saveItem);
 				if ($scope.prevStates.length == 0)
 					$scope.setState($scope.states.HIDE);
 				else
@@ -49,6 +50,7 @@ app.directive('editor', function () {
 
 			/* State machine, go to next */
 			$scope.nextState = function () {
+				angular.extend($scope.saveItem, $scope.editItem);
 				if ($scope.nextStates.length == 0) {
 					save();
 					$scope.setState($scope.states.HIDE);
@@ -92,6 +94,7 @@ app.directive('editor', function () {
 				$scope.save = saveFunc;
 				
 				$scope.saveItem = item;
+				$scope.editItem = angular.copy(item);
 				$scope.isUser = item.email != null;
 			}
 			
