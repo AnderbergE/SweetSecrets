@@ -50,10 +50,12 @@ app.controller('DateActionCtrl',
 			$scope.selected, newValue);
 	}, true);
 
+	/* Update today accordingly */
 	$scope.$watch(dateService.getToday, function () {
 		$scope.today = dateService.getToday();
 	});
 
+	/* Update the date actions when the user changes. */
 	$scope.$watch(userService.getActiveUser, function () {
 		$scope.changeMonth(0);
 	});
@@ -106,13 +108,14 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', 'userService', fun
 			$scope.types.splice(index, 1);
 	}
 
-	/* */
+	/* Bind the active user's action types. */
 	function bindTypes (active) {
 		storage.unbind($scope, 'types');
 		storage.bind($scope, 'types',
 			{ defaultValue: [], prefix: active ? active.id : '' });
 	}
 
+	/* Update action types when the user changes. */
 	$scope.$watch(userService.getActiveUser, function (newValue) {
 		bindTypes(newValue);
 	});
@@ -135,16 +138,6 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', 'userService', fun
 		}
 		dynamicStyle.editRule('.day .action-bg', ruleValue);
 	}, true);
-
-	// TODO: remove this debug insertion.
-	/*
-	if ($scope.types.length <= 0) {
-		updateType({name: "candy", icon: "\ue006", background: "rgb(144, 238, 144)"});
-		updateType({name: "cake", icon: "\ue002", background: "rgb(255, 165, 0)"});
-		updateType({name: "drink", icon: "\ue00a", background: "rgb(255, 105, 180)"});
-		updateType({name: "icecream", icon: "\ue009", background: "rgb(176, 224, 230)"});
-	}
-	*/
 }]);
 
 /**
