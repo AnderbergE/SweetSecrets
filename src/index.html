@@ -105,7 +105,7 @@
 					</div>
 					<div class="center editor-menu-info">
 						<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.USER)"
-							ng-class="{'no-display': item.email === undefined}" icon="&#xe00a"></action-icon>
+							ng-class="{'no-display': !isUser}" icon="&#xe00a"></action-icon>
 						<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.REMOVE)" icon="&#xe00c"></action-icon>
 					</div>
 				</div>
@@ -157,7 +157,7 @@
 					</div>
 				</div>
 				<div class="editor-choose-remove">
-					<div class="editor-choose-remove-section" ng-class="{'no-display': item.email === undefined}" ng-click="logout()">
+					<div class="editor-choose-remove-section" ng-class="{'no-display': !isUser}" ng-click="logout()">
 						<action-icon class="editor-icon editor-remove-choice editor-logout-choice" icon="&#xe008"></action-icon>
 					</div>
 					<div class="editor-choose-remove-section" ng-click="delete()">

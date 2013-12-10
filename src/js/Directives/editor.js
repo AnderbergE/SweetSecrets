@@ -21,26 +21,29 @@ app.directive('editor', function () {
 				}
 				
 				if ($scope.currentState == $scope.states.HIDE) {
+					/* New editor, reset history states. */
 					$scope.prevStates = [];
 					$scope.nextStates = [];
 				} else if (back)
 					$scope.nextStates.push($scope.currentState);
 				else
 					$scope.prevStates.push($scope.currentState);
-				if (!forward && !back ||
-					state == $scope.states.MENU)
+
+				if (state == $scope.states.MENU)
+					/* Menu choice - reset history */
 					$scope.nextStates = [];
+				else if ($scope.currentState == $scope.states.MENU)
+					/* Leaving menu - next should go back to menu */
+					$scope.nextStates.push($scope.currentState);
 				
 				$scope.currentState = state;
 			}
 
 			/* State machine, go to previous */
 			$scope.prevState = function () {
-				if ($scope.prevStates.length == 0) {
-					// TODO: This might be cancel, not save.
-					save();
+				if ($scope.prevStates.length == 0)
 					$scope.setState($scope.states.HIDE);
-				} else
+				else
 					$scope.setState($scope.prevStates.pop(), true);
 			}
 
@@ -75,21 +78,21 @@ app.directive('editor', function () {
 			
 			/* Call the save method (supplied to the setup) */
 			function save () {
-				angular.extend($scope.item, {icon: $scope.icon,
+				angular.extend($scope.saveItem, {icon: $scope.icon,
 					background: "rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")"});
-				if ($scope.item.email !== undefined)
-					angular.extend($scope.item, {email: $scope.item.email, pass: $scope.item.pass});
-				$scope.save($scope.item);
+				if ($scope.isUser)
+					angular.extend($scope.saveItem, {email: $scope.saveItem.email, pass: $scope.saveItem.pass});
+				$scope.save($scope.saveItem);
 			}
 			
 			/* Setup the editor from input */
 			function setupEditor (item, saveFunc) {
-				if (!saveFunc) {
+				if (!saveFunc)
 					throw "Strange editor setup values, check them out";
-				}
 				$scope.save = saveFunc;
 				
-				$scope.item = item;
+				$scope.saveItem = item;
+				$scope.isUser = item.email != null;
 			}
 			
 			/* Listen to edit events */
@@ -112,7 +115,7 @@ app.directive('editor', function () {
 				setupEditor(item, saveFunc);
 				$scope.setState($scope.states.ICON, true);
 				
-				if (item.email != null)
+				if ($scope.isUser)
 					$scope.nextStates.push($scope.states.USER);
 				$scope.nextStates.push($scope.states.BACKGROUND);
 			});
@@ -132,7 +135,9 @@ app.directive('editor', function () {
 			$scope.setState($scope.states.HIDE);
 
 			$scope.save = null;
-			$scope.item = null;
+			$scope.saveItem = null;
+			$scope.editItem = null;
+			$scope.isUser = false;
 
 			$scope.availableIcons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
 			$scope.icon = "\ue006";
