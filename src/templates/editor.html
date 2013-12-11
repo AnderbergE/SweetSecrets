@@ -8,7 +8,7 @@
 						ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}"
 						icon="{{prevStates.length == 0 || isEditing ? 'O' : '<'}}"></action-icon>
 					<action-icon class="editor-icon editor-icon-header always-bg"
-						ng-style="{'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}" icon="{{icon}}"></action-icon>
+						ng-style="{'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}" icon="{{editItem.icon}}"></action-icon>
 					<action-icon class="editor-icon editor-icon-header editor-nav editor-nav-next"
 						ng-click="currentState == states.USER && form.$invalid ? '' : nextState()"
 						ng-class="{'disabled': currentState == states.USER && form.$invalid}"
@@ -23,13 +23,13 @@
 					</div>
 					<div class="center editor-menu-info">
 						<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.USER)"
-							ng-class="{'no-display': item.email === undefined}" icon="&#xe00a"></action-icon>
+							ng-class="{'no-display': !isUser}" icon="&#xe00a"></action-icon>
 						<action-icon class="editor-icon editor-menu-choice" ng-click="setState(states.REMOVE)" icon="&#xe00c"></action-icon>
 					</div>
 				</div>
 				<div class="editor-choose-icon">
 					<action-icon class="editor-icon editor-icon-choice" ng-repeat="icon in availableIcons"
-						input-type="radio" input-id="ac{{$index}}" input-name="choice" input-value="{{icon}}" input-model="$parent.icon"
+						input-type="radio" input-id="ac{{$index}}" input-name="choice" input-value="{{icon}}" input-model="$parent.editItem.icon"
 						icon="{{icon}}"></action-icon>
 				</div>
 				<div class="editor-choose-background">
@@ -66,16 +66,16 @@
 				</div>
 				<div class="editor-choose-user">
 					<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-email').focus()">
-						<input type="email" id="editor-user-email" class="editor-user-input" placeholder="your@email.com" ng-model="item.email" autofocus required>
+						<input type="email" id="editor-user-email" class="editor-user-input" placeholder="your@email.com" ng-model="editItem.email" autofocus required>
 						<action-icon class="editor-icon editor-user-choice" icon="&#xe008"></action-icon>
 					</div>
 					<div class="editor-choose-user-section" onclick="document.getElementById('editor-user-password').focus()">
-						<input type="password" id="editor-user-password" class="editor-user-input" placeholder="********" ng-model="item.pass" required>
+						<input type="password" id="editor-user-password" class="editor-user-input" placeholder="********" ng-model="editItem.pass" required>
 						<action-icon class="editor-icon editor-user-choice" icon="&#xe00a"></action-icon>
 					</div>
 				</div>
 				<div class="editor-choose-remove">
-					<div class="editor-choose-remove-section" ng-class="{'no-display': item.email === undefined}" ng-click="logout()">
+					<div class="editor-choose-remove-section" ng-class="{'no-display': !isUser}" ng-click="logout()">
 						<action-icon class="editor-icon editor-remove-choice editor-logout-choice" icon="&#xe008"></action-icon>
 					</div>
 					<div class="editor-choose-remove-section" ng-click="delete()">

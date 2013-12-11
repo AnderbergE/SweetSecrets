@@ -90,7 +90,7 @@
 						ng-style="currentState == states.MENU || currentState == states.HIDING ? {'visibility': 'hidden'} : {}"
 						icon="{{prevStates.length == 0 || isEditing ? 'O' : '<'}}"></action-icon>
 					<action-icon class="editor-icon editor-icon-header always-bg"
-						ng-style="{'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}" icon="{{icon}}"></action-icon>
+						ng-style="{'background-color': 'rgb(' + (255-r.others) + ', ' + (255-g.others) + ', ' + (255-b.others) + ')'}" icon="{{editItem.icon}}"></action-icon>
 					<action-icon class="editor-icon editor-icon-header editor-nav editor-nav-next"
 						ng-click="currentState == states.USER && form.$invalid ? '' : nextState()"
 						ng-class="{'disabled': currentState == states.USER && form.$invalid}"
@@ -111,7 +111,7 @@
 				</div>
 				<div class="editor-choose-icon">
 					<action-icon class="editor-icon editor-icon-choice" ng-repeat="icon in availableIcons"
-						input-type="radio" input-id="ac{{$index}}" input-name="choice" input-value="{{icon}}" input-model="$parent.icon"
+						input-type="radio" input-id="ac{{$index}}" input-name="choice" input-value="{{icon}}" input-model="$parent.editItem.icon"
 						icon="{{icon}}"></action-icon>
 				</div>
 				<div class="editor-choose-background">

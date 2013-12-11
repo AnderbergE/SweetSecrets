@@ -41,7 +41,11 @@ app.directive('editor', function () {
 
 			/* State machine, go to previous */
 			$scope.prevState = function () {
+				/* Cancel changes. */
+				if ($scope.currentState == $scope.states.BACKGROUND && !!$scope.saveItem.background)
+					setupColors($scope.saveItem.background);
 				angular.extend($scope.editItem, $scope.saveItem);
+
 				if ($scope.prevStates.length == 0)
 					$scope.setState($scope.states.HIDE);
 				else
@@ -50,7 +54,12 @@ app.directive('editor', function () {
 
 			/* State machine, go to next */
 			$scope.nextState = function () {
+				/* Save changes. */
+				if ($scope.currentState == $scope.states.BACKGROUND)
+					angular.extend($scope.editItem,
+						{background: "rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")"});
 				angular.extend($scope.saveItem, $scope.editItem);
+
 				if ($scope.nextStates.length == 0) {
 					save();
 					$scope.setState($scope.states.HIDE);
@@ -80,10 +89,6 @@ app.directive('editor', function () {
 			
 			/* Call the save method (supplied to the setup) */
 			function save () {
-				angular.extend($scope.saveItem, {icon: $scope.icon,
-					background: "rgb(" + $scope.r.value + ", " + $scope.g.value + ", " + $scope.b.value + ")"});
-				if ($scope.isUser)
-					angular.extend($scope.saveItem, {email: $scope.saveItem.email, pass: $scope.saveItem.pass});
 				$scope.save($scope.saveItem);
 			}
 			
@@ -98,26 +103,33 @@ app.directive('editor', function () {
 				$scope.isUser = item.email != null;
 			}
 			
-			/* Listen to edit events */
-			$scope.$on('editValue', function(event, item, saveFunc) {
-				var colors = item.background.match(/\d+/g);
+			/* Setup the color sliders from an rgb string */
+			function setupColors (rgbString) {
+				var colors = rgbString.match(/\d+/g);
 				if (colors.length != 3) {
 					throw "Strange editor setup values, check them out";
 				}
-				$scope.icon = item.icon;
 				$scope.r.value = colors[0];
 				$scope.g.value = colors[1];
 				$scope.b.value = colors[2];
+			}
 
+			/* Listen to edit events */
+			$scope.$on('editValue', function(event, item, saveFunc) {
 				setupEditor(item, saveFunc);
+				setupColors(item.background);
 				$scope.setState($scope.states.MENU);
 			});
 			
 			/* Listen to add events */
 			$scope.$on('addValue', function(event, item, saveFunc) {
 				setupEditor(item, saveFunc);
+				$scope.editItem.icon = $scope.availableIcons[Math.floor(Math.random() * $scope.availableIcons.length)];
+				$scope.r.value = Math.floor(Math.random() * 155 + 100);
+				$scope.g.value = Math.floor(Math.random() * 155 + 100);
+				$scope.b.value = Math.floor(Math.random() * 155 + 100);
 				$scope.setState($scope.states.ICON, true);
-				
+
 				if ($scope.isUser)
 					$scope.nextStates.push($scope.states.USER);
 				$scope.nextStates.push($scope.states.BACKGROUND);
@@ -143,7 +155,6 @@ app.directive('editor', function () {
 			$scope.isUser = false;
 
 			$scope.availableIcons = ["\ue000", "\ue001", "\ue002", "\ue004", "\ue006", "\ue008", "\ue009", "\ue00a", "\ue00b", "\ue00c"];
-			$scope.icon = "\ue006";
 			/* For the color slider, note that the names correspond to the slider names! */
 			$scope.r = {name: "red", value: 200};
 			$scope.g = {name: "green", value: 200};
