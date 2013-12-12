@@ -7,11 +7,18 @@
  *
  * Inspired by: https://github.com/agrublev/angularLocalStorage
  */
-app.service('storageService', ['$parse', function ($parse) {
-	function parseValue (val) {
-		if (angular.isNumber(val) || angular.isString(val))
-			return val;
-		return angular.toJson(val);
+app.service('storageService',
+	['$parse',
+	function ($parse) {
+
+	/**
+	 * Parse a value into Json.
+	 * @param {number|string|Object} v The value to parse
+	 */
+	function parseValue (v) {
+		if (angular.isNumber(v) || angular.isString(v))
+			return v;
+		return angular.toJson(v);
 	}
 
 	/**
@@ -73,15 +80,15 @@ app.service('storageService', ['$parse', function ($parse) {
 
 	/**
 	 * Bind a scope variable to local storage (or browser cache).
-	 * @param {Object} $scope The scope to add the variable to.
+	 * @param {Object} scope The scope to add the variable to.
 	 * @param {number|string|Object} key The name of the variable.
 	 * @param {Object} opts List of possible options:
 	 *	- defaultValue Value to store if key does not exist.
 	 
-	 * @throws Error if $scope or key is not specified.
+	 * @throws Error if scope or key is not specified.
 	 */
-	this.bind = function ($scope, key, opts) {
-		if ($scope == null || key == null)
+	this.bind = function (scope, key, opts) {
+		if (scope == null || key == null)
 			throw "Incorrect usage of storageService.bind";
 
 		var defaultOpts = {
@@ -95,9 +102,9 @@ app.service('storageService', ['$parse', function ($parse) {
 		if (this.load(prefixKey) == null)
 			this.save(prefixKey, opts.defaultValue);
 
-		$parse(key).assign($scope, this.load(prefixKey));
+		$parse(key).assign(scope, this.load(prefixKey));
 
-		bindings[key] = $scope.$watch(key, function (val) {
+		bindings[key] = scope.$watch(key, function (val) {
 			if (angular.isDefined(val)) {
 				storageService.save(prefixKey, val);
 			}
@@ -106,21 +113,21 @@ app.service('storageService', ['$parse', function ($parse) {
 
 	/**
 	 * Bind a scope variable to local storage (or browser cache).
-	 * @param {Object} $scope The scope to add the variable to.
+	 * @param {Object} scope The scope to add the variable to.
 	 * @param {number|string|Object} key The name of the variable.
-	 * @throws Error if $scope or key is not specified.
+	 * @throws Error if scope or key is not specified.
 	 */
-	this.unbind = function ($scope, key) {
-		if ($scope == null || key == null)
+	this.unbind = function (scope, key) {
+		if (scope == null || key == null)
 			throw "Incorrect usage of storageService.unbind";
 
-		delete $scope.key;
+		delete scope.key;
 		if (key in bindings) {
 			bindings[key]();
 			delete bindings[key];
 		}
 	}
-	
+
 	var storage = (typeof(Storage) !== "undefined") ? localStorage : {};
 	var storageService = this;
 	var bindings = {};

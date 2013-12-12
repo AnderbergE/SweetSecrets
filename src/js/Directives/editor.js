@@ -1,8 +1,9 @@
 /**
  * Editor for the actions and users.
- * @param {Object} $scope Angular.js scope.
  */
-app.directive('editor', function () {
+app.directive('editor',
+	function () {
+
 	return {
 		restrict: 'E',	// use as element
 		replace: true,	// get rid of element that we start with.

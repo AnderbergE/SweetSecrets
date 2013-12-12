@@ -1,7 +1,10 @@
 /**
  * A service to handle users.
  */
-app.service('userService', ['$rootScope', '$http', 'storageService', function ($rootScope, $http, storage) {
+app.service('userService',
+	['$rootScope', '$http', 'storageService',
+	function ($rootScope, $http, storage) {
+
 	/* Get the current users. */
 	this.getUsers = function () {
 		return $scope.users;
@@ -12,7 +15,10 @@ app.service('userService', ['$rootScope', '$http', 'storageService', function ($
 		return $scope.activeUser;
 	}
 
-	/* Update a user. */
+	/*
+	 * Update a user.
+	 * @param {Object} user The user to update.
+	 */
 	this.updateUser = function (user) {
 		var index = $scope.users.indexOf(user);
 		if (index < 0) {
@@ -23,7 +29,10 @@ app.service('userService', ['$rootScope', '$http', 'storageService', function ($
 			angular.extend($scope.users[index], user);
 	}
 
-	/* Remove a user. The user is logged out if currently logged in. */
+	/*
+	 * Remove a user. The user is logged out if currently logged in.
+	 * @param {Object} user The user to remove.
+	 */
 	this.removeUser = function (user) {
 		// TODO: Error checking and server check.
 		var index = $scope.users.indexOf(user);
@@ -33,14 +42,17 @@ app.service('userService', ['$rootScope', '$http', 'storageService', function ($
 			this.logout();
 	}
 
-	/* Log in a user. */
+	/*
+	 * Log in a user.
+	 * @param {Object} user The user to log in.
+	 */
 	this.login = function (user) {
 		$scope.activeUser = user;
 		$rootScope.$broadcast('login');
 		return true;
 	}
 
-	/* Log out a user. */
+	/* Log out current user. */
 	this.logout = function () {
 		$scope.activeUser = null;
 		$rootScope.$broadcast('logout');

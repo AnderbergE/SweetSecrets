@@ -1,12 +1,18 @@
 /**
  * A service to handle date functionality.
  */
-app.service('dateService', ['$timeout', function ($timeout) {
+app.service('dateService',
+	['$timeout',
+	function ($timeout) {
+
 	this.getToday = function () {
 		return today;
 	}
 
-	/* Set the nearby class to day elements */
+	/*
+	 * Set the nearby class to day elements.
+	 * @param {number} selected The day (in ms) that is selected.
+	 */
 	this.updateNearbyStyle = function (selected) {
 		// Remove old nearby dates.
 		angular.element(global_position_wrapper_date.querySelectorAll(".nearby")).removeClass('nearby');

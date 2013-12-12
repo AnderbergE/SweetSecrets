@@ -1,16 +1,20 @@
 /**
  * An angular directive that makes action-icon elements into sweet html.
  * @attribute {string} inputType	What type the input should be, undefined means no input element.
- * @attribute {string} inputId		Id of the input element
- * @attribute {string} inputName	Name of the input element (for grouping)
- * @attribute {string} inputValue	Value of the input element, if undefined inputId will be used
- * @attribute {string} inputModel	Angular model of the input element
- * @attribute {string} inputDirective	Angular directive for the model
- * @attribute {string} forInput		Which input to trigger on click, if undefined inputId will be used
- * @attribute {string} bg		Background of the action-icon (css values)
+ * @attribute {string} inputId		Id of the input element.
+ * @attribute {string} inputName	Name of the input element (for grouping).
+ * @attribute {string} inputValue	Value of the input element, if undefined inputId will be used.
+ * @attribute {string} inputModel	Angular model of the input element.
+ * @attribute {string} inputDirective	Angular directive for the model.
+ * @attribute {string} click		What should happen when clicking.
+ * @attribute {string} forInput		Which input to trigger on click, if undefined inputId will be used.
+ * @attribute {string} bg		Background of the action-icon (css values).
  * @attribute {string} customBg		Custom string for background items.
+ * @attribute {string} icon		Icon (character) to display.
  */
-app.directive('actionIcon', function () {
+app.directive('actionIcon',
+	function () {
+
 	return {
 		restrict: 'E',	// use as element
 		replace: true,	// get rid of element that we start with.
@@ -18,7 +22,7 @@ app.directive('actionIcon', function () {
 		template: function (element, attrs) {
 			attrs.forInput = attrs.forInput || attrs.inputId;
 			attrs.inputValue = attrs.inputValue || attrs.inputId;
-			
+
 			return '<div class="action-icon">' +
 					(!attrs.inputType ? '' : '<input type="' + attrs.inputType + '"' +
 					(!attrs.inputId ? '' : ' id="' + attrs.inputId + '"') +

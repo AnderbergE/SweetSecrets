@@ -2,7 +2,8 @@
  * Dates and their actions.
  */
 app.controller('DateActionCtrl',
-	['$scope', '$timeout', 'dateService', 'storageService', 'userService', function ($scope, $timeout, dateService, storage, userService) {
+	['$scope', '$timeout', 'dateService', 'storageService', 'userService',
+	function ($scope, $timeout, dateService, storage, userService) {
 
 	/* Change the month. Behaviour when amount is more than 12 is undefined. */
 	$scope.changeMonth = function (amount) {
@@ -57,24 +58,29 @@ app.controller('DateActionCtrl',
 
 	/* Update the date actions when the user changes. */
 	$scope.$watch(userService.getActiveUser, function () {
+		$scope.selected = $scope.today;
 		$scope.changeMonth(0);
 	});
 
 	/* Initialization */
 	$scope.today = dateService.getToday();
 	$scope.selected = $scope.today;
-	$scope.dates = {};
 	$scope.dates = fillMonth($scope.selected);
 }]);
 
 /**
- * Action types available for a date.
+ * Action types available.
+ * A type have the following properties:
+ * {id: string, icon: utf-string, background: rgb-string}
  */
-app.controller('ActionTypeCtrl', ['$scope', 'storageService', 'userService', function ($scope, storage, userService) {
+app.controller('ActionTypeCtrl',
+	['$scope', 'storageService', 'userService',
+	function ($scope, storage, userService) {
+
 	/* Open editor for this type */
 	$scope.add = function () {
 		$scope.$root.$broadcast('addValue', {}, function (updatedItem) {
-			updatedItem.name = $scope.types.length;
+			updatedItem.id = $scope.types.length;
 			updateType(updatedItem);
 		});
 	}
@@ -142,8 +148,13 @@ app.controller('ActionTypeCtrl', ['$scope', 'storageService', 'userService', fun
 
 /**
  * Users for the app.
+ * A user have the following properties:
+ * {id: string, icon: utf-string, background: rgb-string, email: string, pass: string}
  */
-app.controller('UserCtrl', ['$scope', 'userService', function ($scope, userService) {
+app.controller('UserCtrl',
+	['$scope', 'userService',
+	function ($scope, userService) {
+
 	/* Open editor for this user */
 	$scope.add = function () {
 		$scope.$root.$broadcast('addValue', {email: true}, function (updateItems) {
@@ -183,12 +194,4 @@ app.controller('UserCtrl', ['$scope', 'userService', function ($scope, userServi
 	/* Initialization */
 	$scope.users = userService.getUsers();
 	$scope.activeUserIndex = -1;
-
-	// TODO: remove this debug insertion.
-	if ($scope.users.length <= 0) {
-		userService.updateUser({name: "Erik Anderberg", icon: "\ue006",
-			 background: "rgb(255, 0, 0)", email: "heyo@ey.moo", pass: "pass"});
-		userService.updateUser({name: "Camilla Bergvall", icon: "\ue004",
-			 background: "rgb(0, 255, 0)", email: "blarg@larva.now", pass: "pass"});
-	}
 }]);
