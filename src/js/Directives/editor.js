@@ -99,6 +99,7 @@ app.directive('editor',
 					throw "Strange editor setup values, check them out";
 				$scope.save = saveFunc;
 				
+				$scope.form.$setPristine(); // Reset form validation.
 				$scope.saveItem = item;
 				$scope.editItem = angular.copy(item);
 				$scope.isUser = item.email != null;
@@ -126,11 +127,13 @@ app.directive('editor',
 			$scope.$on('addValue', function(event, item, saveFunc) {
 				setupEditor(item, saveFunc);
 				$scope.editItem.icon = $scope.availableIcons[Math.floor(Math.random() * $scope.availableIcons.length)];
+				if ($scope.isUser)
+					$scope.editItem.pass = "";
 				$scope.r.value = Math.floor(Math.random() * 155 + 100);
 				$scope.g.value = Math.floor(Math.random() * 155 + 100);
 				$scope.b.value = Math.floor(Math.random() * 155 + 100);
+				
 				$scope.setState($scope.states.ICON, true);
-
 				if ($scope.isUser)
 					$scope.nextStates.push($scope.states.USER);
 				$scope.nextStates.push($scope.states.BACKGROUND);
