@@ -3,7 +3,6 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var autoprefixer = require('gulp-autoprefixer');
 var minifycss = require('gulp-minify-css');
-var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 
@@ -32,8 +31,6 @@ var jsName = 'scripts';
 var jsPath = srcPath + 'js/';
 gulp.task(jsName, function () {
 	return gulp.src(jsPath + all + '.js')
-		// .pipe(jshint())
-		// .pipe(jshint.reporter('default'))
 		.pipe(concat('script.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest(distPath));
